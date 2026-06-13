@@ -1,0 +1,9 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:include="layouts/layout_new::page">
+<body>
+<div th:fragment="content">	
+	<div th:replace="fragments/login :: login"></div>
+	<div th:replace="fragments/banner :: banner"></div>
+</div>		
+</body>
+</html>

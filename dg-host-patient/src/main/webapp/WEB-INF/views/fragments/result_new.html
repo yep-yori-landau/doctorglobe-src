@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<body>
+	<div th:fragment="result" id="ajaxresult">
+		<!-- results -->
+				<div class="my-block res-info " th:if="${totalhealthcareproviders != 0}">
+					<h3 class="fl ico ico-sm-search-bl fh">
+						<span th:text="${totalhealthcareproviders}" class="totalfound"></span>
+						<span th:text="#{healthcareproviders.healthcareprovidersfound}+ ' '+${filterModel.treatmentName}"></span>					
+					</h3>
+					<h4 class="fr">
+						<span th:text="#{page.sortby.text}">Sort by:</span> 
+						<span class="sort-nav">
+							<strong>
+								<select class="sort-select js-select" id="hsort">									
+									<option th:text="#{sortby.rating}" th:value="rankings"  th:selected="${sortingVal == 'rankings'}"></option>
+									<option th:text="#{sortby.distance_low_to_high}" th:value="distancelh" th:selected="${sortingVal == 'distancelh'}"></option>
+									<!--<option th:text="#{sortby.distance_high_to_low}" th:value="distancehl" th:selected="${sortingVal == 'distancehl'}"></option>-->									
+									<option th:if="${forcorporate}" th:text="#{sortby.bonus}" th:value="bonus"  th:selected="${sortingVal == 'bonus'}"></option>
+									<option th:unless="${forcorporate}" th:text="#{sortby.price}" th:value="price" th:selected="${sortingVal == 'price'}"></option>
+									<option th:text="#{sortby.volume}" th:value="volume" th:selected="${sortingVal == 'volume'}"></option>									
+								</select>
+							</strong>	
+						</span>
+					</h4>
+				</div>				
+				<div class="my-block res-info notfound" th:if="${totalhealthcareproviders == 0}">
+					<h3 class="fl ico ico-sm-search-bl"	th:text="#{page.noresultfound.text}"></h3>
+				</div>
+			<ul>
+				<li th:each="f : ${healthcareproviders}" class="resli" th:if="${f.isAvailable}">				
+					<article
+						class="my-block resultsdiv res pd-ch"
+						th:id="${f.id}">
+						<button class="ico ico-close"></button>
+						<ul>
+							<li>
+								<figure class="fig-block imagehide">
+									<img th:each="healthcareproviderImage :${filterModel.healthcareproviderImageMap.get(f.id)}"  th:src="@{${healthcareproviderImage}}" th:alt="${{f.name}}"/>
+									<span class="vol-txt">
+                                        <span class="vol-txt-in txt-co1">Volume:</span> 
+                                        <span class="vol-txt-in txt-co2" th:text="${{f.volume}}">MODERATLY HIGH</span>
+                                    </span>								
+								</figure>
+							</li>
+							<li class="pd-none pl-26">
+							    <h3 th:text="${{f.name}}" class="fs-20">Saint Clare's Hospital</h3>                          
+                                <div class="my-tabs">                                    
+                                    <div class="my-tab-content">
+<!--
+                                        <p class="pn fs-16" th:text="${{f.location}}">145 Sunshine Avenue California</p>
+-->
+                                        	<a class="various fancybox.iframe text-black" th:href="@{'/healthcareprovider-map'(id=${f.id},location=${f.location},lat=${f.lat},lon=${f.lon})}">
+                                    			<span class="pn fs-16" th:text="${{f.location}}">145 Sunshine Avenue California</span> 
+                                    	   	</a>
+
+                                        <p class="pn fs-16">
+                                        	<span><strong>Distance</strong>: <span th:text="${#numbers.formatDecimal(f.distance,0,'COMMA',0,'POINT')}+' '+mi">500km</span></span>
+                                            <span class="pdl-23"><span th:attr="data-tooltip=#{flighthour.title}" data-tooltip-position="top" class="img-info"></span>&nbsp;<strong th:text="#{page.hospital.flighthours}">Flight Hours</strong>: <span th:if="${f.flighthours == 0.0}" th:text="#{flighthours.NA}"></span><span th:if="${f.flighthours != 0.0}" th:text="${f.flighttime}"></span></span>
+                                        </p>
+                                    </div>
+                                    
+                                    <div class="my-tab-content po-dis">
+                                    	<div class="ho-r" th:if="${{f.ratingUrl != null}}">
+                                    		<a th:href="${{f.ratingUrl}}" target="_blank">
+                                        		<span class="rating-img"></span>
+                                    	 		<span class="fs-14 cps text-l" th:text="#{page.hospital.results.hospital_ratings}">Hospital Ratings</span> 
+                                    	 	</a>
+                                        </div>
+                                        <div class="ho-r" th:if="${{f.ratingUrl == null}}">
+                                        	<span class="rating-img"></span>
+                                    	 	<span class="fs-14 cps text-l" th:text="#{page.hospital.results.hospital_ratings}">Hospital Rating</span> 
+                                        </div>
+                                        
+                                    	<div class="ho-r" th:if="${{f.doctorsUrl != null}}">
+                                    		<a th:href="${{f.doctorsUrl}}" target="_blank">
+                                        		<span class="doctor-img"></span>
+                                    	 		<span class="fs-14 cps text-l" th:text="#{page.hospital.results.view_doctors}">View Doctors</span> 
+                                    	 	</a>
+                                        </div>
+                                        <div class="ho-r" th:if="${{f.doctorsUrl == null}}">
+                                        	<span class="doctor-img"></span>
+                                    	 	<span class="fs-14 cps text-l" th:text="#{page.hospital.results.view_doctors}">View Doctors</span> 
+                                        </div>
+                                        
+                                        <div class="ho-r" th:if="${{f.website != null}}">
+                                           <a th:href="${{f.website}}" target="_blank" class="text-black">
+                                        	<span class="site-img"></span>
+                                    	 	<span class="fs-14 cps" th:text="#{page.hospital.results.hospital_website}">Hospitals Website</span>
+                                    	 	</a> 
+                                        </div>
+                                        <div class="ho-r" th:if="${{f.website == null}}">
+                                           	<span class="site-img"></span>
+                                    	 	<span class="fs-14 cps" th:text="#{page.hospital.results.hospital_website}">Hospitals Website</span>                                    	 	 
+                                        </div>
+<!--                                        
+                                        <div class="ho-r wt-80">
+                                           <a class="various fancybox.iframe text-black" th:href="@{'/healthcareprovider-map'(id=${f.id},location=${f.location},lat=${f.lat},lon=${f.lon})}">
+                                        	 <span class="map-img"></span>
+                                    	 	 <span class="fs-14 cps" th:text="#{page.hospital.results.location}">Location</span> 
+                                    	   </a>                                    	   
+                                        </div>
+-->
+                                    </div>                                    
+                                </div>					
+							</li>
+							<li>
+                                <div th:if="${forcorporate}">
+                                	<span th:attr="data-tooltip=#{youget.title}" data-tooltip-position="top" class="img-info"></span>
+                                	<span class="fs-15" th:text="#{page.youget.text}">Bonus up to:</span>
+                                	<span class="upto fr">
+                                    <span th:text="${f.currencyCode}"></span>
+                                    <span><strong th:text="${#numbers.formatDecimal(f.youGetUpTo ,0,'COMMA',0,'POINT')}"></strong></span>
+                                    </span>
+                                </div>
+                                <div class="mat-10" th:if="${forcorporate}">
+                                	<span th:attr="data-tooltip=#{youpay.title}" data-tooltip-position="top" class="img-info"></span>
+                                	<span class="fs-15" th:text="#{page.youpay.text}">You pay:</span>                                	
+                                    <span class="upto fr pd-10"><span th:text="${f.currencyCode}"></span>0</span>                                    
+                                    <span class="upto fr"><span class="strikeout" th:text="${f.currencyCode+''+#numbers.formatDecimal(f.youPayUpTo ,0,'COMMA',0,'POINT')}">$5,300</span></span>                                                                     
+                                </div>
+                                <div th:unless="${forcorporate}">
+<!-- This code show the full price. Need to enable it after adding onfiguration per client (some clients may want to see full price)
+									<span class="fs-15" th:text="#{page.estimatedcost.text}">Annual average charge:</span>
+									<strong th:if="${forcorporate}" th:text="#{page.youpay.text}"></strong>
+									<p class="fs-15"></p>
+                                   	<p class="pn upto tc fs-15">
+										<span th:text="${f.currencyCode}"></span>
+										<span><strong th:text="${#numbers.formatDecimal(f.estimatedCost,0,'COMMA',0,'POINT')}"></strong></span>									
+                                    </p>
+-->                                    
+
+									<!-- ### This code show the below and above average price ### -->                                    
+	                                <div th:if="${originPrice >= f.estimatedCost}">
+									<span class="fs-15" th:text="#{page.chargeRelativeToAareaAverage.text}">Charge relative to area avg: </span>
+										<p class="fs-15"></p>
+	                                   	<p class="pn upto tc fs-15">
+											<span th:text="${f.currencyCode}"></span><span><strong th:text="${#numbers.formatDecimal(f.estimatedCost,0,'COMMA',0,'POINT')}"></strong></span>									
+											<span>
+												<strong>(</strong><strong th:text="${#numbers.formatDecimal((f.estimatedCost/originPrice)*100,0,'COMMA',0,'POINT')}"></strong><strong>%)</strong>
+											</span>
+	                                    </p>
+	                                </div>
+	                                <div th:if="${f.estimatedCost > originPrice}">
+									<span class="fs-15" th:text="#{page.chargeRelativeToAareaAverage.text}">Charge relative to area avg: </span>
+										<p class="fs-15"></p>
+	                                   	<p class="pn above-avg tc fs-15">
+											<span th:text="${f.currencyCode}"></span><span><strong th:text="${#numbers.formatDecimal(f.estimatedCost,0,'COMMA',0,'POINT')}"></strong></span>									
+											<span>
+												<strong>(</strong><strong th:text="${#numbers.formatDecimal((f.estimatedCost/originPrice)*100,0,'COMMA',0,'POINT')}"></strong><strong>%)</strong>
+											</span>
+	                                    </p>
+	                                </div>
+									<!-- ### End of code show the below and above average price ### -->                                    
+
+									<p class="fs-15"></p>
+								</div>
+
+                                <span class="hr-l"><hr/></span>
+                                <div class="fs-13"><span th:attr="data-tooltip=#{relevance.title}" data-tooltip-position="top" class="img-info"></span>&nbsp;<strong th:text="#{page.ranking.ranked}"></strong>&nbsp;&nbsp;<span th:text="${{f.ranking}}" class="rankresult"></span>&nbsp;&nbsp;<span th:text="#{page.ranking.of}"></span>&nbsp;&nbsp;<span th:text="${totalhealthcareproviders}" class="totalresult"></span></div>
+                                <div class="btn-block">
+									<a th:if="${limitExceed and !f.isDisabled}" th:href="@{'/limitexceed'}" class="various3 fancybox.iframe" data-fancybox-width="645" data-fancybox-height="313" data-value='4'>
+											<button
+											class="btn btn-l-blue l-blue-sm fl"
+											th:text="#{page.selecthospital.text}">Select
+											Hospital</button>
+									</a>
+									<a th:if="${!f.isDisabled and !limitExceed}" th:href="@{'/confirmation'(islogged=true)}" class="various3 fancybox.iframe" data-fancybox-width="645" data-fancybox-height="313" th:attr="data-href=@{'/user/patientcase'(practitioner=${f.practitioner},treatment=${treatment},hcpstmp=${f.hcpstmpId},healthcareprovider=${f.id},lp=${f.estimatedCost},ylp=0,blp=${f.youGetUpTo},tn=${filterModel.treatmentName})}">
+											<button
+											class="btn btn-l-blue l-blue-sm fl"
+											th:text="#{page.selecthospital.text}">Select
+											Hospital</button>
+									</a>
+									<a th:if="${f.isDisabled and !limitExceed}">
+											<button
+											class="btn btn-l-gray fl na"
+											th:text="#{page.selecthospital.text}" disabled="disabled">Select
+											Hospital</button>
+									</a>
+									<a th:if="${f.isDisabled and limitExceed}">
+											<button
+											class="btn btn-l-gray fl na"
+											th:text="#{page.selecthospital.text}" disabled="disabled">Select
+											Hospital</button>
+									</a>									
+								</div>								
+                            </li>						
+						</ul>
+					</article>						
+				</li>
+			</ul>	
+			<div class="res-footer" th:if="${viewmore}"><a href="javascript:void(0);" class="fl viewmore" th:text="#{page.viewmore.text}" th:attr="data-value=${limit}"></a></div>
+			<script type="text/javascript" th:inline='javascript'>
+				$(document).ready(function() {	
+					$('.img-info').hide();
+					$(".resultsdiv").hover(function(){
+						$(this).find('.img-info').show();
+					});
+					$(".resultsdiv").on("mouseleave",function(){
+						$(this).find('.img-info').hide();
+					});
+					$("#hsort").msDropDown().data("dd");
+					/*<![CDATA[*/	
+					      var sliderChange = [[${sliderChange}]];
+					      if(sliderChange){
+						      var volumeMap = [[${volumeCountMap}]];
+						      for (var key in volumeMap) {
+						    	    $('#'+key.toLowerCase().replace(' ','')+'Value').text('('+volumeMap[key]+')');
+						    	    if(volumeMap[key] == 0){
+						    	    	$('#'+key.toLowerCase().replace(' ','')).attr("disabled", true);
+						    	    	$('#'+key.toLowerCase().replace(' ','')).parent('label').addClass('na');
+						    	    }else{
+						    	    	$('#'+key.toLowerCase().replace(' ','')).removeAttr("disabled");
+						    	    	$('#'+key.toLowerCase().replace(' ','')).parent('label').removeClass('na');
+						    	    }					    	    					    	    
+						      }					
+					      }
+						  
+					 /*]]>*/           
+				});
+		   </script>					
+	 </div>
+</body>
+</html>

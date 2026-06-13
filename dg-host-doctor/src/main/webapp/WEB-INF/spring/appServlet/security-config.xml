@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/security
+    http://www.springframework.org/schema/security/spring-security.xsd">
+
+   <global-method-security secured-annotations="enabled" />    
+    <http auto-config="true">
+        <headers>
+            <cache-control></cache-control>
+            <hsts/>
+        </headers>
+    	<intercept-url pattern="/" access="ROLE_ANONYMOUS,ROLE_USER" />   	
+    	<intercept-url pattern="/home/**" access="ROLE_USER" />
+    	<form-login login-page="/" login-processing-url="/login.do" authentication-failure-url="/?error=1" default-target-url="/home/index" username-parameter="email" password-parameter="password"></form-login>
+    	<logout logout-url="/logout" logout-success-url = "/"></logout>
+    </http>
+    
+    <beans:bean id="urlProperties"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<beans:property name="location"
+			value="classpath:url-${dgEnvTarget}.properties" />			
+		<beans:property name="ignoreResourceNotFound" value="false" />
+		<beans:property name="searchSystemEnvironment" value="true" />
+		<beans:property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
+	</beans:bean> 
+		
+	<authentication-manager>
+		<authentication-provider user-service-ref="userService">
+			<password-encoder hash="sha" />
+		</authentication-provider>		
+	</authentication-manager>
+	<beans:bean id="userService" class="com.dg.doctor.service.UserService">
+		  <beans:property name="loginUrl" value="${url.loginUrl}"></beans:property>	
+	</beans:bean>	
+	<beans:bean id="webSecurityExpressionHandler" class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler"/>	
+</beans:beans>

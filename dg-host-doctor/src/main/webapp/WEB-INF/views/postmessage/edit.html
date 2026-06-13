@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	th:include="layouts/layoutcontext::page" class='sidebar-large'>
+<body>
+	<div th:fragment="content">
+		<div class="overlay o-sm postmessageheight">
+        <div class="overlay-header bg">
+            <h3 th:text="#{page.postmessage.heading}"></h3>
+            <button class="ico ico-close btn btn-blue fancyclose"></button>
+        </div>
+        <div class="overlay-content" th:each="p : ${patientList}" th:if="${!procedureFound}">
+          <h3 th:if="${message != null}" th:text="#{page.postmessage.success}"></h3>
+          <h3>
+          	<span th:text="#{page.postmessage.subheading}"></span>
+          	<span th:text="${p.name}"></span> 
+          	<span th:text="#{page.postmessage.subheading_here}"></span>
+          </h3>
+           <form class="form-block" name="postMessageForm" method='post' th:object="${postMessageForm}" th:action="@{/home/postmessage/edit}">
+               <ul class="row gt-10 single-col">                 
+                   <li>                      
+                      <div class="hide">
+                       <span class="my-select">
+                         <select name="receiver" id="receiver" required="" th:field="*{receiver}">
+                           <option th:each="var : ${patientList}" th:value="${var.id}" th:text="${var.name}"/>                                                           
+                         </select>                         
+                       </span>
+                       <input type="hidden" name="patientcase" id="patientcase" required="" th:field="*{patientcase}"/>
+                     </div>  
+                   </li>
+                   
+                   <li>
+                       <label for="subject" th:text="#{page.postmessage.subject}"></label>                       
+                       <input type="text" name="subject" id="subject" required="" th:field="*{subject}"/>                    
+                   </li>
+                   <li>
+                       <label for="body" th:text="#{page.postmessage.message}"></label>
+                       <textarea rows="3" name="body" id="body" required="" th:field="*{body}"></textarea>                       
+                   </li>
+               </ul>
+               <p class="tr">
+                   <button type="submit" class="btn btn-green btn-sm" th:text="#{page.postmessage.btn.send}"></button>
+               </p>
+           </form>
+        </div>
+        <div class="overlay-content" th:if="${procedureFound}">
+        	<h3 th:text="#{page.procedurefound.message}"></h3>
+        </div>
+    </div>
+    
+    <script type="text/javascript" th:inline='javascript'>
+		$(document).ready(function() {
+			/*[+
+			var msg = [[${message}]];			
+			+]*/			
+			if(msg == 1){
+				parent.jQuery.fancybox.close();											
+			}
+		});
+   </script>		
+	</div>
+</body>
+</html>

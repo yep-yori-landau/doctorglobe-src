@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	th:include="layouts/layoutresult::page" class='sidebar-large'>	
+<body th:class="page-common">
+	<main id="main-content" th:fragment='content'>	
+		<div class="wrap">           
+                <h1 class="hs-22" th:text="#{page.broker_user.heading}">Type in patient details and company name (optional) to proceed</h1>
+                <div class="mt-20">
+                    <form name="brokerUserform" id="brokerUserForm" th:object="${brokerUserForm}" method='post' th:action="@{/admin-area}">
+                        <span class="fl mr-r-10">
+                        	<input type="text" class="pat_input pat_wt" th:field="*{search}" th:placeholder="#{page.broker_user.search.placeholder}"/>                            
+                        </span>
+                        <span class="fl">                          
+                            <select class="pat_com_wt pat_input" th:field="*{corporatecompany}">
+                                <option value="0">All</option>
+						   		<option th:each="company : ${companyList}" th:value="${company.id}" th:text="${company.name}">Company</option>
+                            </select>
+                        </span>
+                        <span class="block-ar a_pro">
+                        	<button type="submit" class="search-icon"></button>
+                        </span>                            
+                        
+                    </form>
+                </div>
+
+                <div class="mt-20" th:if="${patientList != null}">
+                    <p class="p-ps-18" th:text="#{page.broker_user.search_results}">Search Results</p>
+                    <table class="my-table" border="0" cellspacing="0" cellpadding="0" id="tableData">
+                       <thead>
+                       		<tr>
+					           	<th th:text="#{page.broker_user.firstname}">First Name</th>
+					      		<th th:text="#{page.broker_user.lastname}">Last Name</th>
+					            <th th:text="#{page.broker_user.company}">Comapny</th>
+					            <!--<th th:text="#{page.broker_user.email}">Email</th>-->
+					            <th th:text="#{page.broker_user.employeeid}">Employee id</th>
+					            <th th:text="#{page.broker_user.city}">Employee city</th>
+					            <th th:text="#{page.broker_user.state}">Employee state</th>
+					            <th th:text="#{page.broker_user.loginas}">Log in as:</th>
+			           		</tr>
+                       </thead>
+                       <tbody>
+                       		<tr th:each="model : ${patientList}">
+				            	<td th:text="${model.firstName}">Shahar</td>
+				        		<td th:text="${model.lastName}">Cohen</td>
+				            	<td th:text="${model.ccName}">Prototype</td>
+				            	<!--<td th:text="${model.email}">shaharnash@yahoo.com</td>-->
+				            	<td th:text="${model.employeeId}">34544</td>
+				            	<td th:text="${model.city}">California</td>
+				            	<td th:text="${model.state}">San Francisco</td>
+				            	<td><a th:href="@{'/associate'(id=${model.patientId})}" th:text="#{page.broker_user.btn.loginas}" class="log_as"></a></td>
+				       </tr>
+                       </tbody>
+                    </table>   
+                </div>
+        </div>	
+        <script type="text/javascript" th:inline='javascript'>
+            $(document).ready(function() {
+            	  /*[+	
+            	  		var paginationLimit = [[${{paginationLimit}}]];             	  		
+            	  +]*/            	            	               	 
+            	 $('#tableData').paging({limit:paginationLimit});      
+            });
+        </script>
+        	
+	</main>
+</body>
+</html>

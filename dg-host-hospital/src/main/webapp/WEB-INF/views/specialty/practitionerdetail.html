@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:include="layouts/layout::page">
+<body>
+	<main id="main-content" th:fragment='content'>	
+	  <div class="wrap">
+			<aside th:replace="fragments/sidebar :: sidebar"></aside>
+			<div id="container">
+				<div class="my-block">
+				<form th:action="@{/home/specialty-treatment-method-practitioner-detail}" th:object="${hospitalSpecialtyTreatmentMethodPractitionerDetailForm}" method="post" id="practitionerdetailform">
+					<h3 class="hel-med fs-16 title-in">
+						<span th:text="#{page.hospital.treatment.specialty_of}">Specialty of</span>						
+						<span th:text="${specialtyMap.get(hospitalSpecialtyTreatmentMethodPractitionerDetailForm.specialty)}">Aesthetics</span>
+						<span>&gt;</span>
+						<span th:text="${treatmentMap.get(hospitalSpecialtyTreatmentMethodPractitionerDetailForm.treatment)}">Aesthetics</span>
+						<span th:text="#{page.hospital.method.treatment}"></span>
+						<span>&gt;</span>
+						<span th:text="${methodMap.get(hospitalSpecialtyTreatmentMethodPractitionerDetailForm.method)}">Aesthetics</span>
+						<span>&gt;</span>
+						<span th:text="${practitionerMap.get(hospitalSpecialtyTreatmentMethodPractitionerDetailForm.hstmpModel.practitioner)}">Aesthetics</span>	                    
+					</h3>
+					<h3 class="hel-med fs-16" >
+						<span th:text="${practitionerMap.get(hospitalSpecialtyTreatmentMethodPractitionerDetailForm.hstmpModel.practitioner)}">Dr Richie Hawtin:</span>					
+					</h3>
+                            <ul class="my-form mt-20">
+                            	<input type="hidden" th:field="*{hstmpModel.id}" class="detail-half" required="required"/>
+                            	<input type="hidden" th:field="*{hstmpModel.active}" class="detail-half" required="required"/>
+                            	<input type="hidden" th:field="*{hstmpModel.practitioner}" class="detail-half" required="required"/>
+                            	<input type="hidden" th:field="*{hstmpModel.healthcareproviderSpecialtyTreatmentMethod}" class="detail-half" required="required"/>
+                            	<input type="hidden" th:field="*{treatment}" class="detail-half" required="required"/>
+                            	<input type="hidden" th:field="*{method}" class="detail-half" required="required"/>
+                            	<input type="hidden" th:field="*{specialty}" class="detail-half" required="required"/>
+                            	<li>
+                                    <label for="availabilityDays" th:text="#{page.hospital.specialty.treatment.method.practitioner.availability}">Availability:</label>
+                                    <input type="text" th:field="*{hstmpModel.availabilityDays}" class="detail-half" id="availabilityDays"/>
+                                  	<label class="error practitioner-detail-error" for="availabilityDays"></label>
+                                    <label th:if="${#fields.hasErrors('hstmpModel.availabilityDays')}" th:errors="*{hstmpModel.availabilityDays}" class="error practitioner-detail-error"></label>
+                                </li>
+                            	<li>
+                                    <label for="yearsPracticed" th:text="#{page.hospital.specialty.treatment.method.practitioner.years_practised}">Years Practised:</label>
+                                    <!--<input type="text" th:field="*{hstmpModel.yearsPracticed}" class="detail-half" id="yearsPracticed"/>-->
+                                    <select th:field="*{hstmpModel.yearsPracticed}" class="my-select half" id="yearsPracticed">                                    
+                                    	<option th:each="year : ${yearsPracticedList}" th:text="${year}" th:value="${year}"></option>
+                                    </select>
+                                    <label class="error practitioner-detail-error" for="yearsPracticed"></label>
+                                    <label th:if="${#fields.hasErrors('hstmpModel.yearsPracticed')}" th:errors="*{hstmpModel.yearsPracticed}" class="error practitioner-detail-error"></label>
+                                </li>
+                                <li>
+                                    <label for="numberPerformedOverall" th:text="#{page.hospital.specialty.treatment.method.practitioner.performed}">Preformed(lifetime):</label>
+                                    <input type="text" th:field="*{hstmpModel.numberPerformedOverall}" class="detail-half"/>
+                                    <label class="error practitioner-detail-error" for="numberPerformedOverall"></label>
+                                    <label th:if="${#fields.hasErrors('hstmpModel.numberPerformedOverall')}" th:errors="*{hstmpModel.numberPerformedOverall}" class="error practitioner-detail-error"></label>
+                                </li>
+                                <li>
+                                    <label for="numberPerformedLastYear" th:text="#{page.hospital.specialty.treatment.method.practitioner.returns}">Performed (Last 12 months):</label>
+                                    <input type="text" th:field="*{hstmpModel.numberPerformedLastYear}" class="detail-half"/>                                    
+                                    <label th:if="${#fields.hasErrors('hstmpModel.numberPerformedLastYear')}" th:errors="*{hstmpModel.numberPerformedLastYear}" class="error practitioner-detail-error"></label>
+                                </li>
+                                <li>
+                                    <label for="correctionsLastYear" th:text="#{page.hospital.specialty.treatment.method.practitioner.corrections}">Performed (Last 12 months):</label>
+                                    <input type="text" th:field="*{hstmpModel.correctionsLastYear}" class="detail-half"/>
+                                    <label th:if="${#fields.hasErrors('hstmpModel.correctionsLastYear')}" th:errors="*{hstmpModel.correctionsLastYear}" class="error practitioner-detail-error"></label>
+                                </li>
+                                <li>
+                                    <label for="healthcareproviderPrice" th:text="#{page.hospital.specialty.treatment.method.practitioner.hospital_price}">Hospital Price:</label>
+                                    <input type="text" th:field="*{hstmpModel.healthcareproviderPrice}" class="detail-half"/>                                   
+                                    <label th:if="${#fields.hasErrors('hstmpModel.healthcareproviderPrice')}" th:errors="*{hstmpModel.healthcareproviderPrice}" class="error practitioner-detail-error"></label>
+                                </li>                                
+                                <li>
+                                    <label for="practitionerPrice" th:text="#{page.hospital.specialty.treatment.method.practitioner.price}">Price:</label>
+                                    <input type="text" th:field="*{hstmpModel.practitionerPrice}" class="detail-half"/>                                    
+                                    <label th:if="${#fields.hasErrors('hstmpModel.practitionerPrice')}" th:errors="*{hstmpModel.practitionerPrice}" class="error practitioner-detail-error"></label>
+                                </li>                                
+                                <li>
+                                    <label for="methodPrice" th:text="#{page.hospital.specialty.treatment.method.practitioner.method_price}">Method Price:</label>
+                                    <input type="text" th:field="*{hstmpModel.anesthesiaPrice}" class="detail-half"/>                                   
+                                    <label th:if="${#fields.hasErrors('hstmpModel.anesthesiaPrice')}" th:errors="*{hstmpModel.anesthesiaPrice}" class="error practitioner-detail-error"></label>
+                                </li>
+                                <li>
+                                    <label for="currency" th:text="#{page.hospital.specialty.treatment.method.practitioner.currency}">Currency:</label>                                    
+                                    <input type="text" th:field="*{hstmpModel.currency}" class="detail-half" readonly="readonly" id="currency"/>
+                                    <span th:if="${#fields.hasErrors('hstmpModel.currency')}" th:errors="*{hstmpModel.currency}" class="error practitioner-detail-error"></span>
+                                </li>
+                                <li>
+                                    <label for="corporatecompanyInsurance" th:text="#{page.hospital.specialty.treatment.method.practitioner.corporatecompany_insurance}">Corporate Company Insurance:</label>                                    
+                                   	<select th:field="*{hstmpModel.corporatecompanyInsurance}" class="my-select half" id="corporatecompanyInsurance">
+											<option value="">None</option>
+											<option th:each="var : ${corporatecompanyInsuranceList}"
+												th:value="${var.id}" th:text="${var.programName}"></option>
+									</select>                                    
+                                    <span th:if="${#fields.hasErrors('hstmpModel.corporatecompanyInsurance')}" th:errors="*{hstmpModel.corporatecompanyInsurance}" class="error practitioner-detail-error"></span>
+                                </li>
+                                
+                            </ul>                           
+                            <div class="tc my-btn-block">
+                                <button class="btn btn-sm btn-dk-blue btn-cancel" type="reset" th:text="#{page.hospital.btn_cancel}">Cancel</button>
+                                <button class="btn btn-sm btn-blue" type="submit" th:text="#{page.hospital.btn_save_changes}">Save Changes</button>
+                            </div>
+                        </form>
+				</div>	
+				<script type="text/javascript" th:inline='javascript'>
+					$(document).ready(function() {
+						/*<![CDATA[*/	
+							$("#practitionerdetailform").validate();
+						    $("#availabilityDays").rules("add",{
+						    	required : true,
+						    	message:{
+						    		required : "Please enter availability days."
+						    	}
+						    });
+						    $("#currency").rules("add",{
+						    	required : true,
+						    	message:{
+						    		required : "Please enter currency."
+						    	}
+						    });	
+						  /*]]>*/
+					});
+				</script>
+			</div>
+	</div>
+	</main>
+</body>
+</html>			

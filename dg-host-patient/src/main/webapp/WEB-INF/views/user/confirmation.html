@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	th:include="layouts/layoutcontext::page" class='sidebar-large'>
+<body>
+<div th:fragment='content' >
+	<div class="loginbox o-sm js-conference-overlay">
+        <div class="overlay-header bg">            
+            <h3 th:text="#{page.hospital.confirmation.heading}"></h3>
+            <button class="ico ico-close btn btn-blue fancyclose"></button>
+        </div>
+        <div class="overlay-content height241">            
+            <p th:text="#{page.conference.confirmation.message}" class="fs-15"></p>
+            <p class="hide loginerror" th:text="${islogged}"></p>            
+	        <p>
+	             <button type="button" class="btn btn-green btn-sm btn-conference-ok" th:text="#{page.schedule.btn.ok}">Send Request</button>
+	             <button type="button" class="btn btn-green btn-sm btn-conference-cancel" th:text="#{page.schedule.btn.cancel}">Send Request</button>
+	        </p>            
+        </div>           
+      </div>
+   </div>
+  </body>  
+</html>

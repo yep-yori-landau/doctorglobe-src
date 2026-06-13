@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/security
+    http://www.springframework.org/schema/security/spring-security.xsd">
+
+   <global-method-security secured-annotations="enabled" />    
+   
+   
+    <http auto-config="false" entry-point-ref="loginUrlAuthenticationEntryPoint">
+    	<headers>
+            <cache-control></cache-control>
+            <hsts/>
+        </headers>
+    	<intercept-url pattern="/patient/" access="ROLE_ANONYMOUS" />
+    	<intercept-url pattern="/patient/forgot" access="ROLE_ANONYMOUS" />
+    	<intercept-url pattern="/patient/search" access="ROLE_USER" />   	
+    	<intercept-url pattern="/patient/api/**" access="ROLE_USER" />   	
+    	<intercept-url pattern="/user/**" access="ROLE_USER" />
+    	<intercept-url pattern="/patient/admin-area" access="ROLE_ASSOCIATE" />
+    	<!--<form-login login-page="/" login-processing-url="/login.do" authentication-failure-url="/?error=1" default-target-url="/search" always-use-default-target="true" username-parameter="email" password-parameter="password"></form-login>-->
+    	<logout logout-url="/logout" logout-success-url = "/" delete-cookies="true"></logout>
+    	<custom-filter position="FORM_LOGIN_FILTER" ref="customUsernamePasswordAuthenticationFilter" />
+    </http>  
+    
+    <beans:bean id="urlProperties"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<beans:property name="location"
+			value="classpath:url-${dgEnvTarget}.properties" />			
+		<beans:property name="ignoreResourceNotFound" value="false" />
+		<beans:property name="searchSystemEnvironment" value="true" />
+		<beans:property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
+	</beans:bean>
+    
+	<authentication-manager alias="authenticationManager">
+		<authentication-provider user-service-ref="userService">
+			<password-encoder hash="sha" />
+		</authentication-provider>		
+	</authentication-manager>	
+	
+	<beans:bean id="userService" class="com.dg.patient.service.UserService">
+		<beans:property name="loginUrl" value="${url.loginUrl}"></beans:property>
+		<beans:property name="associateUrl" value="${url.associateUrl}"></beans:property>
+		<beans:property name="associationUrl" value="${url.associationBaseUrl}"></beans:property>
+		<beans:property name="corporatecompanyUrl" value="${url.corporatecompanyBaseUrl}"></beans:property>			
+	</beans:bean>	
+	<beans:bean id="webSecurityExpressionHandler" class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler"/>
+	
+	
+	 <beans:bean id="loginUrlAuthenticationEntryPoint" class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
+		<beans:property name="loginFormUrl" value="/" />
+		
+	</beans:bean>
+	
+	<beans:bean id="customUsernamePasswordAuthenticationFilter" class="com.dg.patient.filter.CustomUsernamePasswordAuthenticationFilter">
+		<beans:property name="authenticationManager" ref="authenticationManager" />
+		<beans:property name="authenticationFailureHandler" ref="failureHandler" />
+		<beans:property name="authenticationSuccessHandler" ref="successHandler" />
+		<beans:property name="filterProcessesUrl" value="/login.do" />			
+		<beans:property name="postOnly" value="true" />		
+	</beans:bean>
+	
+	<beans:bean id="successHandler" class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler">
+		<beans:property name="defaultTargetUrl" value="/search" />
+		<beans:property name="alwaysUseDefaultTargetUrl" value="true"/>
+	</beans:bean>
+
+	<beans:bean id="failureHandler" class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
+		<beans:property name="defaultFailureUrl" value="/?error=1" />
+	</beans:bean>	
+</beans:beans>

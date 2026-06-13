@@ -1,0 +1,103 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" th:include="layout::page"
+	class='sidebar-large'>
+<div class="container" th:fragment="content">
+	<div class="page-title">
+		<i class="icon-custom-left"></i>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="panel panel-default">
+				<div class="panel-heading bg-red">
+					<h3 class="panel-title">
+						<strong th:text="#{page.heading.patientcasebooking}">Patientcasebooking</strong>
+					</h3>
+				</div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-md-12 col-sm-12 col-xs-12">
+							<form action="#" th:action="@{/patientcasebooking/save}"
+								th:object="${patientcasebooking}" method="post"
+								id="patientcasebooking" class="form-horizontal">
+								<div class="form-group">
+									<ul>
+										<li th:each="e : ${#fields.detailedErrors()}"
+											th:class="${e.global}? globalerr : fielderr"><span
+											class='text-danger' th:text="${e.global}?'*':${e.fieldName}">The
+												field name </span> | <span class='text-danger'
+											th:text="${e.message}">The error message</span></li>
+									</ul>
+									<div th:errors="${patientcasebooking}"></div>
+								</div>
+								<input type="hidden" class="form-control" th:field="*{id}"
+									th:value="*{id}" />
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'>Reference<span
+										class='asterisk'>*</span>
+									</label>
+									<div class='col-sm-9'>
+										<input type="text" required='' class='form-control'
+											th:field="*{reference}" th:value="*{reference}" />
+									</div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'>Booking_dt<span
+										class='asterisk'>*</span>
+									</label>
+									<div class='col-sm-9'>
+										<input type="text" required=''
+											class='form-control date-picker' th:field="*{bookingDt}"
+											th:value="*{bookingDt}" />
+									</div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'>Status<span
+										class='asterisk'>*</span>
+									</label>
+									<div class='col-sm-9'>
+										<select th:field="*{status}" class="form-control">
+											<option th:value="Open" th:text="Open"></option>
+											<option th:value="Cancel" th:text="Cancel"></option>
+											<option th:value="Closed" th:text="Closed"></option>
+										</select>
+									</div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'>Patient_case<span
+										class='asterisk'>*</span>
+									</label>
+									<div class='col-sm-9'>
+										<select th:field="*{patientCase}" class="form-control">
+											<option th:each="var : ${patientcaseList}"
+												th:value="${var.id}" th:text="${var.description}"></option>
+										</select>
+									</div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'>Healthcareprovider_specialty_treatment_method_practitioner<span
+										class='asterisk'>*</span>
+									</label>
+									 <div class='col-sm-9'>
+                                              <select th:field="*{healthcareproviderSpecialtyTreatmentMethodPractitioner}" class="form-control">
+                                                <option th:each = "var : ${healthcareproviderSpecialtyTreatmentMethodPractitionerList}" th:value="${var.id}" th:text="${var.id}"></option>
+                                              </select>                                                                                                 
+                                     </div>
+								</div>
+
+
+								<div class="col-sm-9 col-sm-offset-3">
+									<div class="pull-right">
+										<button class="btn btn-primary m-b-10"
+											onclick="javascript:$('#patientcasebooking').parsley('validate');"
+											th:text="#{page.button.submit}">Submit</button>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</html>

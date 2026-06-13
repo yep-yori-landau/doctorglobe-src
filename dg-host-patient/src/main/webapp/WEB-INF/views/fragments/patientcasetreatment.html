@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<body>
+<div class="my-block pcdiv" th:fragment="patientcasetreatment">
+	<h3>
+		<span th:text="#{patient.case.text}">Case:</span>
+		<span class="sort-nav pcname hide">
+			<strong>
+				<select th:class="patientcasetreatment + ' '+ case-select + ' '+' '+js-select">
+					<option th:each="patientcase : ${patientcases}" th:value="${patientcase.key}" th:text="${patientcase.value}" th:selected="${patientcase.key == pc}"></option>				
+				</select>
+			</strong>
+		</span>
+		<span class="patientcasetreamenttext" th:each="patientcase : ${patientcases}" th:text="${patientcase.value}"></span>
+	</h3>
+	<script type="text/javascript" th:inline='javascript'>	
+		$(document).ready(function() {
+			$("select.patientcasetreatment").change(function(){
+				var val = $(this).val();
+				var hosturl = /*[[${application.hostbaseurl} ]]*/;
+				$.ajax({					
+					url: hosturl+'/user/select-patientcase/'+val,
+					success : function(data){						    
+						    if(data){
+						    	window.location.reload(true);
+						    }
+					}
+				});
+				
+			});
+		});
+	</script>	
+</div>
+</body>
+</html>

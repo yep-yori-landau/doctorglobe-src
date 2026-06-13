@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<body>
+	<!-- SIDEBAR-->
+	<aside id="sidebar" th:fragment="sidebar">
+		<div class="row my-block">
+                        <figure th:if="${practitionerDetail.photo == 'demo_user.gif'}" class="tc">                            
+                            <img th:src="@{/resources/images/demo_user.gif}" height="170" width="174"/>
+                        </figure>
+                        <figure th:if="${practitionerDetail.photo != 'demo_user.gif'}" class="tc">                            
+                            <img th:src="@{/doctorglobe-doctor/practitioner/}+${practitionerDetail.id}+'/photo/'+${practitionerDetail.photo}" height="170" width="174"/>
+                        </figure>
+                        <h3 class="hel-med fs-16" th:text="${practitionerDetail.title}+' '+${practitionerDetail.firstName}+' '+${practitionerDetail.lastName}">Doctor Lisa Mcbee</h3>
+                        <p><a th:href="@{'/home/practitioner/photo'(id=${id})}" class="various fancybox.iframe underline" data-fancybox-width="645" data-fancybox-height="474" th:text="#{page.hospital.practitioner.sidebar.change_photo}">Change photo</a></p>
+                                       
+                        <div class="accordion mg-0 mt-20">
+                            <section class="acc-block acc-open">
+                                <h3 class="acc-title ico ico-doctor">
+                                 <span th:text="#{page.hospital.practitioner.sidebar.edit_info}">Edit Info</span>
+                                 <i class="ico ico-arr-common"></i>
+                                </h3>                                
+                                <div class="acc-content">
+                                    <ul class="sub-accordion">
+                                        <li><a th:href="@{'/home/practitioner/edit'(id=${id})}"  th:title="#{page.hospital.practitioner.sidebar.details}" th:text="#{page.hospital.practitioner.sidebar.details}">Details</a></li>
+                                        <li><a th:href="@{'/home/practitioner/medical'(id=${id})}" th:title="#{page.hospital.practitioner.sidebar.medical_license}" th:text="#{page.hospital.practitioner.sidebar.medical_license}">Medical License</a></li>
+                                        <li><a th:href="@{'/home/practitioner/treatment'(id=${id})}" th:title="#{page.hospital.practitioner.sidebar.treatments}" th:text="#{page.hospital.practitioner.sidebar.treatments}">Treatments</a></li>
+                                        <li><a th:href="@{'/home/practitioner/method'(id=${id})}" th:title="#{page.hospital.practitioner.sidebar.methods}" th:text="#{page.hospital.practitioner.sidebar.methods}">Methods</a></li>
+                                        <li><a th:href="@{'/home/practitioner/language'(id=${id})}" th:title="#{page.hospital.practitioner.sidebar.languages}" th:text="#{page.hospital.practitioner.sidebar.languages}">Languages</a></li>
+                                        <!--<li><a th:href="@{'/home/practitioner/stats'(id=${id})}" th:title="#{page.hospital.practitioner.sidebar.professional_questioner}" th:text="#{page.hospital.practitioner.sidebar.professional_questioner}">Professional Questioner</a></li>-->
+                                        <!--<li><a th:href="@{'/home/practitioner/attestation'(id=${id})}" th:title="#{page.hospital.practitioner.sidebar.attestation_questioner}" th:text="#{page.hospital.practitioner.sidebar.attestation_questioner}">Attestation Questioner</a></li>-->
+                                    </ul>
+                                </div>
+                            </section>
+                        </div>
+         </div>
+	</aside>
+</body>
+</html>

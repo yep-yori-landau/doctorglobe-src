@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	th:include="layouts/layoutresult::page" class='sidebar-large'>
+<body th:class="page-common">
+	<main id="main-content" th:fragment='content'>
+	<div class="wrap">
+		<!-- topbar-->        
+				<section class="results mb-0">
+					<div class="my-block">
+						<h3 th:text="#{page.profile.editprofile}" class="fs-20"></h3>
+					</div>
+				</section>	
+				<!-- results -->
+                <section class="results">
+                    <div class="my-block">                        
+                        <form name="registrationform" id="registrationform" class="w-70" th:object="${patientModel}" method="post" th:action="@{/user/profile}" enctype="multipart/form-data">                        
+                            <ul class="my-form">									
+                            	<li>
+                            		<input type="hidden" name="pc" th:value="${pc}"/>
+                                    <input type="hidden" th:field="*{id}" th:value="*{id}" />
+                                    <input type="hidden" name="email" id="email" required="" th:field="*{email}"/>
+                                    <input type="hidden" name="active" id="active" required="" th:field="*{active}"/>                                    
+                                    <input type="hidden" name="password" id="password" required="" th:field="*{password}"/>
+                                    <input type="hidden" name="city" id="city" required="" th:field="*{city}"/>
+                                    <input type="hidden" name="useragreement" id="useragreement" th:field="*{userAgreement}"/>
+                                    <input type="hidden" name="ytdoop" id="ytdOop" th:field="*{ytdOop}"/>
+                                    <input type="hidden" name="dependent" id="dependent" th:field="*{dependent}"/>
+                                    <label for="title" th:text="#{signup.title}">Title</label> 
+									<input name="title" id="title" type="text" th:field="*{title}" />
+									<label th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="error ml-131 w-355"></label>
+									<label for="title" class="error ml-131 w-355"></label> 
+                                </li>                            
+                                <li>                                 
+                                    <label for="first_name" th:text="#{signup.firstname}">First Name</label> 
+									<input name="first_name" id="firstName" required="required" type="text" th:field="*{firstName}" />
+									<label th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="error ml-131 w-355"></label>									
+                                </li>
+                                <li>
+                                    <label for="last_Name" th:text="#{signup.lastname}">Last Name</label> 
+									<input name="last_name" id="lastName" required="" type="text" th:field="*{lastName}" />				
+									<label th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="error ml-131 w-355"></label>						
+                                </li>
+                                <li>
+                                    <label for="dob" th:text="#{signup.dob}">DOB</label> 
+									<input type='text' required="required" class='form-control date-picker' th:field="*{dob}" th:value="*{dob}"/>									
+                                </li>  
+                                <li>
+                                    <label for="gender" th:text="#{signup.gender}">Gender</label>
+                                    <span class="sort-nav full">
+                                    	<strong>  
+											<select th:field="*{gender}" class="form-control my-select js-select">
+												<option th:value="M" th:text="M"></option>
+												<option th:value="F" th:text="F"></option>
+												<option th:value="U" th:text="U"></option>
+											</select>
+										</strong>
+									</span>		
+                                </li>                               
+                                <li>
+                                    <label for="phone" th:text="#{signup.phone}">Phone</label> 
+									<input type="text" name="phone" id="phone" th:field="*{phone}"/>									
+									<label th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" class="error ml-131 w-355"></label>
+                                </li>
+                                <li style="display:none">
+                                    <label for="mobile" th:text="#{signup.mobile}">Mobile</label> 
+									<input type="hidden" name="mobile" id="mobile" th:field="*{mobile}"/>
+									<label th:if="${#fields.hasErrors('mobile')}" th:errors="*{mobile}" class="error ml-131 w-355"></label>
+                                </li>
+                                <li>
+                                    <label for="address" th:text="#{signup.address}">Address</label> 
+									<input type="text" name="address" id="address" th:field="*{address}"/>
+									<label th:if="${#fields.hasErrors('address')}" th:errors="*{address}" class="error ml-131 w-355"></label>									
+                                </li>
+                                <li>
+                                    <label for="zipcode" th:text="#{signup.zip_code}">Address</label> 
+									<input type="text" name="zipCode" id="zipCode" th:field="*{zipCode}"/>
+									<label th:if="${#fields.hasErrors('zipCode')}" th:errors="*{zipCode}" class="error ml-131 w-355"></label>									
+                                </li>
+                                <li>
+                                    <label for="country" th:text="#{signup.country}">Country</label>
+                                    	<select class="form-control my-select country w-354" id="country" required ="required">
+												<option value="">All Countries</option>
+												<option th:each="c : ${countryList}" th:text="${c.name}" th:value="${c.id}"></option>										
+										</select>									
+                                </li>
+                                <li>
+                                    <label for="state" th:text="#{signup.state}">State</label>
+                                   	<select class="form-control my-select state w-354" id="state"></select>                                   												
+                                </li>
+                                <li>
+                                    <label for="city" th:text="#{signup.city}">City</label>
+                                    <select class="form-control my-select w-354" id="ajaxcity" required="required"></select>
+                                    <label th:if="${#fields.hasErrors('city')}" th:errors="*{city}" class="error ml-131 w-355"></label>                                    																			
+                                </li>
+                                <li>
+                                    <label for="photo" th:text="#{signup.photo}">Photo</label> 
+									<input type="hidden" class='form-control' th:field="*{photo}" th:value="*{photo}"/>   
+                                    <input type="file" name="file"/>
+                                    <span th:if="${sizeerror != null}" class="error ml192" th:text="#{page.upload.file.size.error}"></span>
+	            					<span th:if="${typeerror != null}" class="error ml192" th:text="#{page.upload.file.type.error}"></span>
+	            					<label th:if="${#fields.hasErrors('lastName')}" th:errors="*{photo}" class="error ml-131 w-355"></label>
+                                </li>                               
+                                <li class="profile_btn fr">
+                                    <button type="submit" class="btn btn-green btn-sm" th:text="#{signup.update_profile}">Update Profile</button>
+                                </li>
+                            </ul>
+                        </form>
+                    </div>
+                </section>
+            </div>
+            <div th:replace="fragments/ajaxcountry :: ajaxcountry"></div>
+              <script type="text/javascript" th:inline='javascript'>
+					$(document).ready(function() {						
+						 $( "#registrationform" ).validate({
+							 	rules: {
+							 		title:{
+							 			maxlength:32,
+							 		},
+							 		firstName:{
+							 			required: true,
+							 			maxlength:100,
+							 		},
+							 		lastName:{
+							 			required: true,
+							 			maxlength:100,
+							 		},
+							 		email:{
+							 			required: true,
+							 			email: true,
+							 		},				 		
+							 		city: {
+							 			required: true							 			
+							 		},
+							 		phone:{							 		
+							 			maxlength:20,
+							 		},
+							 		mobile:{							 		
+							 			maxlength:20,
+							 		},
+							 		address:{							 		
+							 			maxlength:200,
+							 		},
+							 		zip_code:{							 		
+							 			maxlength:10,
+							 		}
+							 		
+							 	},
+							 	messages: {
+							 		firstName: {
+							 			required: "Please enter first name"							 			
+							 		},
+							 		lastName: {
+							 			required: "Please enter last name"
+							 		},
+							 		dob: {
+							 			required: "Please enter date of birth"
+							 		},
+							 		email: {
+							 			required: "Please enter email address",
+							 			email: "Please enter valid email address"
+							 		},
+							 		country: {
+							 			required: "Please select country"							 			
+							 		},
+							 		city: {
+							 			required: "Please select city"							 			
+							 		}
+							 		
+							    },
+							    errorPlacement: function(label, element) {
+							        label.addClass('ml-131 w-50');
+							        label.insertAfter(element);
+							    },
+							    submitHandler: function(form){
+									form.submit();
+								}
+						});
+					});
+				</script>	
+            
+	</main>
+</body>
+</html>	

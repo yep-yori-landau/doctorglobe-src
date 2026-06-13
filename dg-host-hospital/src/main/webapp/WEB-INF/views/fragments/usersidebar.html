@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<body>
+	<!-- SIDEBAR-->
+	<aside id="sidebar" th:fragment="sidebar">
+		<div class="accordion my-block no-pad">
+			<section class="acc-block">
+				<h3 class="acc-title">
+					<a th:href="@{/home/profile}" th:title="#{page.sidebar.user.my_profile}" th:text="#{page.sidebar.user.my_profile}" class="accordion-heading ml-20">
+						My Profile
+					</a>					
+					<i class="ico ico-arr-common"></i>					
+				</h3>
+			</section>
+			<section class="acc-block">
+				<h3 class="acc-title">
+					<a th:href="@{/home/changepassword}" th:title="#{page.sidebar.user.change_password}" th:text="#{page.sidebar.user.change_password}" class="accordion-heading ml-20">
+						Change Password
+					</a>					
+					<i class="ico ico-arr-common"></i>					
+				</h3>
+			</section>
+
+		</div>
+	</aside>
+</body>
+</html>

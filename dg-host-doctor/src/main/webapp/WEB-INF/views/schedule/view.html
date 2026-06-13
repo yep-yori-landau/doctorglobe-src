@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	th:include="layouts/layoutcontext::page" class='sidebar-large'>
+<body>
+	<div th:fragment='content'>
+		<div class="overlay o-sm my-calender-overlay">
+			<div class="overlay-header bg">
+				<h3 th:text="#{page.doctorarea.mycalender}">My Calender:</h3>
+				<button class="ico ico-close btn btn-blue fancyclose"></button>
+			</div>
+			<div class="overlay-content" th:if="${patientConferenceList != null}">				
+				<h3 class="mt-10" th:text="#{page.doctorarea.scheduled_conference_call}">Scheduled Conference Calls:</h3>
+				<ul class="row col-2 gt-10 mt-10">
+					<li>
+						<article class="com-block no-pad" th:each="pcl :${patientConferenceList}" th:if="${pcl.conferenceDt.toString() != '1970-01-01 00:00:00.0'}">
+									<p th:if="${pcl.conferenceTimezone == pcl.patientTimezone}">
+                                    	<strong class="fs-14" th:text="#{page.doctorarea.date}">Date: </strong> 
+                                    	<span th:text="${#dates.format(pcl.conferenceDt,'MMM dd, yyyy')}"></span>
+                                    </p>
+                                    <p th:if="${pcl.conferenceTimezone == pcl.patientTimezone}">
+                                    	<strong class="fs-14" th:text="#{page.doctorarea.time}"></strong>
+                                    	<span th:text="${#dates.format(pcl.conferenceDt,'hh:mm a')}"></span>                                    	
+                                    </p>
+                                    <p th:if="${pcl.conferenceTimezone != pcl.patientTimezone and conferenceDate == pcl.patientConferenceDate}">
+                                    	<strong class="fs-14" th:text="#{page.doctorarea.date}">Date: </strong> 
+                                    	<span th:text="${#dates.format(pcl.conferenceDt,'MMM dd, yyyy')}"></span>
+                                    </p>
+                                    <p th:if="${pcl.conferenceTimezone != pcl.patientTimezone and conferenceDate != pcl.patientConferenceDate}">
+                                    	<strong class="fs-14" th:text="#{page.doctorarea.your_date}">Date: </strong> 
+                                    	<span th:text="${#dates.format(pcl.conferenceDt,'MMM dd, yyyy')}"></span>
+                                    </p>
+                                    <p th:if="${pcl.conferenceTimezone != pcl.patientTimezone}">
+                                    	<strong class="fs-14" th:text="#{page.doctorarea.your_time}"></strong>
+                                    	<span th:text="${#dates.format(pcl.conferenceDt,'hh:mm a')}"></span>                                    	
+                                    </p>
+                                    <p th:if="${pcl.conferenceTimezone != pcl.patientTimezone and conferenceDate != pcl.patientConferenceDate}">
+                                    	<strong class="fs-14" th:text="#{page.doctorarea.patient_date}">Date: </strong> 
+                                    	<span th:text="${pcl.patientConferenceDate}"></span>
+                                    </p>
+                                    <p th:if="${pcl.conferenceTimezone != pcl.patientTimezone}">
+                                    	<strong class="fs-14" th:text="#{page.doctorarea.patient_time}"></strong>
+                                    	<span th:text="${pcl.patientConferenceTime}"></span>                                    	
+                                    </p>
+							<p><span th:text="#{page.doctorarea.scheduled_call_with}"></span><span th:text="${' '+pcl.name}"></span></p>
+							<p><strong th:text="#{page.doctorarea.status}"></strong><span th:text="${' '+pcl.patientconferenceStatus}"></span></p>
+						</article>							
+					</li>					
+				</ul>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

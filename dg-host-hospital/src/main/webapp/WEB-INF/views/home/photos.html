@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:include="layouts/layout::page">
+<body>
+	<main id="main-content" th:fragment='content'>	
+	  <div class="wrap">
+			<aside th:replace="fragments/sidebar :: sidebar"></aside>
+			<div id="container">
+				  <div class="my-block">
+                        <h3 class="hel-med fs-16 title-in" th:text="#{page.hospital.photo}">Photo</h3>
+                        <div class="row">
+                                <h3 class="fs-15 hel-med">
+                                    <span th:text="#{page.hospital.photo.main_image}">Main Image</span>     
+                                    <a th:href="@{'/home/upload'(is_primary=1)}" class="various fancybox.iframe" data-fancybox-width="645" data-fancybox-height="474">                               
+                                    	<button th:text="#{page.hospital.photo.change}" class="btn-upload ml-20"></button>
+                                    </a>                                    
+                                </h3>
+                                <ul class="row my-res-col">
+                                    <li class="res" th:each="imagesList : ${imagesList}" th:if="${imagesList.isPrimary}">
+                                        <figure class="fig-block">
+                                        	<a class="fancybox" th:href="@{'/doctorglobe-hospital/hospital/'+${imagesList.healthcareprovider}+'/photo/'+${imagesList.path}}">
+                                            	<img width="182" height="145" th:alt="${imagesList.path}" th:src="@{'/doctorglobe-hospital/hospital/'+${imagesList.healthcareprovider}+'/photo/'+${imagesList.path}}" class="image-description" th:title="${imagesList.description}"/>
+                                            </a>	
+                                        </figure>
+                                        <div class="row">
+                                            <p class="fl imgname" th:text="${imagesList.name}" th:title="${imagesList.name}">Hospital Exterior </p>
+                                            <div class="small-nav fr">
+                                                <i class="ico ico-hamburger"></i>
+                                                <ul>
+                                                    <li>
+                                                        <a title="Delete" th:href="@{'/home/deletephoto'(id=${imagesList.id},v=0)}" th:text="#{page.hospital.photo.delete}" class="various fancybox.iframe" data-fancybox-width="645" data-fancybox-height="474">Delete</a>
+                                                    </li>
+                                                    <li>
+                                                        <a title="Edit" th:href="@{'/home/upload'(id=${imagesList.id})}" th:text="#{page.hospital.photo.edit}" class="various fancybox.iframe" data-fancybox-width="645" data-fancybox-height="474">Edit</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- uploaded photos -->
+                            <div class="row mt-40">
+                                <h3 class="fs-15 hel-med">
+                                    <span th:text="#{page.hospital.photo.uploaded_photos}">Uploaded Photos</span>
+                                    <a th:href="@{'/home/upload'(is_primary=0)}" class="various fancybox.iframe" data-fancybox-width="645" data-fancybox-height="474">                               
+                                    	<button th:text="#{page.hospital.photo.upload}" class="btn-upload ml-20"></button>
+                                    </a>                                    
+                                </h3>
+                                <ul class="row my-res-col">
+                                    <li class="res" th:each="imagesList : ${imagesList}" th:if="${imagesList.isPrimary == 0 and imagesList.type != 'video'}">
+                                        <figure class="fig-block">
+                                        	<a class="fancybox" th:href="@{'/doctorglobe-hospital/hospital/'+${imagesList.healthcareprovider}+'/photo/'+${imagesList.path}}">
+                                            	<img width="182" height="145" th:alt="${imagesList.path}" th:src="@{'/doctorglobe-hospital/hospital/'+${imagesList.healthcareprovider}+'/photo/'+${imagesList.path}}" th:title="${imagesList.description}" class="image-description" />
+                                            </a>	
+                                        </figure>
+                                        <div class="row">
+                                            <p class="fl imgname" th:text="${imagesList.name}" th:title="${imagesList.name}">Hospital Exterior </p>
+                                            <div class="small-nav fr">
+                                                <i class="ico ico-hamburger"></i>
+                                                <ul>
+                                                    <li>
+                                                        <a title="Delete" th:href="@{'/home/deletephoto'(id=${imagesList.id},v=0)}" th:text="#{page.hospital.photo.delete}" class="various fancybox.iframe" data-fancybox-width="645" data-fancybox-height="474">Delete</a>
+                                                    </li>
+                                                    <li>
+                                                        <a title="Edit" th:href="@{'/home/upload'(id=${imagesList.id})}" th:text="#{page.hospital.photo.edit}" class="various fancybox.iframe" data-fancybox-width="645" data-fancybox-height="474">Edit</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </li>                                   
+                                </ul>
+                            </div>
+                            <!-- uploaded videos -->
+                            <div class="row mt-40 hide">
+                                <h3 class="fs-15 hel-med">
+                                    <span th:text="#{page.hospital.photo.uploaded_videos}">Uploaded Videos</span>
+                                    <a th:href="@{'/home/uploadvideo'}" class="various fancybox.iframe" data-fancybox-width="645" data-fancybox-height="474">                               
+                                    	<button th:text="#{page.hospital.photo.upload}" class="btn-upload ml-20"></button>
+                                    </a>                                    
+                                </h3>
+                                <ul class="row my-res-col">
+                                    <li class="res" th:each="imagesList : ${imagesList}" th:if="${imagesList.isPrimary == 0 and imagesList.type == 'video'}">
+                                        <figure class="fig-block">
+                                        	<a class="fancybox" th:href="@{'/doctorglobe-hospital/hospital/'+${imagesList.healthcareprovider}+'/video/'+${imagesList.path}}">
+                                            	<video width="182" height="145" th:alt="${imagesList.path}" th:title="${imagesList.description}" th:src="@{'/doctorglobe-hospital/hospital/'+${imagesList.healthcareprovider}+'/video/'+${imagesList.path}}" class="image-description" controls="controls"></video>
+                                          	</a>
+                                        </figure>
+                                        <div class="row">
+                                            <p class="fl imgname" th:text="${imagesList.name}" th:title="${imagesList.name}">Hospital Exterior </p>
+                                            <div class="small-nav fr">
+                                                <i class="ico ico-hamburger"></i>
+                                                <ul>
+                                                    <li>
+                                                        <a title="Delete" th:href="@{'/home/deletephoto'(id=${imagesList.id},v=1)}" th:text="#{page.hospital.photo.delete}" class="various fancybox.iframe" data-fancybox-width="645" data-fancybox-height="474">Delete</a>
+                                                    </li>
+                                                    <li>
+                                                        <a title="Edit" th:href="@{'/home/uploadvideo'(id=${imagesList.id})}" th:text="#{page.hospital.photo.edit}" class="various fancybox.iframe" data-fancybox-width="645" data-fancybox-height="474">Edit</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </li>                                   
+                                </ul>
+                            </div>                            
+                   </div>
+			</div>
+	  </div>
+	</main>	
+</body>
+</html>		

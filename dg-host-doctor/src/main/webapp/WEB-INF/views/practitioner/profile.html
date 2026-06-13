@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:include="layouts/layout::page" class='sidebar-large'>
+<body th:class="page-common">
+	<main id="main-content" th:fragment='content'>
+	<div class="wrap">                
+                <div class="my-block">
+                    <h3 class="fs-22 hel-med" th:text="#{page.doctor.profile.edit_profile}"></h3>
+                </div>              
+                <aside class="sidebar">                    
+                    <div class="my-block">
+                        <h3 class="my-title-md" th:text="${practitioner.title+' '+practitioner.firstName+' '+practitioner.lastName}">Doctor Lisa Mcbee</h3>
+                        <p><a th:href="@{/home/changepassword}" th:text="#{page.doctor.profile.change_password}"></a></p> 
+                    </div>
+                </aside>
+
+                <!-- results -->
+                <section class="results">
+                    <div class="my-block">                  
+                        <form th:action="@{/home/profile}" th:object="${practitioner}" method="post" id="practitioner" class="w-70" enctype="multipart/form-data">
+                        	<ul class="my-form">
+		   						<li th:each="e : ${#fields.detailedErrors()}" th:class="${e.global}? globalerr : fielderr">
+                   					<span class='text-danger' th:text="${e.global}?'*':${e.fieldName}">The field name </span> 
+                   					| <span class='text-danger' th:text="${e.message}">The error message</span>                   
+                   				</li>
+                   			</ul>
+                   			<div th:errors="${practitioner}"></div>
+                            <ul class="my-form">
+                                <li>
+                                	<input type="hidden" th:field="*{id}" th:value="*{id}"/>
+                                	<input type="hidden" th:field="*{password}" th:value="*{password}"/>
+                                	<input type="hidden" th:field="*{role}" th:value="*{role}"/>
+                                	<input type="hidden" th:field="*{city}"/>
+                                    <label for="name" th:text="#{page.doctor.profile.title}"></label>
+                                    <input type="text" th:field="*{title}" th:value="*{title}"/>     
+                                    <label for="title" class="error field-error"></label>                               
+                                </li>
+                                <li>
+                                    <label for="fname" th:text="#{page.doctor.profile.first_name}">First name: </label>
+                                    <input type="text" th:field="*{firstName}" th:value="*{firstName}"/>
+                                    <label for="firstName" class="error field-error"></label>                                    
+                                </li>
+                                <li>
+                                    <label for="lname" th:text="#{page.doctor.profile.last_name}">Last name: </label>
+                                    <input type="text" th:field="*{lastName}" th:value="*{lastName}"/>
+                                    <label for="lastName" class="error field-error"></label>
+                                </li>
+                                <li>
+                                    <label for="email" th:text="#{page.doctor.profile.email}">Email:</label>
+                                    <input type="text" th:field="*{email}" th:value="*{email}" readOnly="true"/>
+                                    <label for="email" class="error field-error"></label>
+                                </li>
+                                <li>
+                                    <ul class="row col-3">
+                                        <li>
+                                            <label for="phone" class="w-40" th:text="#{page.doctor.profile.phone}">Phone:</label>                                            
+                                            <input type="text" class="w-40" th:field="*{phone}" th:value="*{phone}"/>
+                                        </li>
+                                        <li>
+                                            <label for="mobile" class="ml-20" th:text="#{page.doctor.profile.mobile}">Mobile:</label>
+                                            <input type="text"  class="w-40" th:field="*{mobile}" th:value="*{mobile}"/>
+                                            <label for="mobile" class="error field-error"></label>                                            
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <label for="address1" th:text="#{page.doctor.profile.address1}"></label>
+                                    <input type="text" th:field="*{address_1}" th:value="*{address_1}"/>
+                                    <label for="address_1" class="error field-error"></label>
+                                </li>
+                                <li>
+                                    <label for="address2" th:text="#{page.doctor.profile.address2}"></label>
+                                    <input type="text" th:field="*{address_2}" th:value="*{address_2}"/>
+                                    <label for="address_2" class="error field-error"></label>
+                                </li>
+                                <li>
+                                    <label for="zipCode" th:text="#{page.doctor.profile.zip_code}"></label>
+                                    <input type="text" th:field="*{zipCode}" th:value="*{zipCode}"/>
+                                    <label for="zipCode" class="error field-error"></label>
+                                </li>
+                                <li>
+                                    <label for="country" th:text="#{page.doctor.profile.country}" class="mt-8">Country</label>
+                                    <select class="form-control my-select country w-403" id="country" name="country">
+										<option value="">All Countries</option>
+										<option th:each="c : ${countryList}" th:text="${c.name}" th:value="${c.id}"></option>										
+									</select>
+									<label for="country" class="error"></label> 
+                                </li>
+                                <li>
+                                    <label for="state" th:text="#{page.doctor.profile.state}" class="mt-8">State</label>
+                                    <select class="form-control my-select state w-403" id="state"></select>									 
+                                </li>
+                                <li>
+                                    <label for="ajaxcity" th:text="#{page.doctor.profile.city}" class="mt-8">City</label>
+                                    <select class="form-control my-select w-403" id="ajaxcity" name="ajaxcity"></select>
+                                    <span th:if="${#fields.hasErrors('city')}" th:errors="*{city}" class="text-danger ml-145"></span>
+                                    <label for="ajaxcity" class="error"></label>                                    
+                                </li>
+                                <li>
+                                    <label for="photo" th:text="#{page.doctor.profile.photo}"></label>
+                                    <input type="hidden" class='form-control' th:field="*{photo}" th:value="*{photo}"/>   
+                                    <input type="file" name="file" class="myfile"/>
+                                </li>                                
+                                <li>
+                                    <label for="certified" th:text="#{page.doctor.profile.usa_certification}"></label>
+                                    <select th:field="*{usaCertification}" class="form-control my-select">
+                                              	<option th:value="None" th:text="None"></option>
+                                              	<option th:value="Inforce" th:text="Inforce"></option>                                              	                                            
+                                              	<option th:value="Expired" th:text="Expired"></option>
+                                    </select>                                         
+                                </li>
+                                <li>
+                                    <label for="certified" th:text="#{page.doctor.profile.usa_training}"></label>
+                                    <select th:field="*{usaTraining}" class="form-control my-select">
+                                              	<option th:value="1" th:text="Yes"></option>
+                                              	<option th:value="0" th:text="No"></option>                                              	                                            
+                                    </select>                                     
+                                </li>
+                                <li>
+                                    <label for="certified" th:text="#{page.doctor.profile.gender}">Gender:</label>
+                                    <select th:field="*{gender}" class="form-control my-select">
+                                              	<option th:value="M" th:text="M"></option>
+                                              	<option th:value="F" th:text="F"></option>                                              	                                            
+                                              	<option th:value="U" th:text="U"></option>
+                                    </select>                                   
+                                </li>
+                                 <li>
+                                    <label for="dob" th:text="#{page.doctor.profile.dob}">Date of Birth: </label>
+                                    <input type="text" class='dob' th:field="*{dob}" th:value="*{dob}"/>
+                                    <label for="dob" class="error field-error"></label>
+                                </li>
+                                 <li>
+                                    <label for="graduationDt" th:text="#{page.doctor.profile.graduation_date}">Graduation date: </label>
+                                    <input type="text" class='datepicker' th:field="*{graduationDt}" th:value="*{graduationDt}"/>
+                                </li>
+                                 <li>
+                                    <label for="gInstitution" th:text="#{page.doctor.profile.graduation_instituation}">Graduation Institution: </label>
+                                    <input type="text" class='form-control' th:field="*{graduationInstitution}" th:value="*{graduationInstitution}"/>
+                                </li>
+                                <li>
+                                    <label for="specialtyDt" th:text="#{page.doctor.profile.specialty_date}"></label>
+                                    <input type="text" class='form-control datepicker' th:field="*{specialtyDt}" th:value="*{specialtyDt}"/>
+                                </li>
+                                 <li>
+                                    <label for="gInstitution" th:text="#{page.doctor.profile.specialty_instituation}"></label>
+                                    <input type="text" th:field="*{specialtyInstitution}" th:value="*{specialtyInstitution}"/>
+                                </li>
+                                <li>
+                                    <label for="type" th:text="#{page.doctor.profile.type}"></label>
+                                    <select th:field="*{type}" class="form-control my-select">
+                                      <option th:each = "var : ${practitionertypeList}" th:value="${var.id}" th:text="${var.name}"></option>
+                                    </select>
+                                </li>
+                                <li>
+                                    <label for="degree" th:text="#{page.doctor.profile.degree}"></label>
+                                    <input type="text" th:field="*{degree}" th:value="*{degree}"/>
+                                </li>
+                                <li>
+                                    <label for="medicalLicense" th:text="#{page.doctor.profile.medical_license}"></label>
+                                    <input type="text" th:field="*{medicalLicense}" th:value="*{medicalLicense}"/>
+                                </li>
+                                <li>
+                                    <label for="abtMe" th:text="#{page.doctor.profile.description}">Description:</label>
+                                    <textarea cols="20" rows="10" th:field="*{description}" th:value="*{description}"></textarea>
+                                </li>
+                                <li class="tr">
+                                    <button type="submit" class="btn btn-green btn-sm" th:text="#{page.doctor.profile.save_and_update}">Save and Update</button>
+                                </li>
+                            </ul>
+                        </form>
+                    </div>
+                </section>                
+            </div>
+             <aside th:replace="fragments/ajaxcity :: ajaxcity"></aside>
+              <script type="text/javascript" th:inline='javascript'>
+					$(document).ready(function() {
+						$('.btn').click(function(){
+							window.btn_clicked = true;						   
+						});
+						$('#practitioner').data('serialize',$('#practitioner').serialize());
+						$(window).bind('beforeunload', function(){
+							/*<![CDATA[*/
+								if($('#practitioner').serialize()!=$('#practitioner').data('serialize') && !window.btn_clicked){
+									return true;
+								}
+							/*]]>*/
+						});
+						
+						$("#practitioner").validate({
+							rules:{				
+								title:{
+									required : true,									
+								},
+								firstName:{
+									required : true,									
+								},
+								lastName:{
+									required : true,									
+								},
+								email:{
+									required : true,
+									email : true
+								},
+								mobile:{
+									required : true,
+									number : true
+								},
+								address:{
+									required : true,									
+								},
+								dob:{
+									required : true,									
+								},
+								
+							},				
+							submitHandler: function(form){
+								form.submit();
+							}
+						});
+					});
+				</script>	
+	
+	</main>
+</body>
+</html>	

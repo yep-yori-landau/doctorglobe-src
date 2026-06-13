@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<body>
+<div class="overlay o-sm js-confirmation-overlay" th:fragment="confirmation">
+	<div class="overlay-header">
+		<h3 th:text="#{confirmation.signup}">Sign Up</h3>
+		<button class="ico ico-close btn btn-blue"></button>
+	</div>
+	<div class="overlay-banner">
+		<i class="ico ico-logo"></i>
+		<h3 class="lg-title" th:text="#{confirmation.activate_your_new_account}">Activate Your New Account</h3>
+	</div>
+	<div class="overlay-content confirmationcontent">
+		<p class="fs-16" th:text="#{confirmation.message}">A message was sent to your Email Address with an
+			activation link for your account, please go to your email message and
+			press this link in order to activate your doctor globe account.</p>
+		<p class="tr">
+			<button type="button" class="btn btn-green btn-lg" th:text="#{confirmation.button_ok}">O.K</button>
+		</p>
+	</div>
+</div>
+</body>
+</html>

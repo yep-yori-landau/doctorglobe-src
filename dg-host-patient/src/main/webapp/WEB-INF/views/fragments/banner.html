@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="banner">
+	<div class="container-fluid bg-color-t2">
+		    <div class="container">
+		        <div class="row">
+		            <h2 class="h2 text-center pt-50">The Ultimate Gateway to Smart Healthcare Choices</h2>
+		            <p class="fs-20">What if you could be rewarded for finding better care for less? Surgerate will help you avoid out-of-pocket costs, and may even get you a cash bonus for making a smart provider selection. We are experts in finding healthcare providers who offer better care for less.</p>
+		        </div>
+		
+		        <div class="row pt-50 pb-80 plr-152">
+		            <div class="col-md-6 col-xs-12 col-sm-6">
+		            	<h2 class="mn-top">How It Works</h2>
+		                <p class="fa-16 gray">
+		                    Start typing your procedure in the search box to send us on a smart provider search. Lean back and let us walk you through the easy process. Find and reserve your selected hospital and doctor, while saving thousands of dollars. Try typing now…
+						</p>
+						<p class="fa-16">
+		                    <a class="playvideo" href="javascript:;"><img th:src="@{/resources/img/video-i.png}" alt=""></img></a><strong class="wv-txt"> Watch video now!</strong>                    
+						</p>           		
+		            </div>
+		            <div class="col-md-6 col-xs-12 col-sm-6 img_pt_50">
+		                <figure class="text-right fr img-center img-responsive">
+		                <video id="my-video" class="video-js vjs-default-skin" preload="none" controls="controls" th:poster="@{/resources/img/video.png}" data-setup="{}" width="422" height="243">
+		                    <source th:src="@{/resources/video/dg.mp4}" type="video/mp4" />
+		                    <p class="vjs-no-js">
+		                        To view this video please enable JavaScript, and consider upgrading to a web browser that
+		                        <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+		                    </p>
+		                </video>
+		                </figure>
+		            </div>
+		     </div>
+	    </div>
+	</div>
+	
+	<div class="container-fluid bg-color-t3">
+	    <div class="container pt-pb">
+	        <div class="row">
+	            <div class="col-md-3 col-xs-12 col-sm-3 text-center r-mb-20">
+	                <figure>
+	                    <img th:src="@{/resources/img/find.png}" alt=""/>
+	                </figure>
+	                <h3 class="h3">Find</h3>
+	                <p class="fa-18">Find a hospital by volume, distance, and bonus</p>
+	            </div>
+	            <div class="col-md-3 col-xs-12 col-sm-3 text-center r-mb-20">
+	                <figure>
+	                    <img th:src="@{/resources/img/select.png}" alt=""/>
+	                </figure>
+	                <h3 class="h3">Select</h3>
+	                <p class="fa-18">Select your doctor at your chosen hospital</p>
+	            </div>
+	            <div class="col-md-3 col-xs-12 col-sm-3 text-center r-mb-20">
+	                <figure>
+	                    <img th:src="@{/resources/img/reserve.png}" alt=""/>
+	                </figure>
+	                <h3 class="h3">Reserve</h3>
+	                <p class="fa-18">Reserve your care with your selected providers</p>
+	            </div>
+	            <div class="col-md-3 col-xs-12 col-sm-3 text-center">
+	                <figure>
+	                    <img th:src="@{/resources/img/collect.png}" alt=""/>
+	                </figure>
+	                <h3 class="h3">Collect</h3>
+	                <p class="fa-18">Collect your cash bonus for making smart choices</p>
+	            </div>
+	        </div>
+	    </div>
+	</div>	
+</div>	
+</body>
+</html>	

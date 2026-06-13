@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:include="layouts/layout::page">
+<body>
+	<main id="main-content" th:fragment='content'>	
+	  <div class="wrap">
+			<aside th:replace="fragments/practitionersidebar :: sidebar"></aside>
+			<div id="container">
+				<div class="my-block">
+					<h3 class="hel-med fs-16 title-in">
+						<a th:href="@{/home/practitioner}" th:text="#{page.hospital.practitioner.edit.back_to_dashboard}">Back to Dashboard</a>	               
+					</h3>
+					<form th:action="@{/home/practitioner/language}" th:object="${practitionerLanguageForm}" method="post">
+						<input type="hidden" th:field="*{practitioner}"/>
+                            <h3 class="hel-med fs-16">
+                            	<span th:text="#{page.hospital.practitioner.language.spoken_languages}">Spoken Languages by Doctor</span>
+                            	<span th:text="${practitionerMap.get(practitionerLanguageForm.practitioner)}">Lisa Mcbee:</span>: 
+                            </h3>
+                            <ul class="mt-20 row col-4">                            	
+                                <li th:each="practitionerLanguageFormModel,rowStat : ${practitionerLanguageForm.practitionerLanguageFormModel}">
+                                    <input type="hidden" th:field="*{practitionerLanguageFormModel[__${rowStat.index}__].id}"/>                                	                                                        
+                                	<input type="hidden" th:field="*{practitionerLanguageFormModel[__${rowStat.index}__].practitioner}"/>
+                                	<input type="hidden" th:field="*{practitionerLanguageFormModel[__${rowStat.index}__].language}"/>
+                                	<label th:for="practitionerLanguageFormModel+${rowStat.index}+.isChecked">
+                                		<span class="box"></span>
+	                            		<input type="checkbox" th:field="*{practitionerLanguageFormModel[__${rowStat.index}__].isChecked}" th:id="practitionerLanguageFormModel+${rowStat.index}+.isChecked"/>	                                        			
+	                            		<span th:text="${practitionerLanguageFormModel.languageName}"></span>
+                                	</label>
+                                </li>                                
+                             </ul>
+                             <div class="tc my-btn-block">
+                                <button class="btn btn-sm btn-dk-blue" type="reset" th:text="#{page.hospital.btn_cancel}">Cancel</button>
+                                <button class="btn btn-sm btn-blue" type="submit" th:text="#{page.hospital.btn_save_changes}">Save Changes</button>
+                            </div>
+                     </form>          		
+				</div>
+			</div>
+		</div>
+	</main>
+</body>
+</html>

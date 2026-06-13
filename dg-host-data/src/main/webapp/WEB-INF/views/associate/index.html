@@ -1,0 +1,70 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:include="layout::page" class='sidebar-large'>
+<div class="container" th:fragment="content">					
+			<div class="row">
+				<div class="col-md-12">
+					<div class="panel panel-default">
+                                        <div class="panel-heading" th:if="${message} != null">
+						<h3 class ="panel-title"><strong th:text="${message}"></strong></h3>
+					</div>
+					<div class="panel-heading bg-red">
+						<h3 class ="panel-title"><strong th:text="#{page.heading.associate}">Associate</strong></h3>
+					</div>
+					<div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12 m-b-20">
+                                    <div class="btn-group">
+                                       <a id="table-edit_new" class="btn btn-danger" th:href="@{'/associate/edit'}">
+                                            Add New <i class="fa fa-plus"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                      <div class="col-md-12 col-sm-12 col-xs-12 table-responsive table-red">
+                            <table class="table table-striped table-hover dataTable" id="table-editable">          
+								<thead>
+									<tr>
+										<th th:text="#{associate.id}">id</th>
+										<th th:text="#{associate.title}">title</th>
+										<th th:text="#{associate.first_name}">first_name</th>
+										<th th:text="#{associate.last_name}">last_name</th>				
+										<th th:text="#{associate.email}">email</th>							
+										<!--<th th:text="#{associate.password}">password</th>-->															
+										<th th:text="#{associate.active}">active</th>
+										<th th:text="#{associate.association}">association</th>
+										<th th:text="#{associate.phone}">Phone 1</th>
+										<th th:text="#{associate.mobile}">Mobile</th>										
+										<th class="text-center sorting" th:text="#{page.text.options}">Options</th>
+									</tr>
+								</thead>
+						<tbody>							
+								<tr th:each="model :${models}">
+								<td th:text="${model.id}"></td>
+								<td th:text="${model.title}"></td>
+								<td th:text="${model.firstName}"></td>
+								<td th:text="${model.lastName}"></td>								
+								<td th:text="${model.email}"></td>								
+								<!--<td th:text="${model.password}"></td>-->
+								<td th:text="${model.active}"></td>
+								<td th:text="${model.association}"></td>
+								<td th:text="${model.phone_1}"></td>
+								<td th:text="${model.mobilephone_1}"></td>								
+								
+								<td class="text-center">
+								<a class="edit btn btn-dark" th:href="@{'/associate/edit'(id=${model.id})}"><i class="fa fa-pencil-square-o"></i>
+								Edit
+								</a>								
+								<a class="delete btn btn-danger" th:href="@{'/associate/delete'(id=${model.id})}">
+								<i class="fa fa-times-circle"></i>
+								Remove								
+								</a>
+								</td>
+								</tr>							
+						</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+		</div>
+</div>
+</html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	th:include="layouts/layoutresult::page" class='sidebar-large'>
+<body th:class="page-common">
+	<main id="main-content" th:fragment='content'>
+	<div class="wrap" id="discussionBlock">
+		<div th:if="${patientconference != null}"
+			th:replace="fragments/patientcasetreatment :: patientcasetreatment"></div>
+		<!-- user sidebar -->
+		<aside th:replace="fragments/usersidebar :: usersidebar"></aside>
+		<!-- user sidebar end  -->
+		<section class="results">
+			<form th:object="${selectDoctorForm}" method='post'
+				th:action="@{/user/select-doc}" th:if="${!hospitalMap.isEmpty()}"
+				id="selectdocform">
+
+				<div class="row">
+					<!--<ol class="my-tab-head tabs tabmargin">                        	
+                            <li th:each="hospitalMap : ${hospitalMap}" th:classappend="${hospitalMap.key == hstm ? 'active' : ''}">
+                            	<a href="#lsRet" th:title="${hospitalMap.value}" th:text="${hospitalMap.value}" th:id="${hospitalMap.key}" class="hospitaltab"></a>
+                            </li>                            
+                        </ol>-->
+					<select class="my-select hospitalList" th:field="*{hstm}">
+						<option th:each="hospitalMap : ${hospitalMap}"
+							th:text="${hospitalMap.value}" th:value="${hospitalMap.key}"></option>
+					</select>
+				</div>
+
+				<div class="my-block row-zebra result-container"
+					th:if="${!hospitalMap.isEmpty()}">
+					<article th:fragment="ajaxselectdoc" id="ajaxselectdoc">
+						<p th:text="#{page.selectdoc.select_your_doctor}"></p>
+						<p>
+							<span th:text="#{page.selectdoc.please_select}"></span><br /> <span
+								th:text="${treatmentName}"></span> <span
+								th:text="#{page.selectdoc.at}"></span> <span
+								class="hospitalName"></span><br /> <span
+								th:text="#{page.selectdoc.please_follow}"></span>
+						</p>
+						<p>
+							<span th:text="#{page.selectdoc.for_a_list}"></span> <span
+								th:text="${treatmentName}"></span> <span
+								th:text="#{page.selectdoc.at}"></span> <span
+								class="hospitalName"></span><br /> <span
+								th:text="#{page.selectdoc.please_click}"></span><br /> <span
+								th:text="#{page.selectdoc.to_explore}"></span> <span
+								class="hospitalName"></span>.
+						</p>
+						<p>
+							<span th:text="#{page.selectdoc.please_explore}"></span>
+						</p>
+						<p>
+							<span th:text="#{page.selectdoc.please_select_you}"></span>
+						</p>
+						<div class="w-100">
+							<div class="w-50">
+								<select th:field="*{selectedHstmp}" id="ajaxhstmp"
+									class="my-select">
+									<option value="">Select</option>
+									<option th:each="practitionerList : ${practitionerList}"
+										th:text="${practitionerList.practitionerName}"
+										th:value="${practitionerList.id}">Select</option>
+								</select>
+							</div>
+							<br />
+							<div class="w-100">OR</div>
+							<br />
+							<div class="row">
+								<div class="w-50 fl">
+									First Name <input type="text" th:field="*{firstName}"
+										th:value="*{firstName}" />
+								</div>
+								<div class="w-50 fr">
+									Last Name <input type="text" th:field="*{lastName}"
+										th:value="*{lastName}" />
+								</div>
+							</div>
+							<br />
+							<div class="row proceduredate hide">
+								<div class="w-50 fl">
+									Add Procedure Date <input type="text" th:field="*{bookingDate}"
+										th:value="*{bookingDate}" th:class="bookingdate" />
+								</div>
+							</div>
+
+						</div>
+						<br />
+						<div class="btn-block reply-btn">
+							<button class="btn btn-dk-blue btn-fixed"
+								th:text="#{page.selectdoc.btn.submit}">Submit</button>
+						</div>
+
+					</article>
+				</div>
+			</form>
+		</section>
+		<script type="text/javascript" th:inline='javascript'>
+	               $(".hospitalList").change(function(){
+	                	/*<![CDATA[*/	
+	                	var hosturl = /*[[${application.hostbaseurl} ]]*/;
+	                	var hstm = $(this).val();
+	                	$('#hstm').val(hstm);
+						$('#ajaxhstmp').html('');						
+						var hospitalName = $('option:selected', $(this)).text();						
+						$('.hospitalName').html(hospitalName);
+						$.ajax({
+							url: hosturl+'/user/practitioner-list/'+hstm,
+							success : function(data){						    
+								    if(data.length > 0){
+								    	var options = '<option value="">Select</option>';
+								    	$(data).each(function(index){
+								    		options += '<option value="' + data[index].id + '">' + data[index].practitionerName + '</option>';						    		
+								    	});						    							    	
+							            $('#ajaxhstmp').html(options);	
+							            $.ajax({
+							            	url: hosturl+'/user/selected-hcpstmp/'+hstm,
+							            	success : function(data){						            		
+											    if(data){											    	
+											    	$('select#ajaxhstmp').val(data);
+											    	$('.proceduredate').show();
+									            	  $.ajax({
+											            	url: hosturl+'/user/added-booking-date/'+data,
+											            	success : function(bookingDate){						            		
+															    if(data){											    	
+															    	$('.bookingdate').val(bookingDate);
+															    }
+											            	}
+											            });
+											    }else{
+											    	$('select#ajaxhstmp').val("");
+											    }
+							            	}
+							            });
+								    }else{
+								    	var options = '<option value="">No Doctor</option>';
+							        	$('#ajaxhstmp').html(options);							        	
+								    }
+							},
+						});						
+						
+	                }).change();	
+	               
+	               $("select#ajaxhstmp").change(function(){
+	            	   var hosturl = /*[[${application.hostbaseurl} ]]*/;
+	            	   var selectedText = $('option:selected', $(this)).text();	       
+	            	   console.log(selectedText);
+	            	   if(selectedText != 'Select' && ($(this).val() != "" && $(this).val() != null)){
+	            	   	   $('.proceduredate').show();
+		            	   $.ajax({
+				            	url: hosturl+'/user/added-booking-date/'+$(this).val(),
+				            	success : function(data){						            		
+								    if(data){											    	
+								    	$('.bookingdate').val(data);
+								    }
+				            	}
+				            });
+	            	   }else{
+	            		   $('.proceduredate').hide();
+	            	   }
+	               }).change();
+	               
+	               $(".bookingdate").datetimepicker({
+	            	    timepicker:false,
+	           			format:'M d, Y',
+	            	    minDate: 0,
+	            	    changeMonth: true,
+	       				numberOfMonths: 1,
+	               });
+	               /*]]>*/
+                </script>
+	</div>
+	</main>
+</body>
+</html>

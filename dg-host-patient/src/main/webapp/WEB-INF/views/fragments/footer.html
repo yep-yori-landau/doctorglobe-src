@@ -1,0 +1,31 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<body>
+<footer id="main-footer" th:fragment="footer">
+	<div class="wrap">
+		<ul class="nav-footer fl">			
+			<li><a th:href="@{/resources/pdf/faq.pdf}" th:title="footer.faq" th:text="#{footer.faq}" target="_blank">FAQ</a></li>
+			<li><a href="#lsRet" th:title="#{footer.support}" th:text="#{footer.support}">Support</a></li>
+			<li><a th:href="@{/resources/pdf/tc.pdf}" th:title="#{footer.termsandconditions}" th:text="#{footer.termsandconditions}" target="_blank"></a></li>
+			<li><a th:href="@{/resources/pdf/privacy-policy.pdf}" th:title="#{footer.privacypolicy}" th:text="#{footer.privacypolicy}" target="_blank"></a></li>
+			<li class="pl-138"><span th:utext="#{footer.copyright}"></span></li>
+		</ul>		
+		<script th:inline="javascript" sec:authorize="hasRole('ROLE_USER')">								
+		    $(document).ready(function() {
+		    	
+				function getTotalNewMessage(){
+			    	$.ajax({
+						url: /*[[${application.patientNewMessagesurl}]]*/,
+						success : function(data){
+							$('.mails').attr('title',data);															
+						},
+			    		global: false,
+					});
+				}
+				//getTotalNewMessage();
+				//setInterval(function(){getTotalNewMessage()},3000);										
+			});
+		</script> 
+	</div>
+</footer>
+</body>
+</html>

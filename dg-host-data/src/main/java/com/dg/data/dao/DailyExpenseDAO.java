@@ -1,0 +1,13 @@
+package com.dg.data.dao;
+
+import com.dg.data.model.db.DailyExpense;
+
+/**
+ * This is a DailyExpense DAO interface which includes the most fundamental DAO
+ * operations for any DailyExpense object It also extends the generic DAO CRUD
+ * methods
+ * 
+ * @author DoctorGlobe
+ */
+public interface DailyExpenseDAO extends GenericDAO<DailyExpense> {
+}

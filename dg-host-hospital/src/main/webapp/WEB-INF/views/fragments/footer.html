@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+	<body>        
+        <!-- FOOTER -->
+        <footer id="main-footer" th:fragment="footer">
+            <div class="wrap">
+                <ul class="nav-footer fl">
+                    <li><a href="#lsRet" th:title="#{page.footer.contact}" th:text="#{page.footer.contact}">Contact</a></li>
+                    <li><a href="#lsRet" th:title="#{page.footer.about}" th:text="#{page.footer.about}">About</a></li>
+                    <li><a href="#lsRet" th:title="#{page.footer.faq}" th:text="#{page.footer.faq}">FAQ</a></li>
+                    <li><a href="#lsRet" th:title="#{page.footer.support}" th:text="#{page.footer.support}">Support</a></li>
+                    <li><a href="#lsRet" th:title="#{page.footer.termsandconditions}" th:text="#{page.footer.termsandconditions}">Terms &amp; conditions</a></li>
+                </ul>
+                <p class="fr" th:utext="#{page.footer.copyright}">&copy;2014 Doctor Globe</p>
+            </div>
+        </footer>                
+    </body>
+</html>     	 

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<body>
+	 <header id="main-header" th:fragment="header">
+            <div class="wrap">
+                <a th:href="@{/}" class="logo"><img th:src="@{/resources/images/logo.png}" height="41" width="186" th:alt="#{page.titile}"/></a>                
+                <nav id="main-nav">
+                    <ul id="js-o-nav">                     
+                        <li sec:authorize="!isAuthenticated()"><a th:href="@{/}" th:title="#{header.signup}" th:text="#{header.signup}" id="js-signup" data-fancybox-width="645" data-fancybox-height="510">Sign Up</a></li>
+                        <li sec:authorize="hasRole('ROLE_USER')"><a th:href="@{/home/index}" th:title="#{header.home}" th:text="#{header.home}">Home</a></li>                        
+                        <li sec:authorize="hasRole('ROLE_USER')"><a th:href="@{/home/profile}" th:title="#{header.userprofile}" th:text="#{header.userprofile}">My Profile</a></li>
+                        <li sec:authorize="hasRole('ROLE_USER')"><a th:href="@{/logout}" th:title="#{header.signout}" th:text="#{header.signout}">Sign Out</a></li>                        
+                        <li><a href="#lsRet" th:title="#{header.help}" th:text="#{header.help}">Help</a></li>						
+                        <li sec:authorize="hasRole('ROLE_USER')">
+                            <div class="user-menu global">
+                                <span class="user-info">
+                                    <a href="#lsRet" class="pr-4">                                        
+                                        <img th:if="${userImage != null}" th:src="@{${userImage}}" height="24" width="24"/>
+                                        <img th:if="${userImage == null}" th:src="@{/resources/images/demo_user.gif}" height="24" width="24"/>
+                                        <span th:if="${userName != null}" th:text="${userName}" class="pr-10"></span>
+                                    </a>
+                                    <a href="#lsRet" class="ico ico-sm-mail mails"></a>
+                                </span>                                
+                            </div>                            
+                        </li>
+                    </ul>
+                </nav>                 
+            </div>
+        </header>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:include="layouts/layout::page">
+<body>
+	<main id="main-content" th:fragment='content'>
+		<div class="wrap">
+			<aside th:replace="fragments/usersidebar :: sidebar"></aside>
+			<div id="container">
+                    <div class="my-block">                    
+                        <h3 class="hel-med fs-16 title-in">
+                           <span th:text="#{page.hospital.user.my_profile}"></span>
+                           <span th:if="${success != null}" th:text="#{page.hospital.success.edited}" class="fr text-danger"></span>
+                        </h3>
+                        <form th:action="@{/home/profile}" th:object="${profileForm}" method="post" class="w-75">
+                        	<ul class="my-form mt-20">
+                            	<li th:each="e : ${#fields.detailedErrors()}"
+								th:class="${e.global}? globalerr : fielderr"><span
+								class="text-danger" th:text="${e.global}? '*' : ${e.fieldName}">The
+									field name</span> | <span class="text-danger" th:text="${e.message}">The
+									error message</span>
+								</li>					
+                                <li>
+                                	<input type="hidden" th:field="*{id}" th:value="*{id}" />                                 
+                                    <label for="firstName" th:text="#{page.hospital.user.first_name}">First Name</label>
+                                    <input type="text" th:field="*{firstName}" required="required"/> 
+                                </li>
+                                <li>                                	                                 
+                                    <label for="lastName" th:text="#{page.hospital.user.last_name}">Last Name</label>
+                                    <input type="text" th:field="*{lastName}" required="required"/> 
+                                </li>
+                                <li>                                	                                 
+                                    <label for="mobile" th:text="#{page.hospital.user.mobile}">Mobile</label>
+                                    <input type="text" th:field="*{mobile}" required="required"/> 
+                                </li>                                
+                           </ul>     
+                           <div class="tr my-btn-block">
+                                <button class="btn btn-sm btn-dk-blue" type="reset" th:text="#{page.hospital.btn_cancel}">Cancel</button>
+                                <button class="btn btn-sm btn-blue" type="submit" th:text="#{page.hospital.btn_save_changes}">Save Changes</button>
+                            </div>
+                        </form>
+                      </div>
+             </div>           
+		</div>
+	</main>
+</body>
+</html>	

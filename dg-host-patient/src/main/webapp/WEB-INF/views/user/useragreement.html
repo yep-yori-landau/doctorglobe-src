@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	th:include="layouts/layoutcontext::page" class='sidebar-large'>
+<body>
+<div th:fragment='content' >
+	<div class="loginbox o-sm js-conference-overlay">
+        <div class="overlay-header bg">            
+            <h3 th:text="#{page.useragreement.heading}"></h3>           
+        </div>
+        <div class="overlay-content">    
+        <form method="post" th:action="@{/user/useragreement}" name="tcform" id="tcform">           
+	        <ul>
+			<li><h1 th:text="#{page.useragreement.heading1}" class="pt-15">Terms and Conditions of Use</h1></li>
+			<li>
+				<p th:text="#{page.useragreement.text1}" class="popup-p pt-15"></p>
+			</li>
+			<li>
+				<h2 th:text="#{page.useragreement.heading2}" class="pt-15">General Terms and Conditions</h2>
+			</li>
+			<li>
+				<p th:text="#{page.useragreement.text2}" class="popup-p pt-15"></p>
+			</li>
+			<li>
+				<p th:text="#{page.useragreement.text2_subtext}" class="popup-p pt-15"></p>
+			</li>
+			<li>
+				<h2 th:text="#{page.useragreement.heading3}" class="pt-15">What Service does DoctorGlobe Provide?</h2>
+			</li>
+			<li>
+				<p class="popup-p pt-15" th:text="#{page.useragreement.text3}"></p>
+			</li>
+			<li>
+				<h2 th:text="#{page.useragreement.heading4}" class="pt-15">How to Use the Website?</h2>
+			</li>
+			<li>
+				<p class="popup-p pt-15" th:text="#{page.useragreement.text4}"></p>
+			</li>
+			<li>
+				<p class="popup-p pt-15" th:text="#{page.useragreement.text5}"></p>
+			</li>
+			<li>
+				<p class="popup-p pt-15" th:text="#{page.useragreement.text6}"></p>
+			</li>
+
+			<li>
+				<p class="popup-p pt-15" th:text="#{page.useragreement.text7}">
+					BY CLICKING THE LINK TO A PARTICULAR PROVIDER, YOU ARE SIGNALING
+					YOUR DESIRE TO CONNECT WITH ONE OF THEM, AND ONE OR MORE OF
+					THEM MAY THEN CHOOSE TO CONNECT WITH YOU AS SOON AS
+					PRACTICABLE. PLEASE NOTE THAT DOCTORGLOBE DOES NOT REFER OR
+					RECOMMEND ANY THERAPIST. DOCTORGLOBE IS A PLATFORM THAT
+					ALLOWS YOU TO TRANSMIT A REQUEST TO A PANEL OF PROVIDERS, AND
+					FACILITATES THE ABILITY OF A PROVIDER TO RESPOND TO YOUR REQUEST
+					AND CHOOSE TO CONNECT WITH YOU.
+				</p>
+			</li>
+
+			<li>
+				<p class="popup-p pt-15" th:text="#{page.useragreement.text8}">
+					DOCTORGLOBE IS NOT ENGAGED IN THE PRACTICE OF MEDICINE OR ANY
+					OTHER LICENSED PROFESSION, DOES NOT PROVIDE HEALTH SERVICES, AND
+					IS NOT A HEALTH CARE PROVIDER. DOCTORGLOBE DOES NOT INTERFERE
+					WITH ANY OTHER LICENSED PROFESSION BY ANY HEALTH CARE
+					PROFESSIONAL, WHO ARE EACH RESPONSIBLE FOR HIS OR HER SERVICES
+					AND COMPLIANCE WITH THE REQUIREMENTS APPLICABLE TO HIS OR HER
+					PROFESSION AND LICENSE. THE HEALTH CARE PROFESSIONAL WITH WHICH
+					YOU ESTABLISH A TREATMENT RELATIONSHIP IS SOLELY RESPONSIBLE FOR
+					PROVIDING YOU WITH SERVICES. WE ONLY ACT AS A TECHNOLOGY
+					PLATFORM TO CONNECT YOU WITH HEALTH CARE PROFESSIONALS WHO
+					MAY BE INTERESTED IN PROVIDING YOU WITH HEALTH SERVICES.
+				</p>
+			</li>
+			<li>
+				<h2 th:text="#{page.useragreement.heading5}" class="pt-15">Your Use of the Services</h2>
+			</li>
+			<li>
+				<p class="popup-p pt-15" th:text="#{page.useragreement.text9}">
+					You represent and warrant that the information you provide to us is accurate and complete. You
+acknowledge and agree that we are entitled at all times to verify the information provided and to
+deny your use of the Services at any time for any reason or no reason.
+				</p>
+			</li>
+			<li>
+				<p class="popup-p pt-15" th:text="#{page.useragreement.text10}">
+					You may only access the Services using authorized means. It is your responsibility to check to
+ensure you download the correct Website for your device. We are not liable if you do not have a
+compatible device or if you download the wrong version of the Website for your device.
+				</p>
+			</li>
+			<li>
+				<p class="popup-p pt-15">By accessing or using the Services, you further agree that:</p>
+				<ul class="list-style">
+					<li class="list-style">
+						You will only use the Services for your sole, 
+						personal use and you will not resell them to a third party;	
+					</li>
+					<li class="list-style">
+						You will not copy or distribute the Services or other Services content
+					</li>
+					<li class="list-style">
+						You will not upload or transmit any communications 
+						or content of any type that infringes or violates any rights of any party;
+					</li>
+					<li class="list-style">
+						You will not use the Services for any purpose in violation of local, state, 
+						federal or international laws;
+					</li>
+					<li class="list-style">
+						You will not use the Services as a means to distribute 
+						advertising or other unsolicited material to any third party;
+					</li>
+					<li class="list-style">
+						You will not impersonate another person;
+					</li>
+					<li class="list-style">
+						You will not post material that is unlawful, obscene, defamatory, threatening, harassing,
+abusive, slanderous, hateful or embarrassing to any other person or entity as determined
+by us in our sole discretion;
+					</li>
+					<li class="list-style">
+						You will comply with all applicable third party terms of agreement when using the
+Services (e.g., your wireless data service agreement);
+					</li>
+					<li class="list-style">
+						You will ensure that no unauthorized person shall have access to your mobile device or
+your DoctorGlobe passwords or accounts;
+					</li>
+					<li class="list-style">
+						You will promptly notify us in the event your DoctorGlobe passwords or accounts have
+been compromised;
+					</li>
+					<li class="list-style">
+						You will not assign or otherwise transfer your account to any other person or entity;
+					</li>
+					<li class="list-style">
+						You will not try to harm the Services or impair the proper operation of the network in any
+way whatsoever; and
+					</li>
+					<li class="list-style">
+						You will provide us with whatever proof of identity we may request.
+					</li>
+
+				</ul>
+				<p class="popup-p pt-15">We reserve the right to immediately terminate your use of the Services should you fail to comply
+with any of the foregoing rules.</p>
+			</li>
+			<li>
+				<h2 class="pt-15">Our Right to Use User-Provided Content</h2>
+			</li>
+			<li>
+				<p class="popup-p pt-15">
+					We may, in our sole discretion, permit you to post or submit content and other materials through
+					the Services (collectively, "User-­Provided Content"). You grant us, and anyone authorized by us,
+					a royalty­free, perpetual, irrevocable, non­exclusive, unrestricted, worldwide license to use,
+					copy, modify, transmit, sell, exploit, create derivative works from, distribute, and/or publicly
+					perform or display such User-­Provided Content, in whole or in part, in any manner or medium
+					(whether now known or hereafter developed), for any purpose that we choose. Also, you grant
+					us, and anyone authorized by us, the right to identify you as the author of any User-­Provided
+					Content submitted by you. You will not receive any compensation of any kind for the use of any
+					User-­Provided Content submitted by you.
+				</p>
+			</li>
+			<li>
+				<p class="popup-p pt-15">
+					You acknowledge that DoctorGlobe only acts as a passive conduit for the distribution of the
+					User-Provided
+					Content and is not responsible or liable to you or to any third party for the content
+					or accuracy of the User-Provided
+					Content. You understand that we have no obligation to monitor
+					any areas of the Services through which users can post User-Provided
+					Content. However, we
+					reserve the right at all times, in our sole discretion, to screen User-Provided
+					Content and to edit,
+					move, delete, and/or refuse to accept any User-Provided
+					Content that in our judgment violates
+					this Agreement or is otherwise unacceptable or inappropriate, whether for legal or other reasons.
+				</p>
+			</li>
+			<li>
+				<p class="popup-p pt-15">
+					Any use by you of the User-Provided
+					Content is entirely at your own risk. You represent and
+					warrant that any User-Provided
+					Content posted or transmitted by you is original to you and does
+					not copy the work of any third party or otherwise infringe any third party intellectual property
+					rights, rights of privacy or publicity rights and does not contain any defamatory or disparaging
+					statements. Furthermore, you represent and warrant that you have the right to grant the license
+					described above.
+				</p>
+			</li>
+			<li>
+				<p class="popup-p pt-15">
+					You agree to indemnify and hold harmless DoctorGlobe, DoctorGlobe's affiliates, and each of
+its and their respective directors, officers, managers, employees, shareholders, agents,
+representatives, licensors, successors and assigns from and against any and all losses, expenses,
+damages and costs, including reasonable attorneys' fees, that arise out of any User-Provided
+Content posted or transmitted through the Services by you or by others using your account.
+				</p>
+			</li>
+			<li>
+				<h2 class="pt-15">Payment</h2>
+			</li>
+			<li>
+				<p class="popup-p pt-15">
+					There is no charge to access the Website
+				</p>
+			</li>
+			<li>
+				<h2 class="pt-15">Intellectual Property Ownership</h2>
+			</li>
+			<li>
+				<p class="popup-p pt-15">
+					DoctorGlobe alone (and its licensors, where applicable) shall own all right, title and interest,
+					including all intellectual property rights, in and to the Services and any suggestions, ideas,
+					enhancement requests, feedback, recommendations or other information provided by you or any
+					other party relating to the Services. Any copy, modification, revision, enhancement, adaptation,
+					translation, or derivative work of or created from the Services shall be owned solely and
+					exclusively by DoctorGlobe, and/or, as applicable, DoctorGlobe's thirdparty
+					vendors, as shall
+					any and all patent rights, copyrights, trade secret rights, trademark rights, and all other
+					proprietary rights, worldwide therein and thereto, and you hereby assign to DoctorGlobe any and
+					all of your rights, title or interests in the Services or any modification to or derivative work of the
+					4
+					Services. You shall not remove or authorize or permit any third party to remove any proprietary
+					rights legend from the Services.
+				</p>
+			</li>
+			<li>
+				<p class="popup-p pt-15">
+					This Agreement does not constitute a sale and does not convey to you any rights of ownership in
+or related to the Services, or any intellectual property rights owned by DoctorGlobe.
+DoctorGlobe's name, logo and the product names and logos associated with the Services are
+trademarks of DoctorGlobe, its affiliated companies or third parties, and no right of license is
+granted to use them.
+				</p>
+			</li>
+			<li>
+				<p class="popup-p pt-15">
+					The materials on the Services are copyrighted by us and/or other applicable rights holders. You
+may download and reprint a single copy of the materials from the Services for your own
+personal, noncommercial use only, provided that you keep intact all credits and copyright and
+other proprietary notices. Any other use of the materials is strictly prohibited without our prior
+written permission and the permission of the applicable rights holder(s).
+				</p>
+			</li>
+			<li>
+				<h2 class="pt-15">
+					Website License
+				</h2>
+			</li>
+			<li>
+				<p class="popup-p pt-15">
+					Subject to your compliance with the terms and conditions of this Agreement, DoctorGlobe grants
+					you a limited, nonexclusive,
+					nontransferable
+					license to download and install a copy of the
+					Website on a mobile device that you own or control and to run such copy of the Website solely
+					for your own personal use.
+				</p>
+			</li>
+			<li>
+				<p class="popup-p pt-15">
+					You shall not (i) license, sublicense, sell, resell, transfer, assign, distribute or otherwise
+commercially exploit or make available to any third party the Website in any way; (ii) modify or
+make derivative works based upon the Website (iii) reverse engineer or access the Website in
+order to (a) design or build a competitive product or service, (b) design or build a product using
+similar ideas, features, functions or graphics of the Website, or (c) copy any ideas, features,
+functions or graphics of the Website; or (v) launch an automated program or script, including,
+but not limited to, web spiders, web crawlers, web robots, web ants, web indexers, bots, viruses
+or worms, or any program which may make multiple server requests per second, or unduly
+burdens or hinders the operation and/or performance of the Services.
+				</p>
+			</li>
+			<li>
+				<h2 class="pt-15">Disclaimer</h2>
+			</li>
+			<li>
+				<p class="popup-p pt-15">THE SERVICES AND ANY INFORMATION CONTAINED ON OR PROVIDED THROUGH
+THE SERVICES ARE PROVIDED ON AN "AS IS" BASIS. ANY ACCESS TO OR USE OF
+THE SERVICES IS VOLUNTARY. WE WILL REGARD ALL ACCESS OR USE AS
+VOLUNTARY AND AT THE SOLE RISK OF THE USER. NOTHING CONTAINED IN THE SERVICES IS OR SHOULD BE CONSIDERED, OR
+USED AS A SUBSTITUTE FOR, MEDICAL ADVICE, DIAGNOSIS OR TREATMENT.</p>
+			</li>
+
+			<li>
+				<p class="popup-p pt-15">The
+services provided in the Website are here to, among other things, help you connect to health care
+providers only. Any information contained in the Services should not be relied upon as the basis
+of any health care decision. The Services do not constitute the practice of therapy, medical,
+nursing or other professional healthcare advice, diagnosis or treatment.</p>
+			</li>
+			<li>
+				<p class="popup-p pt-15">NEVER DISREGARD, AVOID OR DELAY IN OBTAINING MEDICAL ADVICE
+FROM YOUR DOCTOR OR OTHER QUALIFIED HEALTH CARE PROVIDER
+BECAUSE OF SOMETHING YOU HAVE READ THROUGH OUR WEBSITE. IF YOU
+HAVE OR SUSPECT THAT YOU HAVE A MEDICAL PROBLEM OR CONDITION,
+YOU MAY USE THIS WEBSITE TO TRY TO CONTACT A NEARBY QUALIFIED
+HEALTHCARE PROFESSIONAL. HOWEVER, IF YOU ARE EXPERIENCING A
+MEDICAL EMERGENCY, PLEASE CALL 911 FOR EMERGENCY MEDICAL HELP.</p>
+			</li>
+			<li>
+				<p class="popup-p pt-15">
+					We do not control, supply, endorse, warrant or guarantee any information, products, services or
+merchandise supplied by any of the health care providers that you may connect with via the
+Services.
+				</p>
+			</li>
+			<li>
+				<p class="popup-p pt-15">
+					We also do not warrant or guarantee that files that may be available for downloading through the
+Services will be free of infections or viruses, worms, Trojan horses or other code that contains
+contaminating or destructive properties.
+				</p>
+			</li>
+			<li>
+				<p class="popup-p pt-15">We, and our technology service providers, cannot and do not guarantee or warrant against errors,
+omissions, delays, interruptions or losses, including loss of data. You download and use the
+Services at your own discretion and risk, and you are solely responsible for any damages to your
+hardware device(s) or loss of data that results from the download or use of the Services. Users of
+the Services are responsible for maintaining a means external to the Services for the
+reconstruction of any lost data.</p>
+			</li>
+			<li>
+				<p class="popup-p pt-15">
+					WE DO NOT MAKE ANY EXPRESS OR IMPLIED WARRANTIES, REPRESENTATIONS
+					OR ENDORSEMENTS OF ANY KIND WHATSOEVER (INCLUDING, WITHOUT
+					LIMITATION, WARRANTIES OF TITLE OR NONINFRINGEMENT,
+					OR ANY
+					WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE)
+					WITH REGARD TO THE SERVICES, OR WITH RESPECT TO ANY INFORMATION,
+					PRODUCT, SERVICE, MERCHANDISE OR OTHER MATERIAL PROVIDED ON OR
+					THROUGH THE SERVICES (INCLUDING ANY CONSULTATIONS OR OTHER
+					SERVICES YOU MAY OBTAIN FROM HEALTH CARE PROVIDERS THAT YOU
+					CONNECT WITH VIA THE SERVICES). WE DO NOT WARRANT OR GUARANTEE THE
+					ACCURACY, COMPLETENESS, CORRECTNESS, TIMELINESS OR USEFULNESS OF
+					ANY INFORMATION, PRODUCTS, SERVICES, MERCHANDISE OR OTHER MATERIAL
+					PROVIDED THROUGH THE SERVICES OR ON THE INTERNET GENERALLY. WE
+					MAKE NO WARRANTY OR GUARANTEE THAT THE SERVICES WILL BE
+					UNINTERRUPTED, TIMELY, SECURE OR ERRORFREE.
+					YOUR SOLE AND
+					EXCLUSIVE REMEDY FOR DISSATISFACTION WITH THE SERVICES IS TO STOP
+					USING THEM.
+				</p>
+			</li>
+			<li>
+				<h2 class="pt-15">
+					Limitation of Liability
+				</h2>
+			</li>
+			<li>
+				<p class="popup-p pt-15">
+					TO THE FULLEST EXTENT PERMISSIBLE UNDER APPLICABLE LAW, IN NO EVENT
+					WILL DOCTORGLOBE BE LIABLE TO YOU OR ANY THIRD PARTY FOR ANY
+					DIRECT, INDIRECT, PUNITIVE, EXEMPLARY, INCIDENTAL, SPECIAL OR
+					CONSEQUENTIAL DAMAGES (WHETHER IN CONTRACT, TORT (INCLUDING
+					6
+					NEGLIGENCE), OR OTHERWISE) ARISING OUT OF THIS AGREEMENT, OR THE USE
+					OF, OR THE INABILITY TO USE, THE SERVICES, INCLUDING, WITHOUT
+					LIMITATION, ANY INFORMATION OR DATA MADE AVAILABLE THROUGH THE
+					SERVICES OR ANY SERVICES PERFORMED BY ANY HEALTH CARE PROVIDERS
+					THAT YOU CONNECT WITH VIA THE SERVICES (INCLUDING CLAIMS OF
+					MALPRACTICE AGAINST THOSE HEALTH CARE PROVIDERS), EVEN IF WE ARE
+					ADVISED BEFOREHAND OF THE POSSIBILITY OF SUCH DAMAGES. IN THE EVENT
+					THE FOREGOING LIMITATION OF LIABILITY IS DETERMINED BY A COURT OF
+					COMPETENT JURISDICTION TO BE UNENFORCEABLE, THEN THE MAXIMUM
+					LIABILITY OF DOCTORGLOBE FOR ALL CLAIMS (WHETHER IN CONTRACT, TORT
+					(INCLUDING NEGLIGENCE AND MALPRACTICE), OR OTHERWISE) OF EVERY KIND
+					ARISING OUT OF THIS AGREEMENT WILL NOT EXCEED ONE HUNDRED DOLLARS
+					($100.00). THE FOREGOING LIMITATION OF LIABILITY OF DOCTORGLOBE WILL
+					COVER, WITHOUT LIMITATION, ANY TECHNICAL MALFUNCTION, COMPUTER
+					ERROR OR LOSS OF DATA, AND ANY OTHER INJURY, ARISING FROM THE USE OF
+					THE SERVICES.
+				</p>
+			</li>
+			<li>
+				<h2 class="pt-15">
+					Right to Modify
+				</h2>
+			</li>
+			<li>
+				<p class="popup-p pt-15">	
+					We may at our sole discretion change, add, or delete portions of this Agreement at any time on a
+goingforward
+basis. Continued use of the Services following notice of any such changes will
+indicate your acknowledgement of such changes and agreement to be bound by the revised
+Terms of Service, inclusive of such changes.
+				</p>
+			</li>
+			<li>
+				<h2 class="pt-15">
+					Indemnification
+				</h2>
+			</li>
+			<li>
+				<p class="popup-p pt-15">You agree to indemnify and hold harmless DoctorGlobe, DoctorGlobe's affiliates, and each of
+its and their respective directors, officers, managers, employees, shareholders, agents,
+representatives, licensors, successors and assigns from and against any and all losses, expenses,
+damages and costs, including reasonable attorneys' fees, that arise out of your use of the
+Services, violation of this Agreement by you or any other person using your account, or your
+violation of any rights of another. We reserve the right to control the defense of any claim for
+which we are entitled to indemnification under this section. In such event, you agree to provide
+us with such cooperation as is reasonably requested by us.</p>
+			</li>
+			<li>
+				<h2 class="pt-15">Modifications to, or Discontinuation of, the Services</h2>
+			</li>
+			<li>
+				<p class="popup-p pt-15">
+					We reserve the right at any time and from time to time to modify or discontinue, temporarily or
+permanently, the Services, or any portion thereof, with or without notice. You agree that we will
+not be liable to you or any third party for any modification, suspension or discontinuance of the
+Services or any portion thereof.
+				</p>
+			</li>
+			<li>
+				<h2 class="pt-15">
+					Privacy
+				</h2>
+			</li>
+			<li>
+				<p class="popup-p pt-15">Your use of the Services is subject to DoctorGlobe's Privacy Policy. Please review this policy so
+you understand what information we collect through the Services, how we use it, how we secure
+it, and when we may share it.</p>
+			</li>
+			<li>
+				<h2 class="pt-15">
+					Notice of Copyright Infringement
+				</h2>
+			</li>
+			<li>
+				<p class="popup-p pt-15">
+					The Digital Millennium Copyright Act of 1998 ("DMCA") provides recourse for copyright
+owners who believe that material appearing on the Internet infringes their rights under U.S.
+copyright law. If you believe in good faith that materials appearing on this Web site infringe
+your copyright, you (or your agent) may send us a notice requesting that the material be
+removed, or access to it blocked. In addition, if you believe in good faith that a notice of
+copyright infringement has been wrongly filed against you, the DMCA permits you to send us a
+counternotice.
+Notices and counternotices
+must meet statutory requirements imposed by the
+DMCA. One place to find more information is the U.S. Copyright Office Web site, currently
+located at http://www.loc.gov/copyright. In accordance with the DMCA, DoctorGlobe has
+designated an agent to receive notification of alleged copyright infringement in accordance with
+the DMCA. Any written Notification of Claimed infringement should comply with Title 17,
+United States Code, Section 512(c)(3)(A) and should be provided in writing to Doctor Globe,
+Inc. email to <a href="#lsRet">support@DoctorGlobe.com</a> .
+				</p>
+			</li>
+			<li>
+				<p class="popup-p pt-15">
+					Please note that the contact information provided in this paragraph is for suspected copyright
+infringement only. Contact information for other matters can be found elsewhere on our website
+or through the Website.
+				</p>
+			</li>
+			<li>
+				<h2 class="pt-15">
+					Miscellaneous
+				</h2>
+			</li>
+			<li>
+				<p class="popup-p pt-15">This Agreement constitutes the entire agreement between us and you with respect to the subject
+matter contained in this Agreement and supersede all previous and contemporaneous agreements,
+proposals and communications, written or oral, related to that subject matter. You also may be
+subject to additional terms and conditions that may apply when you use the products or services
+of a third party that are available through the Services. In the event of any conflict between any
+such thirdparty
+terms and conditions and this Agreement, this Agreement will govern. This
+Agreement will be governed by and construed in accordance with the laws of the State of
+California, without regard to any conflicts of law provisions contained therein.</p>
+			</li>
+			<li>
+				<p class="popup-p pt-15">Any dispute arising under or relating in any way to this Agreement will be resolved exclusively
+by final and binding arbitration in California under the rules of the American Arbitration
+Association, except that either party may bring a claim related to intellectual property rights, or
+seek temporary and preliminary specific performance and injunctive relief, in any court of
+competent jurisdiction, without the posting of bond or other security. The parties agree to the
+personal and subject matter jurisdiction and venue of the courts located in California for any
+action related to this Agreement.</p>
+			</li>
+			<li>
+				<p class="popup-p pt-15">This Agreement is personal to you and you may not assign it to anyone. If any provision of this
+Agreement is found to be unlawful, void, or for any reason unenforceable, then that provision
+will be deemed severable from this Agreement and will not affect the validity and enforceability
+of any remaining provisions. This Agreement is not intended to benefit any third party, and do
+not create any third party beneficiaries. Accordingly, this Agreement may only be invoked or
+enforced by you or us. You agree that regardless of any statute or law to the contrary, any claim
+or cause of action that you may have arising out of or related to use of the Services or this
+Agreement must be filed by you within one year after such claim or cause of action arose or be
+forever barred. Any and all provisions of this Agreement that would reasonably be expected to
+be performed after the termination or expiration of this Agreement shall survive and be
+enforceable after such termination or expiration including, without limitation on, provisions relating
+to ownership, indemnification, limitation of liability and governing law.</p>
+			</li>
+			<li>
+				<h2 class="pt-15">Personal and Health Information Sharing Acknowledgement</h2>
+			</li>
+			<li>
+					<p class="list-style">ON BEHALF OF MYSELF, AS WELL AS ANY AND ALL MEMBERS OF MY FAMILY
+THAT ARE AND WILL BE COVERED AS PARTICIPANTS UNDER ANY HEALTH
+PLAN PROVIDED BY MY EMPLOYER, I HEREBY CONFIRM THAT I KNOW AND
+AGREE THAT OUR PERSONAL AND HEALTHCARE INFORMATION HAS BEEN
+AND MAY BE EXCHANGED BETWEEN DOCTOR GLOBE, INC. AND MY
+EMPLOYER, HEALTH PLAN SPONSOR, HEALTH PLAN ADMINISTRATOR,
+HEALTH PLAN BROKER/CONSULTANT, AND OTHERS WHO MAY BE
+ESSENTIAL AND MATERIAL FOR ACCESSING THE DOCTORGLOBE ONLINE
+PLATFORM, AND FOR THE UTILIZATION OF DOCTORGLOBE'S SERVICES.</p>
+				</li>	
+				<li>
+					<input type="checkbox" required="required" name="tc" id="tc"></input>
+					By checking this box and pressing the “I Accept” button I acknowledge that I read, understand, and accept the Terms and Conditions for Use, and that my action constitutes a legal signature.
+				</li>
+		<li>
+			<p>
+	             <button type="submit" class="btn btn-green btn-sm" th:text="#{page.useragreement.btn.accept}">Accept</button>
+	        </p> 
+			<p class="popup-p pt-15">
+				<strong>Last Revised:</strong> May 2016
+			</p>
+		</li>
+		</ul>
+	    </form>                   
+        </div>     
+          <script type="text/javascript" th:inline='javascript'>
+		$(document).ready(function() {			
+			/*[+
+			var msg = [[${message}]];			
+			+]*/			
+			
+			document.getElementById("tc").setCustomValidity("To accept and proceed please check this box.");
+			if(msg == 1){
+				parent.jQuery.fancybox.close();											
+			}
+			$('#tc').on('change', function() { 
+			    // From the other examples
+			    if (!this.checked) {
+			    	this.setCustomValidity('To accept and proceed please check this box.');
+			    }else{
+			    	this.setCustomValidity('');
+			    }
+			});	
+			
+		});
+   </script>		      
+      </div>
+   </div>
+  </body>  
+</html>

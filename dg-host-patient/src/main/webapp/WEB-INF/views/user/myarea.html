@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	th:include="layouts/layoutresult::page" class='sidebar-large'>
+<body th:class="page-common">
+	<main id="main-content" th:fragment='content'>
+		<div class="wrap" id="discussionBlock">
+			<div th:if="${patientconference != null}" th:replace="fragments/patientcasetreatment :: patientcasetreatment"></div>
+			<!-- user sidebar -->
+            <aside th:replace="fragments/usersidebar :: usersidebar"></aside>
+            <!-- user sidebar end  -->
+			<section class="results">               		
+                    <div class="row" th:if ="${patientmessage != null}">
+                        <ol class="my-tab-head tabs tabmargin">                        	
+                            <li th:each="pcl : ${practitionerList}" th:classappend="${pcl.practitioner == practitionerid ? 'active' : ''}"><a href="#lsRet" th:title="${pcl.practitionerName}+'('+${pcl.healthcareproviderName}+')'" th:text="${pcl.practitionerName}" th:id="${pcl.practitioner}" class="practitionertab"></a></li>                            
+                        </ol>
+                        <h4 class="fr">
+                           <span th:text="#{page.sortby.text}">Sort by:</span> 
+                            <span class="sort-nav">
+                                <strong>
+                                	<select class="js-select usersort-select">                                		
+                                		<option th:text="#{sortby.date}" th:value="date"></option>																			
+										<option th:text="#{sortby.subject}" th:value="subject"></option>
+									</select>
+                                </strong>
+                            </span>
+                        </h4>
+                    </div>
+                    
+                    <div class="my-block row-zebra result-container">
+                    <div class="res" th:if ="${patientmessage == null and isCaseDataSubmit == true}">
+                            	<h3 th:text="#{page.noresultfound.text}"></h3>
+                    </div>                                                 
+                    <div class="res" th:if ="${patientmessage == null and isCaseDataSubmit == false}">
+                            	<h3 th:utext="#{page.is_all_data_submit.text}"></h3>
+                            	<p><span th:text="#{page.hello.text}"></span> <span th:text="${userName}"></span>,</p>
+                            	<p th:utext="#{page.is_all_data_submit.message}"></p>
+                    </div>                                                 
+                        <article th:each="patientmessage : ${patientmessage}" th:class="row+' '+user-res+' '+res-sm+' '+' '+resli+' '+${patientmessage.sender}+' '+${patientmessage.receiver}+' '+pcmresult+' '+${patientmessage.pcmClass}" th:classappend="${patientmessage.receiver != practitionerid and patientmessage.sender != practitionerid  ? 'hidemessages' : ''}">
+                            <ul>
+                                <li>                                	
+                                    <figure class="fig-block" th:if="${patientmessage.senderType == 'Practitioner'}">
+                                        <img th:if="${practitionerImage.get(patientmessage.sender) != null}" th:src="@{'/doctorglobe-doctor/practitioner/'+${patientmessage.sender}+'/photo/'+${practitionerImage.get(patientmessage.sender)}}" height="66" width="65" th:alt="${practitionerImage.get(patientmessage.sender)}"/>
+                                        <img th:if="${practitionerImage.get(patientmessage.sender) == null}" th:src="@{'/resources/images/demo_user.gif'}" height="66" width="65" th:alt="${userImage}"/>
+                                    </figure>
+                                    <figure class="fig-block" th:if="${patientmessage.senderType == 'Patient'}">
+                                        <img th:if="${userImage != null}" th:src="@{${userImage}}" height="66" width="65" th:alt="${userImage}"/>                                        
+                                    </figure>
+                                </li>
+                                <li>
+                                    <h3 th:text="${patientmessage.subject}" class="subject"></h3>
+                                    <p th:utext="${patientmessage.message}"></p>                              
+                                </li>
+                                <li class="tr">
+                                    <p>
+                                    	<span th:text="#{discussion.message.sent}">Sent:</span> <span th:text="${#dates.format(patientmessage.sentDt,'MMM dd, yyyy hh:mm a')}"></span>
+                                    	<span th:text="${patientmessage.sentDt.getTime()}" class="date hide"></span>
+                                    </p>                                       
+                                </li>                                
+                            </ul>
+                            <div class="btn-block fr reply-btn" th:if="${patientmessage.senderType == 'Practitioner'}">
+                               <a th:href="@{'/user/sendmessage'(pc=${pc},subject=${patientmessage.subject},receiver=${patientmessage.sender})}" class="various2 fancybox.iframe" data-fancybox-width="645" data-fancybox-height="331" th:attr="data-href=@{'/user/discussion'(pc=${pc},practitioner=${patientmessage.sender})}">                                        
+                               	 <button class="btn btn-dk-blue btn-fixed" th:text="#{discussion.btn.reply}">Reply</button>
+                               </a>
+                            </div>                                                                        
+                        </article>                                            
+                    </div>
+                </section>
+         </div>        				
+	</main>
+</body>
+</html>	

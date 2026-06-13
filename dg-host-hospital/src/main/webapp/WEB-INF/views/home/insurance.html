@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:include="layouts/layout::page">
+<body>
+	<main id="main-content" th:fragment='content'>	
+	  <div class="wrap">
+			<aside th:replace="fragments/sidebar :: sidebar"></aside>
+			 <div id="container">
+                    <div class="my-block">                    
+                        <h3 class="hel-med fs-16 title-in">
+                           <span th:text="#{page.hospital.insurance}"></span>                           
+                        </h3>
+                        <form th:action="@{/home/insurance}" th:object="${insuranceForm}" method="post">
+                            <ul class="my-form mt-20 lbl-100 pl-40">
+								<li th:each="e : ${#fields.detailedErrors()}"
+								th:class="${e.global}? globalerr : fielderr"><span
+								class="text-danger" th:text="${e.global}? '*' : ${e.fieldName}">The
+									field name</span> | <span class="text-danger" th:text="${e.message}">The
+									error message</span>
+								</li>																			                            
+                                <li th:each="hospitalInsuranceFormModel,rowStat : ${insuranceForm.hospitalInsuranceFormModel}" class="cust-check">
+                                	<input type="hidden" th:field="*{hospitalInsuranceFormModel[__${rowStat.index}__].id}"/>                                	                                                        
+                                	<input type="hidden" th:field="*{hospitalInsuranceFormModel[__${rowStat.index}__].healthcareprovider}"/>
+                                	<input type="hidden" th:field="*{hospitalInsuranceFormModel[__${rowStat.index}__].insurance}"/>
+                                    <label th:for="hospitalInsuranceFormModel+${rowStat.index}+.isChecked">
+                                        <input type="checkbox" th:field="*{hospitalInsuranceFormModel[__${rowStat.index}__].isChecked}" th:id="hospitalInsuranceFormModel+${rowStat.index}+.isChecked"/>     
+                                        <span class="box"></span>
+                                        <span th:text="${hospitalInsuranceFormModel.insuranceName}"></span>
+                                    </label> 
+                                </li>                                               
+                            </ul>
+                            <div class="tr my-btn-block">
+                                <a th:href="@{/home/insurance}"><button class="btn btn-sm btn-dk-blue" type="button" th:text="#{page.hospital.insurance.btn_cancel}">Cancel</button></a>
+                                <button class="btn btn-sm btn-blue" type="submit" th:text="#{page.hospital.insurance.btn_save_changes}">Save Changes</button>
+                            </div>
+                        </form>
+                    </div>
+            </div>			
+	  </div>
+	</main>	
+</body>
+</html>

@@ -1,0 +1,74 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:include="layout::page" class='sidebar-large'>
+<div class="container" th:fragment="content">					
+			<div class="row">
+				<div class="col-md-12">
+					<div class="panel panel-default">
+                                        <div class="panel-heading" th:if="${message} != null">
+						<h3 class ="panel-title"><strong th:text="${message}"></strong></h3>
+					</div>
+					<div class="panel-heading bg-red">
+						<h3 class ="panel-title"><strong th:text="#{page.heading.patientcase_price}">Patientcase Price</strong></h3>
+					</div>
+					<div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12 m-b-20">
+                                    <div class="btn-group">
+                                       <a id="table-edit_new" class="btn btn-danger" th:href="@{'/patientcase-price/edit'}">
+                                            Add New <i class="fa fa-plus"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                      <div class="col-md-12 col-sm-12 col-xs-12 table-responsive table-red">
+                            <table class="table table-striped table-hover dataTable" id="table-editable">          
+								<thead>
+									<tr>
+										<th th:text="#{patientcase_price.id}">id</th>
+										<th>List Price</th>
+										<th>You Pay List Price</th>
+										<th>Bonus List Price</th>
+										<th>Quote Price</th>
+										<th>You Pay Quote Price</th>
+										<th>Bonus Quote Price</th>
+										<th>Billed Price</th>
+										<th>You Pay Billed Price</th>
+										<th>Bonus Billed Price</th>
+										<th th:text="#{patientcase_price.healthcareprovider_specialty_treatment_method_practitioner}">healthcareprovider_specialty_treatment_method_practitioner</th>
+										<th th:text="#{patientcase_price.patient_case}">patient_case</th>
+										<th class="text-center sorting" th:text="#{page.text.options}">Options</th>
+									</tr>
+								</thead>
+						<tbody>							
+								<tr th:each="model :${models}">
+								<td th:text="${model.id}"></td>
+								<td th:text="${model.listPrice}"></td>
+								<td th:text="${model.youpayListPrice}"></td>
+								<td th:text="${model.bonusListPrice}"></td>
+								<td th:text="${model.quotePrice}"></td>
+								<td th:text="${model.youpayQuotePrice}"></td>
+								<td th:text="${model.bonusQuotePrice}"></td>
+								<td th:text="${model.billedPrice}"></td>
+								<td th:text="${model.youpayBilledPrice}"></td>
+								<td th:text="${model.bonusBilledPrice}"></td>
+								<td th:text="${model.healthcareproviderSpecialtyTreatmentMethodPractitioner}"></td>
+								<td th:text="${model.patientCase}"></td>
+								
+								<td class="text-center">
+								<a class="edit btn btn-dark" th:href="@{'/patientcase-price/edit'(id=${model.id})}"><i class="fa fa-pencil-square-o"></i>
+								Edit
+								</a>								
+								<a class="delete btn btn-danger" th:href="@{'/patientcase-price/delete'(id=${model.id})}">
+								<i class="fa fa-times-circle"></i>
+								Remove								
+								</a>
+								</td>
+								</tr>							
+						</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+		</div>
+</div>
+</html>

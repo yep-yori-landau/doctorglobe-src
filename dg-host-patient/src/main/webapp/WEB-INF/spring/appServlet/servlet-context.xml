@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- DispatcherServlet Context: defines this servlet's request-processing 
+		infrastructure -->
+	<mvc:annotation-driven />
+	
+	
+	<!-- THYMELEAF: Template Resolver for email templates -->
+	<beans:bean id="emailTemplateResolver"
+		class="org.thymeleaf.templateresolver.ClassLoaderTemplateResolver">
+		<beans:property name="prefix" value="mail/" />
+		<beans:property name="templateMode" value="HTML5" />
+		<beans:property name="characterEncoding" value="UTF-8" />
+		<beans:property name="order" value="1" />
+		<!-- Template cache is true by default. Set to false if you want -->
+		<!-- templates to be automatically updated when modified. -->
+		<beans:property name="cacheable" value="true" />
+	</beans:bean>
+
+	<beans:bean id="webtemplateResolver"
+		class="org.thymeleaf.templateresolver.ServletContextTemplateResolver">
+		<beans:property name="prefix" value="/WEB-INF/views/" />
+		<beans:property name="suffix" value=".html" />
+		<beans:property name="templateMode" value="HTML5" />
+		<!-- Template cache is set to false (default is true). -->
+		<beans:property name="order" value="2" />
+		<beans:property name="cacheable" value="false" />
+	</beans:bean>
+
+	<beans:bean id="templateEngine" class="org.thymeleaf.spring3.SpringTemplateEngine">
+		<beans:property name="templateResolvers">
+			<beans:set>
+				<beans:ref bean="emailTemplateResolver" />
+				<beans:ref bean="webtemplateResolver" />
+			</beans:set>
+		</beans:property>
+		<beans:property name="additionalDialects">
+			<beans:set>
+				<beans:bean class="org.thymeleaf.extras.springsecurity3.dialect.SpringSecurityDialect" />
+			</beans:set>
+		</beans:property>
+	</beans:bean>
+
+	<beans:bean id="viewResolver"
+		class="org.thymeleaf.spring3.view.ThymeleafViewResolver">
+		<beans:property name="templateEngine" ref="templateEngine" />
+		<beans:property name="characterEncoding" value="UTF-8" />
+	</beans:bean>
+
+	<!-- Enables the Spring MVC @Controller programming model -->
+	<annotation-driven />
+
+	<!-- Handles HTTP GET requests for /resources/** by efficiently serving 
+		up static resources in the ${webappRoot}/resources directory -->
+	<resources mapping="/resources/**" location="/resources/" />
+	<resources mapping="/webjars/**" location="classpath:/META-INF/resources/webjars/" />
+
+	<beans:bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource"
+		p:basename="messages" />
+
+	<!-- Url -->
+	<beans:bean id="urlProperties"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<beans:property name="locations">	
+			<beans:list>
+				<beans:value>classpath:url-${dgEnvTarget}.properties</beans:value>
+				<beans:value>classpath:opentok-${dgEnvTarget}.properties</beans:value>				
+			</beans:list>
+		</beans:property>			
+		<beans:property name="ignoreResourceNotFound" value="false" />
+		<beans:property name="searchSystemEnvironment" value="true" />
+		<beans:property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
+	</beans:bean>
+
+	<beans:bean id="contextSource" class="com.dg.patient.service.SearchUrlService">
+		<beans:property name="hostUrl" value="${url.host}" />
+		<beans:property name="baseUrl" value="${url.base}" />
+		<beans:property name="patientBaseUrl" value="${url.patientBase}" />
+		<beans:property name="patientCaseBaseUrl" value="${url.patientCaseBase}" />
+		<beans:property name="patientConferenceBaseUrl" value="${url.patientConferenceBase}" />
+		<beans:property name="healthcareproviderUrl" value="${url.healthcareprovider}" />
+		<beans:property name="practitionerUrl" value="${url.practitioner}" />
+		<beans:property name="patientUrl" value="${url.patient}" />
+		<beans:property name="patientCaseUrl" value="${url.patientCase}" />
+		<beans:property name="patientCaseBookingBaseUrl" value="${url.patientCaseBookingBase}" />
+		<beans:property name="patientCaseFileBaseUrl" value="${url.patientCaseFileBase}" />
+		<beans:property name="customerMailUrl" value="${url.customerMailUrl}" />
+		<beans:property name="imageUrl" value="${url.imageUrl}" />
+		<beans:property name="patientCaseMessagesBaseUrl" value="${url.patientCaseMessagesBase}" />
+		<beans:property name="cityBaseUrl" value="${url.cityBase}" />
+		<beans:property name="practitionerBaseUrl" value="${url.practitionerBase}" />
+		<beans:property name="patientMailUrl" value="${url.patientMailUrl}" />
+		<beans:property name="practitionerMailUrl" value="${url.practitionerMailUrl}" />
+		<beans:property name="stateBaseUrl" value="${url.stateBase}" />
+		<beans:property name="countryBaseUrl" value="${url.countryBase}" />
+		<beans:property name="treatmentUrl" value="${url.treatment}" />
+		<beans:property name="caseConferenceLimit" value="${case.conference.limit}" />
+		<beans:property name="employeeCorporatecompanyBaseUrl" value="${url.employeeCorporatecompanyBase}" />
+		<beans:property name="treatmentPriceBaseUrl" value="${url.treatmentPriceBase}" />
+		<beans:property name="treatmentDocumentBaseUrl" value="${url.treatmentDocumentBase}" />
+		<beans:property name="treatmentQuestionnaireBaseUrl" value="${url.treatmentQuestionnaireBase}" />
+		<beans:property name="patientcaseTreatmentQuestionnaireBaseUrl" value="${url.patientcaseTreatmentQuestionnaireBase}" />
+		<beans:property name="currency" value="${currency}" />
+		<beans:property name="documentBaseUrl" value="${url.documentBase}" />
+		<beans:property name="patientcasePriceBaseUrl" value="${url.patientcasePriceBase}" />
+		<beans:property name="uploadPath" value="${url.uploadPath}" />
+		<beans:property name="imageResourceUrl" value="${url.imageResourceUrl}" />
+		<beans:property name="resultLimit" value="${resultLimit}" />
+		<beans:property name="ratingUrl" value="${ratingUrl}" />
+		<beans:property name="minimumDistanceForAirTravel" value="${minimumDistanceForAirTravel}" />
+		<beans:property name="minimumDistanceForHotel" value="${minimumDistanceForHotel}" />
+		<beans:property name="domesticFlightCost" value="${domesticFlightCost}" />
+		<beans:property name="internationalFlightCost" value="${internationalFlightCost}" />
+		<beans:property name="taxiCostPerMileToHospital" value="${taxiCostPerMileToHospital}" />
+		<beans:property name="associateBaseUrl" value="${url.associateBaseUrl}" />		
+		<beans:property name="corporatecompanyBaseUrl" value="${url.corporatecompanyBaseUrl}" />
+		<beans:property name="paginationLimit" value="${broker.user.pagination.limit}" />
+		<beans:property name="isProfileShow" value="${user.profile.show}" />
+		<beans:property name="environment" value="${environment}" />	
+		<beans:property name="healthcareproviderSpecialtyTreatmentMethodUrl" value="${url.healthcareproviderSpecialtyTreatmentMethodBaseUrl}" />
+		<beans:property name="healthcareproviderSpecialtyTreatmentMethodPractitionerUrl" value="${url.healthcareproviderSpecialtyTreatmentMethodPractitionerBaseUrl}" />
+		<beans:property name="isMyareaShow" value="${user.myarea.show}" />	
+		<beans:property name="treatmentBaseUrl" value="${url.treatmentBaseUrl}" />
+		<beans:property name="apiUserBaseUrl" value="${url.apiUserBaseUrl}" />					
+	</beans:bean>
+
+	<beans:bean id="searchService" class="com.dg.patient.service.SearchService">
+		<beans:property name="searchUrlService" ref="contextSource"></beans:property>
+	</beans:bean>
+	
+	<beans:bean id="rankingService" class="com.dg.patient.service.RankingCalculationService">
+		<beans:property name="distanceWeight" value="${ranking.distanceWeight}" />
+		<beans:property name="bonusWeight" value="${ranking.bonusWeight}" />
+		<beans:property name="volumeWeight" value="${ranking.volumeWeight}" />
+	</beans:bean>
+	
+	<beans:bean id="originPriceService" class="com.dg.patient.service.OriginPriceCalculationService">
+		<beans:property name="minimumHospitalNumForOriginPrice" value="${minimumHospitalNumForOriginPrice}" />
+		<beans:property name="originRadius" value="${originRadius}" />		
+	</beans:bean>	
+	
+	<beans:bean id="userService" class="com.dg.patient.service.UserService">
+		<beans:property name="searchUrlService" ref="contextSource"></beans:property>
+		<beans:property name="mailService" ref="mailService"></beans:property>
+		<beans:property name="associateUrl" value="${url.associateUrl}"></beans:property>
+		<beans:property name="associationUrl" value="${url.associationBaseUrl}"></beans:property>
+		<beans:property name="corporatecompanyUrl" value="${url.corporatecompanyBaseUrl}"></beans:property>		
+	</beans:bean>
+	
+	<beans:bean id="healthcareproviderResultService" class="com.dg.patient.service.HealthcareproviderResultService">
+		<beans:property name="userService" ref="userService"></beans:property>
+		<beans:property name="calculateService" ref="calculateService"></beans:property>
+		<beans:property name="originPriceCalculationService" ref="originPriceService"></beans:property>
+	</beans:bean>	
+	
+	<beans:bean id="apiService" class="com.dg.patient.service.ApiService">
+		<beans:property name="searchUrlService" ref="contextSource"></beans:property>
+		<beans:property name="userService" ref="userService"></beans:property>
+		<beans:property name="searchService" ref="searchService"></beans:property>
+	</beans:bean>
+	<!-- Solr url -->
+	<beans:bean
+		class="org.springframework.web.context.support.ServletContextAttributeExporter">
+		<beans:property name="attributes">
+			<beans:map>				
+				<beans:entry key="autocompleteurl" value="${url.autocomplete}" />
+				<beans:entry key="hostbaseurl" value="${url.host}" />
+				<beans:entry key="patientNewMessagesurl" value="${url.patientNewMessages}" />
+			</beans:map>
+		</beans:property>
+	</beans:bean>
+
+	<beans:bean id="calculateService" class="com.dg.patient.service.CalculateService"></beans:bean>
+	<beans:bean id="distanceCalculatorService" class="com.dg.patient.service.DistanceCalculatorService"></beans:bean>	
+    <beans:bean id="OpentokService" class="com.dg.patient.service.OpentokService">
+    	<beans:property name="apiKey" value="${opentok.apiKey}"></beans:property>
+    	<beans:property name="apiSecret" value="${opentok.apiSecret}"></beans:property>
+    </beans:bean>
+	<!-- Mail config -->
+	<beans:bean id="mailSender"
+		class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<beans:property name="host" value="${mail.server.host}" />
+		<beans:property name="port" value="${mail.server.port}" />
+		<beans:property name="username" value="${mail.server.username}" />
+		<beans:property name="password" value="${mail.server.password}" />
+		<beans:property name="javaMailProperties">
+			<beans:props>
+				<beans:prop key="mail.smtp.auth">${mail.smtp.auth}</beans:prop>
+				<beans:prop key="mail.smtp.starttls.enable">${mail.smtp.starttls.enable}</beans:prop>
+				<beans:prop key="mail.debug">${mail.debug}</beans:prop>
+			</beans:props>
+		</beans:property>
+	</beans:bean>
+
+	<beans:bean id="mailService" class="com.dg.patient.service.MailService">
+		<beans:property name="mailSender" ref="mailSender" />
+		<beans:property name="searchUrlService" ref="contextSource"></beans:property>
+		<beans:property name="mailFrom" value="${mail.from}"></beans:property>
+	</beans:bean>
+
+	<!-- File upload config -->
+	<beans:bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="maxUploadSize" value="10000000000" />
+		<beans:property name="resolveLazily" value="true"/>
+	</beans:bean>
+	<resources mapping="/doctorglobe/**" location="${url.filepath}" />
+	<resources mapping="/doctorglobe-hospital/**" location="${url.hospitalfilepath}" />
+	<resources mapping="/doctorglobe-doctor/**" location="${url.doctorfilepath}" />
+	
+	<mvc:interceptors>
+		<mvc:interceptor>
+		    <mapping path="/search" />
+			<beans:bean class="com.dg.patient.interceptor.AuthenticationInterceptor">
+				<beans:property name="userService" ref="userService"></beans:property>
+			</beans:bean>
+		</mvc:interceptor>
+		<mvc:interceptor>
+		    <mapping path="/healthcareproviders" />
+			<beans:bean class="com.dg.patient.interceptor.AuthenticationInterceptor">
+				<beans:property name="userService" ref="userService"></beans:property>
+			</beans:bean>
+		</mvc:interceptor>
+		<mvc:interceptor>
+		    <mapping path="/user/profile" />
+			<beans:bean class="com.dg.patient.interceptor.AuthenticationInterceptor">
+				<beans:property name="userService" ref="userService"></beans:property>
+			</beans:bean>
+		</mvc:interceptor>
+		<mvc:interceptor>
+		    <mapping path="/user/myarea" />
+			<beans:bean class="com.dg.patient.interceptor.AuthenticationInterceptor">
+				<beans:property name="userService" ref="userService"></beans:property>
+			</beans:bean>
+		</mvc:interceptor>
+		<mvc:interceptor>
+		    <mapping path="/user/select-doc" />
+			<beans:bean class="com.dg.patient.interceptor.AuthenticationInterceptor">
+				<beans:property name="userService" ref="userService"></beans:property>
+			</beans:bean>
+		</mvc:interceptor>
+		<mvc:interceptor>
+		    <mapping path="/api/**" />
+			<beans:bean class="com.dg.patient.interceptor.ApiAuthenticationInterceptor">
+				<beans:property name="apiService" ref="apiService"></beans:property>
+			</beans:bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
+			
+	<context:component-scan base-package="com.dg.patient" />
+
+</beans:beans>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns="//www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:fragment="page">
+<head>
+	<meta charset="utf-8"/>
+        <title th:text="#{page.title}">DoctorGlobe</title>
+        <meta name="description" content=""/>
+        <meta name="viewport" content="width=device-width"/>
+        <link rel="shortcut icon" th:href="@{/resources/images/favicon.ico}"/>
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->     
+        <link rel="stylesheet" th:href="@{/resources/styles/jquery-ui.css}"/>
+        <link rel="stylesheet" th:href="@{'/resources/styles/main.min.css'}"/>
+        <link rel="stylesheet" th:href="@{'/resources/styles/home.min.css'}"/>
+        <link rel="stylesheet" th:href="@{/resources/styles/img.css}"/> 
+        <link rel="stylesheet" th:href="@{/resources/styles/dd.min.css}"/>
+        <link rel="stylesheet" th:href="@{/resources/styles/tooltipster/tooltipster.css}"/>
+        <link rel="stylesheet" th:href="@{/resources/styles/jquery.datetimepicker.css}"/>
+        <link th:href="@{/webjars/fancybox/2.1.5/jquery.fancybox.css}" rel="stylesheet" />
+        <link rel="stylesheet" th:href="@{'/resources/styles/'+${theme}+'whitelabel.css'}" th:if="${theme != null}"/>            
+        <script th:src="@{/webjars/jquery/2.1.1/jquery.min.js}"></script>        
+		<script th:src="@{/resources/scripts/jquery-ui.js}"></script>
+		<script th:src="@{/webjars/jquery-validation/1.11.1/jquery.validate.js}"></script>
+		<script th:src="@{/webjars/fancybox/2.1.5/jquery.fancybox.js}"></script>
+		<script type="text/javascript" th:src="@{/resources/scripts/lib/jquery.dd.js}"></script>
+		<script type="text/javascript" th:src="@{/resources/scripts/lib/tooltipster/jquery.tooltipster.min.js}"></script>
+		<script type="text/javascript" th:src="@{/resources/scripts/jquery.datetimepicker.js}"></script>		
+	  	<script th:src="@{/resources/scripts/web.min.js}"></script>
+</head>
+<body th:class="page-home">
+	<div id="wrapper">
+		<header th:replace="fragments/header :: header"></header>
+		<main th:include="this::content" id="main-content"></main>
+		<footer th:replace="fragments/footer :: footer"></footer>
+		<div class="overlay-bg"></div>				
+		<div th:replace="fragments/confirmation :: confirmation"></div>
+	</div>		
+</body>
+</html>

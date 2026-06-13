@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:include="layouts/layout::page" class='sidebar-large'>
+<body th:class="page-common">
+	<main id="main-content" th:fragment='content'>
+	<div class="wrap">
+                <!-- topbar-->
+                <div class="my-block">
+                    <h3 class="hel-med fs-20" th:text="#{page.doctor_area}"></h3>
+                </div>                
+                <aside class="sidebar">                    
+                    <div class="my-block" th:each="p : ${patientList}">
+                    	<figure>
+                            <img th:if="${p.photo !=null }" th:src="@{'/tmp/patient/'+${p.id}+'/photo/'+${p.photo}}" height="170" width="174" th:alt="${p.name}"/>
+                            <img th:if="${p.photo == null}" th:src="@{'/resources/images/demo_user.gif'}" height="170" width="174" th:alt="${p.name}"/>
+                            
+                        </figure>
+                        <h3 class="my-title-md"><strong th:text="${p.name}"></strong></h3>
+                        <p><span th:text="#{page.doctorarea.patient.age}"></span> <span th:text="${p.age}"></span></p>
+                        <p><span th:text="#{page.doctorarea.patient.address}"></span> <span th:text="${p.address+' ,'+p.city}"></span></p>
+                        <p><span th:text="#{page.doctorarea.patient.phone_number}"></span><span th:text="${p.phone}"></span></p>
+                        <p><span th:text="#{page.doctorarea.patient.gender}"></span><span th:text="#{gender.+${p.gender}}"></span></p>
+                        <p><span th:text="#{page.doctorarea.patient.medical_conditions}"></span><br/>
+                        <span th:text="${p.treatmentName}"></span></p>     
+                       <div class="row my-row">
+                            <a th:href="@{'/home/booking/edit'(pc=${p.patientcaseId})}" class="square tooltip various fancybox.iframe" th:title="#{page.doctorarea.book_procedure}" data-fancybox-width="645" data-fancybox-height="550"><i class="ico ico-cal-gray"></i></a>
+                            <a th:href="@{'/home/schedule/add'(pc=${p.patientcaseId})}" class="square tooltip various fancybox.iframe" th:title="#{page.doctorarea.call_procedure}" data-fancybox-width="645" data-fancybox-height="550"><i class="ico ico-tel-gray"></i></a>
+                            <a th:href="@{'/home/postmessage/edit'(pc=${p.patientcaseId})}" class="square tooltip various fancybox.iframe" th:title="#{page.doctorarea.mail_procedure}" data-fancybox-width="645" data-fancybox-height="345"><i class="ico ico-mail-gray"></i></a>
+                            <a th:href="@{'/home/case/delete'(pc=${p.patientcaseId},dc=1)}" class="square tooltip various fancybox.iframe" th:title="#{page.doctorarea.delete_procedure}" data-fancybox-width="645" data-fancybox-height="331"><i class="ico ico-trash-gray"></i></a>
+                       </div>                    
+                    </div>
+                    
+                     <!-- module: booker procedure -->
+                    <div class="my-block no-pad module">
+                        <h3 class="my-title-md" th:text="#{page.doctorarea.scheduled_procedure}"></h3>
+                        <div class="my-block-content">
+                            <ul class="my-list">
+                                <li th:each="pbl :${patientBookingList}" th:if="${pbl.bookingDt.toString() != '1970-01-01 00:00:00.0'}">
+                                	<p th:if="${pbl.bookingTimezone != pbl.patientTimezone and bookingDate == pbl.patientBookingDate}">
+                                    	<strong class="fs-14" th:text="#{page.doctorarea.date}">Date: </strong> 
+                                    	<span th:text="${#dates.format(pbl.bookingDt,'MMM dd, yyyy')}"></span>
+                                    </p>
+                                	<p th:if="${pbl.bookingTimezone == pbl.patientTimezone}">
+                                    	<strong class="fs-14" th:text="#{page.doctorarea.date}">Date: </strong> 
+                                    	<span th:text="${#dates.format(pbl.bookingDt,'MMM dd, yyyy')}"></span>
+                                    </p>
+                                    <p th:if="${pbl.bookingTimezone == pbl.patientTimezone}">
+                                    	<strong class="fs-14" th:text="#{page.doctorarea.time}"></strong>
+                                    	<span th:text="${#dates.format(pbl.bookingDt,'hh:mm a')}"></span>                                    	
+                                    </p>
+                                    <p th:if="${pbl.bookingTimezone != pbl.patientTimezone and bookingDate != pbl.patientBookingDate}">
+                                    	<strong class="fs-14" th:text="#{page.doctorarea.your_date}">Date: </strong> 
+                                    	<span th:text="${#dates.format(pbl.bookingDt,'MMM dd, yyyy')}"></span>
+                                    </p>
+                                    <p th:if="${pbl.bookingTimezone != pbl.patientTimezone}">
+                                    	<strong class="fs-14" th:text="#{page.doctorarea.your_time}"></strong>
+                                    	<span th:text="${#dates.format(pbl.bookingDt,'hh:mm a')}"></span>                                    	
+                                    </p>
+                                    <p th:if="${pbl.bookingTimezone != pbl.patientTimezone and bookingDate != pbl.patientBookingDate}">
+                                    	<strong class="fs-14" th:text="#{page.doctorarea.patient_date}">Date: </strong> 
+                                    	<span th:text="${pbl.patientBookingDate}"></span>
+                                    </p>
+                                    <p th:if="${pbl.bookingTimezone != pbl.patientTimezone}">
+                                    	<strong class="fs-14" th:text="#{page.doctorarea.patient_time}"></strong>
+                                    	<span th:text="${pbl.patientBookingTime}"></span>                                    	
+                                    </p>                                    
+                                    <p>
+                                    	<strong class="fs-14" th:text="#{page.doctorarea.status}"></strong>
+                                    	<span th:text="${pbl.bookingStatus}"></span>
+                                    </p>
+                                    <div class="small-nav">
+                                        <i class="ico ico-hamburger"></i>
+                                        <ul>
+                                            <li th:if="${pbl.bookingStatus != 'Cancel'}">
+                                                <a th:href="@{'/home/booking/cancel'(pc=${pbl.patientcaseId},dc=0)}" th:title="#{page.doctorarea.cancel_call}" class="various fancybox.iframe" data-fancybox-width="645" data-fancybox-height="331" th:text="#{page.doctorarea.cancel_procedure}">Cancel Procedure</a>
+                                            </li>
+                                            <li>
+                                                <a th:href="@{'/home/booking/edit'(pc=${pbl.patientcaseId})}" th:title="#{page.doctorarea.reschedule_call}" class="various fancybox.iframe" data-fancybox-width="645" data-fancybox-height="550" th:text="#{page.doctorarea.reschedule_procedure}">Reschedule Procedure</a>
+                                            </li>
+                                            <li>
+                                                <a th:href="@{'/home/booking/view'(pc=${pbl.patientcaseId})}" th:title="#{page.doctorarea.show_on_calendar}" class="various fancybox.iframe" data-fancybox-width="645" data-fancybox-height="405" th:text="#{page.doctorarea.show_on_calendar}">Show on Calendar</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>                               
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- module: booker procedure -->
+                    <div class="my-block no-pad module">
+                        <h3 class="my-title-md" th:text="#{page.doctorarea.scheduled_call}">Scheduled Call</h3>
+                        <div class="my-block-content">
+                            <ul class="my-list">
+                                <li th:each="pcl : ${patientConferenceList}" th:if="${pcl.conferenceDt.toString() != '1970-01-01 00:00:00.0'}">
+                                    <p th:if="${pcl.conferenceTimezone == pcl.patientTimezone}">
+                                    	<strong class="fs-14" th:text="#{page.doctorarea.date}">Date: </strong> 
+                                    	<span th:text="${#dates.format(pcl.conferenceDt,'MMM dd, yyyy')}"></span>
+                                    </p>
+                                    <p th:if="${pcl.conferenceTimezone == pcl.patientTimezone}">
+                                    	<strong class="fs-14" th:text="#{page.doctorarea.time}"></strong>
+                                    	<span th:text="${#dates.format(pcl.conferenceDt,'hh:mm a')}"></span>                                    	
+                                    </p>
+                                    <p th:if="${pcl.conferenceTimezone != pcl.patientTimezone and conferenceDate == pcl.patientConferenceDate}">
+                                    	<strong class="fs-14" th:text="#{page.doctorarea.date}">Date: </strong> 
+                                    	<span th:text="${#dates.format(pcl.conferenceDt,'MMM dd, yyyy')}"></span>
+                                    </p>
+                                    <p th:if="${pcl.conferenceTimezone != pcl.patientTimezone and conferenceDate != pcl.patientConferenceDate}">
+                                    	<strong class="fs-14" th:text="#{page.doctorarea.your_date}">Date: </strong> 
+                                    	<span th:text="${#dates.format(pcl.conferenceDt,'MMM dd, yyyy')}"></span>
+                                    </p>
+                                    <p th:if="${pcl.conferenceTimezone != pcl.patientTimezone}">
+                                    	<strong class="fs-14" th:text="#{page.doctorarea.your_time}"></strong>
+                                    	<span th:text="${#dates.format(pcl.conferenceDt,'hh:mm a')}"></span>                                    	
+                                    </p>
+                                    <p th:if="${pcl.conferenceTimezone != pcl.patientTimezone and conferenceDate != pcl.patientConferenceDate}">
+                                    	<strong class="fs-14" th:text="#{page.doctorarea.patient_date}">Date: </strong> 
+                                    	<span th:text="${pcl.patientConferenceDate}"></span>
+                                    </p>
+                                    <p th:if="${pcl.conferenceTimezone != pcl.patientTimezone}">
+                                    	<strong class="fs-14" th:text="#{page.doctorarea.patient_time}"></strong>
+                                    	<span th:text="${pcl.patientConferenceTime}"></span>                                    	
+                                    </p>
+                                    <p>
+                                    	<strong class="fs-14" th:text="#{page.doctorarea.status}"></strong>
+                                    	<span th:text="${pcl.patientconferenceStatus}"></span>
+                                    </p>
+                                    <div class="small-nav">
+                                        <i class="ico ico-hamburger"></i>
+                                        <ul>
+                                            <li th:if="${pcl.patientconferenceStatus != 'Rejected'}">
+                                                <a th:href="@{'/home/schedule/cancel'(id=${pcl.patientconferenceId},pc=${pcl.patientcaseId})}" th:title="#{page.doctorarea.cancel_call}" class="various fancybox.iframe" data-fancybox-width="645" data-fancybox-height="331" th:text="#{page.doctorarea.cancel_call}">Cancel Call</a>
+                                            </li>
+                                            <li th:if="${pcl.patientconferenceStatus != 'Accepted' and pcl.patientconferenceStatus != 'Rejected'}">
+                                                <a th:href="@{'/home/schedule/edit'(id=${pcl.patientconferenceId},pc=${pcl.patientcaseId})}" th:title="#{page.doctorarea.reschedule_call}" class="various fancybox.iframe" data-fancybox-width="645" data-fancybox-height="550" th:text="#{page.doctorarea.reschedule_call}"></a>
+                                            </li>
+                                            <li>
+                                                <a th:href="@{'/home/schedule/view'(pc=${pcl.patientcaseId})}" th:title="#{page.doctorarea.show_on_calendar}" class="various fancybox.iframe" data-fancybox-width="645" data-fancybox-height="405" th:text="#{page.doctorarea.show_on_calendar}"></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>                               
+                            </ul>
+                        </div>
+                    </div>
+                </aside>                
+                 <!-- results -->
+                <section class="results">                                            
+                    <div class="row">
+                        <ol class="my-tab-head tabs mb-0 fl bottom-1 cust-white">
+                            <li th:class="${msg == 0} ? active : null"><a id="patientfileshow" class="viewpatient" href="#lsRet" th:title="#{page.doctorarea.upload_files}" th:text="#{page.doctorarea.upload_files}"></a></li>
+                            <li th:class="${msg == 1} ? active : null"><a id="patientconferenceshow" class="viewpatient" href="#lsRet" th:title="#{page.doctorarea.disccussion}" th:text="#{page.doctorarea.disccussion}"></a></li>
+                        </ol>
+                        <p class="fr hel-med fs-20"><a th:href="@{/home/index}" th:text="#{page.doctorarea.back_to_dashboard}"></a></p>
+                    </div>
+                    
+                    <div class="my-block row-zebra">
+                        <article th:each="pcml : ${patientCaseMessageList}" th:class="row +' '+ res +' '+ res-sm +' '+ patientconferenceshow +' '+${pcml.pcmClass}" th:classappend="${msg == 0} ? hide : null">
+                            <ul>
+                                <li>
+                                    <figure th:if="${pcml.senderType == 'Patient'}" class="fig-block">
+                                        <img th:if="${pcml.photo != null}" th:src="@{'/tmp/patient/'+${pcml.id}+'/photo/'+${pcml.photo}}" height="66" width="65" th:alt="${pcml.name}"/>
+                                        <img th:if="${pcml.photo == null}" th:src="@{'/resources/images/demo_user.gif'}" height="66" width="65" th:alt="${pcml.name}"/>                                       
+                                    </figure>
+                                    <figure th:if="${pcml.senderType == 'Practitioner'}" class="fig-block">                               
+                                        <img th:if="${userImage != null}" th:src="@{${userImage}}" height="66" width="65" th:alt="${userImage}"/>
+                                        <img th:if="${userImage == null}" th:src="@{'/resources/images/demo_user.gif'}" height="66" width="65" th:alt="${pcml.name}"/>
+                                    </figure>
+                                    <figure th:if="${pcml.senderType == 'System'}" class="fig-block">                                        
+                                        <img th:src="@{'/resources/images/demo_user.gif'}" height="66" width="65"/>                                       
+                                    </figure>
+                                </li>
+                                <li>
+                                    <h3 th:text="${pcml.subject}"></h3>
+                                    <p th:utext="${pcml.message}"></p>
+                                </li>
+                                <li class="tr">
+                                    <p>
+                                    	<span th:text="#{page.doctorarea.sent}">Sent:</span>
+                                    	<span th:text="${#dates.format(pcml.sentDt,'MMM dd, yyyy')}"></span>
+                                    </p>
+                                    <div th:if="${pcml.senderType == 'Patient'}" class="btn-block">
+                                        <a th:href="@{'/home/postmessage/edit'(pc=${pcml.patientcaseId},subject=${pcml.subject})}" class="various fancybox.iframe" data-fancybox-width="645" data-fancybox-height="345"><button class="btn btn-dk-blue btn-fixed">Reply</button></a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </article>
+                        <div class="patientfileshow" th:classappend="${msg == 1} ? hide : null"> 
+	                        <ul class="row my-res-col">
+	                            <li class="res" th:each="file : ${patientFileList}">
+	                                <h3 th:text="${file.docName}"></h3>
+	                                <button class="ico ico-close"></button>	                                
+	                                <figure class="fig-block" th:switch="${file.fileType}">
+	                                   	<a th:href="@{'/tmp/patient/'+${file.id}+'/upload/'+${file.fileName}}" th:case="'application/pdf'">
+	                                   		<img class="image-description" th:src="@{'/resources/images/pdf.jpeg'}" height="121" width="121" th:title="${file.fileDescription}"/>
+	                                    	<button th:title="#{click_for_large_image}"><i class="ico ico-sm-search-lg"></i></button>
+	                                    </a>                           
+	                                    <a th:href="@{'/tmp/patient/'+${file.id}+'/upload/'+${file.fileName}}" th:case="'application/zip'">
+	                                   		<img class="image-description" th:src="@{'/resources/images/zip.jpeg'}" height="48" width="48" th:title="${file.fileDescription}"/>
+	                                    	<button th:title="#{click_for_large_image}"><i class="ico ico-sm-search-lg"></i></button>
+	                                    </a>                           
+	                                    <a th:href="@{'/tmp/patient/'+${file.id}+'/upload/'+${file.fileName}}" th:case="'application/msword'">
+	                                   		<img class="image-description" th:src="@{'/resources/images/doc.jpeg'}" height="45" width="46" th:title="${file.fileDescription}"/>
+	                                    	<button th:title="#{click_for_large_image}"><i class="ico ico-sm-search-lg"></i></button>
+	                                    </a>                           
+	                                    <a th:href="@{'/tmp/patient/'+${file.id}+'/upload/'+${file.fileName}}" th:case="'application/vnd.openxmlformats-officedocument.wordprocessingml.document'">
+	                                   		<img class="image-description" th:src="@{'/resources/images/doc.jpeg'}" height="46" width="45" th:title="${file.fileDescription}"/>
+	                                    	<button th:title="#{click_for_large_image}"><i class="ico ico-sm-search-lg"></i></button>
+	                                    </a>                           
+	                                    <a th:href="@{'/tmp/patient/'+${file.id}+'/upload/'+${file.fileName}}" th:case="'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'">
+	                                   		<img class="image-description" th:src="@{'/resources/images/excel.jpeg'}" height="136" width="147" th:title="${file.fileDescription}"/>
+	                                    	<button th:title="#{click_for_large_image}"><i class="ico ico-sm-search-lg"></i></button>
+	                                    </a>                           
+	                                    <a th:href="@{'/tmp/patient/'+${file.id}+'/upload/'+${file.fileName}}" th:case="'application/vnd.ms-excel'">
+	                                   		<img class="image-description" th:src="@{'/resources/images/excel.jpeg'}" height="136" width="147" th:title="${file.fileDescription}"/>
+	                                    	<button th:title="#{click_for_large_image}"><i class="ico ico-sm-search-lg"></i></button>
+	                                    </a>
+	                                    <a class="fancybox" th:href="@{'/tmp/patient/'+${file.id}+'/upload/'+${file.fileName}}" th:case="*" >
+	                                   		<img class="image-description" th:src="@{'/tmp/patient/'+${file.id}+'/upload/'+${file.fileName}}" height="136" width="147" th:title="${file.fileDescription}"/>
+	                                    	<button th:title="#{click_for_large_image}"><i class="ico ico-sm-search-lg"></i></button>
+	                                    </a>                                  
+                                </figure>
+	                                <p><span th:text="#{page.doctorarea.date}"></span> <span th:text="${#dates.format(file.fileDt,'MMM dd ,yyyy')}"></span></p>
+	                            </li>
+	                        </ul>
+                        </div>                    
+                    </div>
+                </section>             
+            </div>	
+	</main>
+</body>
+</html>	

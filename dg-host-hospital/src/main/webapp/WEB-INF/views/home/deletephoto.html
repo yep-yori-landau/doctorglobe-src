@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	th:include="layouts/layoutcontext::page">
+<body>
+	<div th:fragment='content'>
+		<div class="overlay o-sm js-upload-overlay">
+	        <div class="overlay-header">
+	            <h3 th:if="${video == 0}" th:text="#{page.hospital.delete_hospital_photos}">Delete Hospital Photos</h3>
+	            <h3 th:if="${video == 1}" th:text="#{page.hospital.delete_hospital_videos}">Delete Hospital Videos</h3>
+	            <button class="ico ico-close btn fancyclose"></button>
+	        </div>        
+	        <div class="overlay-content upload-content">
+	           <form class="form-block" th:action="@{/home/deletephoto}" th:object="${uploadFileForm}" method="post">
+	           		<input type="hidden" th:field="*{id}" th:value="*{id}" />
+               		<input type="hidden" th:field="*{path}" th:value="*{path}" />
+               		<input type="hidden" th:field="*{type}" th:value="*{type}" />
+               		<input type="hidden" th:field="*{healthcareprovider}" th:value="*{healthcareprovider}" />
+               		<input type="hidden" th:field="*{isPrimary}" th:value="*{isPrimary}" />
+               		<input type="hidden" th:field="*{description}" th:value="*{description}" />
+               		<input type="hidden" th:field="*{name}" th:value="*{name}" />
+               		<h3 class="hel-med fs-15 imgname1" th:text="${uploadFileForm.name}" th:title="${uploadFileForm.name}">Hospital Exterior</h3>				
+					<ul class="mt-20 row">
+						<li class="fl w-70">
+							<figure>
+								<img th:if="${video == 0}" th:src="@{'/doctorglobe-hospital/hospital/'+${uploadFileForm.healthcareprovider}+'/photo/'+${uploadFileForm.path}}" height="288" width="380"/>
+								<video th:if="${video == 1}" th:src="@{'/doctorglobe-hospital/hospital/'+${uploadFileForm.healthcareprovider}+'/video/'+${uploadFileForm.path}}" height="288" width="380" controls="controls"></video>
+							</figure>
+						</li>
+						<li>						
+							<p><span>Description:</span> <br /> <span th:text="${uploadFileForm.description}"></span></p>
+						</li>
+					
+					</ul>
+	               
+					<p class="tc mt-20">
+						<button type="button" class="btn btn-dk-blue btn-sm fancyclose" th:text="#{page.btn.cancel}">Cancel</button>
+						 &nbsp; <button type="Submit" class="btn btn-blue btn-sm" th:text="#{page.btn.delete}">Delete</button>
+					</p>
+	           </form>
+	        </div>
+	          <script type="text/javascript" th:inline='javascript'>
+		$(document).ready(function() {
+			/*[+
+			var msg = [[${success}]];			
+			+]*/			
+			if(msg == 1){
+				parent.jQuery.fancybox.close();											
+			}
+		});
+   </script>		
+	     </div>
+    </div>     
+</body>
+</html>     

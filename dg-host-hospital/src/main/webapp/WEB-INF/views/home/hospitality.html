@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:include="layouts/layout::page">
+<body>
+	<main id="main-content" th:fragment='content'>	
+	  <div class="wrap">
+			<aside th:replace="fragments/sidebar :: sidebar"></aside>
+			<div id="container">
+				  <div class="my-block">
+                        <h3 class="hel-med fs-16 title-in" >
+                        	<span th:text="#{page.hospital.hospitality}"></span>                        	
+                        </h3>
+                        <form th:action="@{/home/hospitality}" th:object="${hospitalityForm}" method="post">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th th:text="#{page.hospital.hospitality.service}">Service:</th>
+                                        <th></th>
+                                        <th th:text="#{page.hospital.hospitality.price}">Price:</th>
+                                        <th th:text="#{page.hospital.hospitality.currency}">Currency:</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="hospitalAmenityFormModel,rowStat : ${hospitalityForm.hospitalAmenityFormModel}">
+                                        <td th:text="${hospitalAmenityFormModel.amenityName}"></td>
+                                        <td>
+                                        	<input type="hidden" th:field="*{hospitalAmenityFormModel[__${rowStat.index}__].id}"/>                                	                                                        
+                                			<input type="hidden" th:field="*{hospitalAmenityFormModel[__${rowStat.index}__].healthcareprovider}"/>
+                                			<input type="hidden" th:field="*{hospitalAmenityFormModel[__${rowStat.index}__].amenity}"/>                                		    
+                                            <select th:field="*{hospitalAmenityFormModel[__${rowStat.index}__].isChecked}" th:id="hospitalAmenityFormModel+''+${rowStat.index}+isChecked" class="w-140 my-select">
+                                                <option th:text="Yes" th:value="true">Yes</option>
+                                                <option th:text="No" th:value="false">No</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <input type="text" th:field="*{hospitalAmenityFormModel[__${rowStat.index}__].price}"/>
+                                        </td>
+                                        <td>
+                                            <input type="text" th:field="*{hospitalAmenityFormModel[__${rowStat.index}__].currency}" class="w-140" id="currency" readonly="readonly"/>                                                
+                                        </td>
+                                    </tr>                           
+                                    <tr>
+                                        <td th:text="#{page.hospital.hospitality.language}" class="hel-med fs-16">Languages</td>
+                                        <td colspan="3">
+                                            <ul>
+                                                <li th:each="hospitalLanguageFormModel,rowStat : ${hospitalityForm.hospitalLanguageFormModel}">
+                                                    <input type="hidden" th:field="*{hospitalLanguageFormModel[__${rowStat.index}__].id}"/>                                	                                                        
+                                					<input type="hidden" th:field="*{hospitalLanguageFormModel[__${rowStat.index}__].healthcareprovider}"/>
+                                					<input type="hidden" th:field="*{hospitalLanguageFormModel[__${rowStat.index}__].language}"/>
+                                    				<label th:for="hospitalLanguageFormModel+${rowStat.index}+.isChecked">
+                                    					<span class="box"></span>
+	                                        			<input type="checkbox" th:field="*{hospitalLanguageFormModel[__${rowStat.index}__].isChecked}" th:id="hospitalLanguageFormModel+${rowStat.index}+.isChecked"/>	                                        			
+	                                        			<span th:text="${hospitalLanguageFormModel.languageName}"></span>
+                                    				</label> 
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td th:text="#{page.hospital.hospitality.food}" class="hel-med fs-16">Optional Menu</td>
+                                        <td colspan="3">
+                                            <ul>
+                                                <li th:each="hospitalCuisineFormModel,rowStat : ${hospitalityForm.hospitalCuisineFormModel}">
+                                                    <input type="hidden" th:field="*{hospitalCuisineFormModel[__${rowStat.index}__].id}"/>                                	                                                        
+                                					<input type="hidden" th:field="*{hospitalCuisineFormModel[__${rowStat.index}__].healthcareprovider}"/>
+                                					<input type="hidden" th:field="*{hospitalCuisineFormModel[__${rowStat.index}__].cuisine}"/>
+                                    				<label th:for="hospitalCuisineFormModel+${rowStat.index}+.isChecked">
+                                    					<span class="box"></span>
+	                                        			<input type="checkbox" th:field="*{hospitalCuisineFormModel[__${rowStat.index}__].isChecked}" th:id="hospitalCuisineFormModel+${rowStat.index}+.isChecked"/>                                        			
+	                                        			<span th:text="${hospitalCuisineFormModel.cuisineName}"></span>
+                                    				</label> 
+                                                </li>                                                
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="tr my-btn-block">
+                                <button class="btn btn-sm btn-dk-blue btn-cancel" type="button" th:text="#{page.hospital.hospitality.btn_cancel}">Cancel</button>
+                                <button class="btn btn-sm btn-blue" type="submit" th:text="#{page.hospital.hospitality.btn_save_changes}">Save Changes</button>
+                            </div>
+                        </form>                        
+                    </div>
+			</div>			
+	  </div>
+	</main>	
+</body>
+</html>		

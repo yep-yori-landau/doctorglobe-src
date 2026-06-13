@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	th:include="layouts/layoutcontext::page" class='sidebar-large'>
+<body>
+	<div th:fragment='content'>
+		<div class="overlay o-sm my-calender-overlay">
+			<div class="overlay-header bg">
+				<h3 th:text="#{page.doctorarea.mycalender}">My Calender:</h3>
+				<button class="ico ico-close btn btn-blue fancyclose"></button>
+			</div>
+			<div class="overlay-content">				
+				<h3 class="mt-10" th:text="#{page.doctorarea.scheduled_procedure}">Scheduled Procedure:</h3>
+				<ul class="row col-2 gt-10 mt-10">
+					<li>
+						<article class="com-block no-pad" th:each="pbl :${patientBookingList}">
+									<p th:if="${pbl.bookingTimezone != pbl.patientTimezone and bookingDate == pbl.patientBookingDate}">
+                                    	<strong class="fs-14" th:text="#{page.doctorarea.date}">Date: </strong> 
+                                    	<span th:text="${#dates.format(pbl.bookingDt,'MMM dd, yyyy')}"></span>
+                                    </p>
+                                	<p th:if="${pbl.bookingTimezone == pbl.patientTimezone}">
+                                    	<strong class="fs-14" th:text="#{page.doctorarea.date}">Date: </strong> 
+                                    	<span th:text="${#dates.format(pbl.bookingDt,'MMM dd, yyyy')}"></span>
+                                    </p>
+                                    <p th:if="${pbl.bookingTimezone == pbl.patientTimezone}">
+                                    	<strong class="fs-14" th:text="#{page.doctorarea.time}"></strong>
+                                    	<span th:text="${#dates.format(pbl.bookingDt,'hh:mm a')}"></span>                                    	
+                                    </p>
+                                    <p th:if="${pbl.bookingTimezone != pbl.patientTimezone and bookingDate != pbl.patientBookingDate}">
+                                    	<strong class="fs-14" th:text="#{page.doctorarea.your_date}">Date: </strong> 
+                                    	<span th:text="${#dates.format(pbl.bookingDt,'MMM dd, yyyy')}"></span>
+                                    </p>
+                                    <p th:if="${pbl.bookingTimezone != pbl.patientTimezone}">
+                                    	<strong class="fs-14" th:text="#{page.doctorarea.your_time}"></strong>
+                                    	<span th:text="${#dates.format(pbl.bookingDt,'hh:mm a')}"></span>                                    	
+                                    </p>
+                                    <p th:if="${pbl.bookingTimezone != pbl.patientTimezone and bookingDate != pbl.patientBookingDate}">
+                                    	<strong class="fs-14" th:text="#{page.doctorarea.patient_date}">Date: </strong> 
+                                    	<span th:text="${pbl.patientBookingDate}"></span>
+                                    </p>
+                                    <p th:if="${pbl.bookingTimezone != pbl.patientTimezone}">
+                                    	<strong class="fs-14" th:text="#{page.doctorarea.patient_time}"></strong>
+                                    	<span th:text="${pbl.patientBookingTime}"></span>                                    	
+                                    </p>
+							<p><span th:text="#{page.doctorarea.scheduled_procedure_with}"></span><span th:text="${' '+pbl.name}"></span></p>
+							<p><strong th:text="#{page.doctorarea.status}"></strong><span th:text="${' '+pbl.bookingStatus}"></span></p>
+						</article>						
+					</li>										
+				</ul>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

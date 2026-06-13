@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<body>
+<div class="overlay o-sm js-signin-overlay" th:fragment="signin">
+        <div class="overlay-header">
+            <h3 th:text="#{signin.signin}">Sign In</h3>
+            <button class="ico ico-close btn btn-blue"></button>
+        </div>
+        <div class="overlay-banner">
+            <i class="ico ico-logo"></i>
+            <h3>            
+             <span th:text="#{signin.sign_into_your_account}">Sign In to Your Account</span>
+             <span class="overlay-sigin">
+             	<small th:text="#{signin.not_registered_yet}">Not Registered Yet?</small>
+             	<a href="#lsRet" th:text="#{signin.signup}">Sign Up</a>
+             </span>
+           </h3>
+        </div>
+        <div class="overlay-content">
+            <form name="loginform" id="loginform" class="form-block" th:object="${loginform}" method='post'>
+                <ul class="row col-2 gt-10">
+                    <li>
+                        <label for="email" th:text="#{signin.email}">Email</label>
+                        <input type="email" name="email" id="email" required ="" th:field="*{email}" />
+                        <p th:text="#{signin_invalid_email_password}" th:class="error+' '+hide+' '+loginerror">Invalid Email/Password</p>
+                    </li>
+                    <li>
+                        <label for="password" th:text="#{signin.password}">Password</label>
+                        <input type="password" name="password" id="password" required ="" th:field="*{password}" />                        
+                        <p class="tr"><a href="#" th:text="#{signin.forgot_my_password}">* Forgot my password</a></p>
+                    </li>
+                </ul>
+                <ul class="row col-2 gt-10">
+                    <li>
+                        <label class="check">
+                            <input type="checkbox"/>
+                            <span th:text="#{signin.keep_me_signed_in}">Keep me signed in</span>
+                        </label>
+                    </li>
+                    <li class="tr">
+                        <button type="submit" class="btn btn-green btn-lg" th:text="#{signin.button_signin}">Sign In</button>
+                    </li>
+                </ul>
+            </form>
+        </div>
+    </div>
+   </body>
+   </html> 

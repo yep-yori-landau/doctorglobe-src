@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="header">
+	<!-- Main menu toggle -->
+	<button type="button" id="main-menu-toggle">
+		<i class="navbar-icon fa fa-bars icon"></i><span
+			class="hide-menu-text">HIDE MENU</span>
+	</button>
+	<div class="navbar-inner">
+		<!-- Main navbar header -->
+		<div class="navbar-header">
+			<!-- Logo -->
+			<div class="navbar-logo">
+				<a th:href="@{/}"> <img
+					th:src="@{/resources/assets/images/logo.png}">
+				</a>
+			</div>
+
+			<!-- Main navbar toggle -->
+			<button type="button" class="navbar-toggle collapsed"
+				data-toggle="collapse" data-target="#main-navbar-collapse">
+				<i class="navbar-icon fa fa-bars"></i>
+			</button>
+
+		</div>
+		<!-- / .navbar-header -->
+
+		<div id="main-navbar-collapse"
+			class="collapse navbar-collapse main-navbar-collapse">
+			<div class="right clearfix">
+				<ul class="nav navbar-nav pull-right right-navbar-nav">
+					<li class="text-right"
+						style="font-size: 28px; padding: 0 5px 0 5px;"></li>
+					<li class="dropdown"><a href="#lsRET"
+						class="dropdown-toggle user-menu" data-toggle="dropdown"> <img
+							th:src="@{/resources/assets/images/pixel-admin/avatar.png}"
+							alt=""> <span>Admin</span>
+					</a>
+						<ul class="dropdown-menu">
+							<li><a href="#">Profile</a></li>
+							<li class="divider"></li>
+							<li><a href="/admin/index/logout"><i
+									class="dropdown-icon fa fa-power-off"></i>&nbsp;&nbsp;Log Out</a></li>
+						</ul></li>
+				</ul>
+				<!-- / .navbar-nav -->
+			</div>
+			<!-- / .right -->
+		</div>
+		<!-- / #main-navbar-collapse -->
+	</div>
+	<!-- / .navbar-inner -->
+</div>
+<!-- / #main-navbar -->
+
+</html>

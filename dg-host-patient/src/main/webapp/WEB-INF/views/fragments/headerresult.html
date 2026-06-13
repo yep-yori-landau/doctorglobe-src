@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<body>
+	 <header id="main-header" th:fragment="header">
+            <div class="wrap">
+                <a th:href="@{/search}" class="logo"></a>
+                  <form id="searchform" class="form-horizontal" action="#"
+						th:action="@{/}" th:object="${searchForm}" method="post" sec:authorize="!isAuthenticated()">
+                <div class="search-block">
+                		<ul>
+							<li th:each="e : ${#fields.detailedErrors()}"
+								th:class="${e.global}? globalerr : fielderr"><span
+								class="text-danger" th:text="${e.global}? '*' : ${e.fieldName}">The
+									field name</span> | <span class="text-danger" th:text="${e.message}">The
+									error message</span></li>
+						</ul>						
+						<input type="hidden" class="form-control" th:field="*{id}"/>
+						<ul><li><label class="text-danger" for="query"></label></li></ul>
+						<input type="text" th:field="*{query}" th:errorclass="has-error" class="fl inp" placeholder="Search Again"/>                    
+                    	<button class="btn btn-green fl ico ico-sm-search"></button>
+                </div>
+                </form>
+                <nav id="main-nav">
+                    <ul id="js-o-nav">
+                        <li sec:authorize="!hasRole('ROLE_ASSOCIATE')"><a th:href="@{/search}" th:title="#{header.search}" th:text="#{header.search}">Search</a></li>
+                        <li sec:authorize="!isAuthenticated()"><a th:href="@{/login}" th:title="#{header.signin}" th:text="#{header.userarea}" id="js-signin" class="various fancybox.iframe" data-fancybox-width="645" data-fancybox-height="385" data-value="0"></a></li>
+                        <li sec:authorize="!isAuthenticated()"><a th:href="@{/login}" th:title="#{header.signin}" th:text="#{header.signin}" id="js-signin" class="various fancybox.iframe" data-fancybox-width="645" data-fancybox-height="385" data-value="0"></a></li>
+                        <li sec:authorize="!isAuthenticated()" style="display:none"><a th:href="@{/signup}" id="js-signup" class="various1 fancybox.iframe" data-fancybox-width="645" data-fancybox-height="510"></a></li>
+                        <li sec:authorize="!isAuthenticated()" style="display:none"><a th:href="@{/forgot}" id="js-forgot" class="various1 fancybox.iframe" data-fancybox-width="645" data-fancybox-height="385"></a></li>
+                        <li sec:authorize="hasRole('ROLE_USER')" th:if="${isMyareaShow}"><a th:href="@{/user/myarea}" th:text="#{header.userarea}">My Area</a></li>
+                        <li sec:authorize="hasRole('ROLE_USER')"><a th:href="@{/logout}" th:title="#{header.signout}" th:text="#{header.signout}">Sign Out</a></li>
+                        <li sec:authorize="hasRole('ROLE_ASSOCIATE')"><a th:href="@{/admin-area}" th:title="#{header.brokerarea}" th:text="#{header.brokerarea}">Broker Area</a></li>
+                        <li sec:authorize="hasRole('ROLE_ASSOCIATE')"><a th:href="@{/logout}" th:title="#{header.signout}" th:text="#{header.signout}">Sign Out</a></li>                        
+						<li sec:authorize="hasRole('ROLE_USER')" th:if="${isProfileShow}"><a th:href="@{/user/profile}" th:title="#{header.userprofile}" th:text="#{header.userprofile}">My Profile</a></li>
+                        <li sec:authorize="hasRole('ROLE_USER')">
+                            <div class="user-menu global">
+                                <span class="user-info">
+                                    <a href="#lsRet">
+                                        <img th:if="${userImage != null}" th:src="@{${userImage}}" height="24" width="24"/>                                        
+                                        <span th:text="${userName}" class="pr-4"></span>
+                                    </a>
+                                    <!--<a href="#lsRet" class="user-ico ico-sm-mail mails"></a>-->
+                                </span>                                
+                            </div>                           
+                        </li>
+                        <li sec:authorize="!hasRole('ROLE_ASSOCIATE')">
+                        	<a th:if="${associateId != null}" th:href="@{/admin-area}" th:title="#{header.backtoadmin}" th:text="#{header.backtoadmin}">Back To Admin Area</a>                        	
+                        </li>
+                    </ul>
+                </nav>
+                   <script th:inline="javascript">
+		/*<![CDATA[*/
+			$(document).ready(function() {
+				$("#search").validate({
+					errorClass : "text-danger",
+					rules : {
+						query : "required"
+					},
+					messages : {
+						query : "Please enter query"
+					}
+				});
+				$("#query").autocomplete({
+					source: function( request, response ) {
+						$.ajax({
+							url: /*[[${application.solrurl}]]*/ 'http://localhost:8983/solr/select',
+							data: {
+								q: request.term,
+								wt: 'json'
+							},
+							dataType: "jsonp",
+							jsonp: 'json.wrf',
+							success: function( data ) {
+								response($.map(data.response.docs, function( item ) {
+									console.log(item);
+				                    return {
+				                    	id: item.id,
+				                    	value: item.name
+				                    }
+								}));
+							}
+						});
+					},
+				    select: function (event, ui) {
+				        $("#id").val(ui.item.id);
+				    },
+					minLength: 2
+				});
+			});		           
+		/*]]>*/
+	</script>
+            </div>
+        </header>
+</body>
+</html>

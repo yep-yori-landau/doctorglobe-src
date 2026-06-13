@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+	
+	<div th:fragment="sidebar">
+       <div id="main-menu-inner">
+           <ul class="navigation">
+                    <li class="mm-dropdown">
+                        <a href="#lsRet"><span class="mm-text" th:text="#{menu.heading.master}">Master</span>
+                        <span class="fa arrow"></span></a>
+                        <ul>
+                           	<li>
+                   			     <a th:href="@{'/region/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text" th:text="#{menu.heading.region}">Region</span></a>                        
+                    	   	</li>                    
+                    	   	<li>
+                        		<a th:href="@{'/country/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text" th:text="#{menu.heading.country}">Country</span></a>                        
+                    	   	</li>
+                    		<li>
+                        		<a th:href="@{'/state/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text" th:text="#{menu.heading.state}">State</span></a>
+                            	                        
+                    		</li>               
+                    		<li>
+                        		<a th:href="@{'/city/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text" th:text="#{menu.heading.city}">City</span></a>
+                            	                        
+                    		</li>                    		
+                    		<li>
+                        		<a th:href="@{'/translations/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text">Translations</span></a>                            	                        
+                    		</li>
+                    		<li>
+                        		<a th:href="@{'/aclroles/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text">Roles</span></a>                            	                        
+                    		</li>
+                    		<li>
+                        		<a th:href="@{'/aclresources/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text">Resources</span></a>                            	                        
+                    		</li>
+                    		<li>
+                        		<a th:href="@{'/acl-permissions/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text">Permissions</span></a>                            	                        
+                    		</li>
+                    		<li>
+                        		<a th:href="@{'/user/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text">User</span></a>                            	                        
+                    		</li>
+                    		<li>
+                        		<a th:href="@{'/api-user/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text">Api User</span></a>                            	                        
+                    		</li>
+                    		<li>
+                        		<a th:href="@{'/insurance/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text">Insurance</span></a>                                                    
+                    		</li>  
+                    		<li>
+                        		<a th:href="@{'/stats/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text">Stats</span></a>                                                    
+                    		</li> 
+                    		<li>
+                        		<a th:href="@{'/amenity/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text">Amenity</span></a>                                                  
+                    		</li>
+                    		<li>
+                        		<a th:href="@{'/accreditation/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text">Accreditation</span></a>                                           
+                    		</li>
+                    		<li>
+                        		<a th:href="@{'/attestations/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text">Attestations</span></a>                                           
+                    		</li>                    		
+                    		<li>
+                        		<a th:href="@{'/ratingcompanies/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text">Rating Companies</span></a>                            
+                    		</li>
+                    		<li>
+                        		<a th:href="@{'/cuisine/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text">Cuisine</span></a>                            
+                    		</li>
+                    		<li>
+                        		<a th:href="@{'/equipment/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text">Equipment</span></a>                            
+                    		</li> 
+                    		<li>
+                        		<a th:href="@{'/method/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text">Method</span></a>                            
+                    		</li>                   		  
+                    		                  		      
+                    		<li>
+                        		<a th:href="@{'/chain/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text">Chain</span></a>                            
+                    		</li> 
+                    		<li>
+                        		<a th:href="@{'/feature/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text">Feature</span></a>                            
+                    		</li>
+                    		<li>
+                        		<a th:href="@{'/audit/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text">Audit</span></a>                            
+                    		</li> 
+                    		<li>
+                        		<a th:href="@{'/exchange-rate/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text">Exchange Rate</span></a>                            
+                    		</li>
+                    		<li>
+                        		<a th:href="@{'/history/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text">History</span></a>                            
+                    		</li>                        		      
+                       </ul>                       
+                    </li> 
+                    <li class="mm-dropdown">
+                        <a href="#lsRet"><span class="mm-text" th:text="#{menu.heading.healthcareprovider}">healthcareprovider</span>
+                        <span class="fa arrow"></span></a>
+                        <ul>
+                           	<li>
+                   			     <a th:href="@{'/healthcareprovider/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text" th:text="#{menu.heading.healthcareprovider}">healthcareprovider</span></a>                        
+                    	   	</li>                    
+                    	   	<li>
+                        		<a th:href="@{'/healthcareprovider-accreditation/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text" th:text="#{menu.heading.healthcareprovider_accreditation}"></span></a>                        
+                    	   	</li>
+                    		<li>
+                        		<a th:href="@{'/healthcareprovider-amenity/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text" th:text="#{menu.heading.healthcareprovider_amenity}"></span></a>                         	                        
+                    		</li>                    		
+                    		<li>
+                        		<a th:href="@{'/healthcareprovider-cuisine/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text" th:text="#{menu.heading.healthcareprovider_cuisine}"></span></a>                            	                        
+                    		</li>
+                    		<li>
+                        		<a th:href="@{'/healthcareprovider-equipment/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text" th:text="#{menu.heading.healthcareprovider_equipment}"></span></a>                            	                        
+                    		</li>
+                    		<li>
+                        		<a th:href="@{'/healthcareprovider-healthcareprovidertype/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text" th:text="#{menu.heading.healthcareprovider_healthcareprovider_type}"></span></a>                            	                        
+                    		</li>
+                    		<li>
+                        		<a th:href="@{'/healthcareprovider-insurance/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text" th:text="#{menu.heading.healthcareprovider_insurance}">healthcareprovider Insurance</span></a>                            	                        
+                    		</li>
+                    		<li>
+                        		<a th:href="@{'/healthcareprovider-language/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text" th:text="#{menu.heading.healthcareprovider_language}">healthcareprovider Language</span></a>                            	                        
+                    		</li>
+                    		<li>
+                        		<a th:href="@{'/healthcareproviderphoto/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text" th:text="#{menu.heading.healthcareprovider_photo}">healthcareprovider Photo</span></a>                            	                        
+                    		</li>
+                    		<li>
+                        		<a th:href="@{'/healthcareprovider-ratings/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text" th:text="#{menu.heading.healthcareprovider_ratings}">healthcareprovider Ratings</span></a>                            	                        
+                    		</li>
+                    		<li>
+                        		<a th:href="@{'/healthcareprovider-specialty/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text" th:text="#{menu.heading.healthcareprovider_specialty}">healthcareprovider Specialty</span></a>                            	                        
+                    		</li>               		
+                    		<li>
+                        		<a th:href="@{'/healthcareprovider-practitioner/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text" th:text="#{menu.heading.healthcareprovider_practitioner}">healthcareprovider Practitioner</span></a>                            	                        
+                    		</li>
+                    		<li>
+                        		<a th:href="@{'/healthcareprovider-specialty-treatment-method/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text" th:text="#{menu.heading.healthcareprovider_specialty_treatment_method}">healthcareprovider Specialty Treatment Method</span></a>                            	                        
+                    		</li>
+                    		<li>
+                        		<a th:href="@{'/healthcareprovider-specialty-treatment-method-practitioner/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text" th:text="#{menu.heading.healthcareprovider_specialty_treatment_method_practitioner}">healthcareprovider Specialty Treatment Method Practitioner</span></a>                            	                        
+                    		</li>
+                    		<li>
+                        		<a th:href="@{'/healthcareprovider-specialty-treatment-method-practitioner-stat/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text" th:text="#{menu.heading.healthcareprovider_specialty_treatment_method_practitioner_stats}">healthcareprovider Specialty Treatment Method Practitioner Stats</span></a>                            	                        
+                    		</li>
+                    		<li>
+                        		<a th:href="@{'/healthcareproviderunit/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text" th:text="#{menu.heading.healthcareprovider_unit}">healthcareprovider Unit</span></a>                            	                        
+                    		</li>
+                    		<li>
+                        		<a th:href="@{'/healthcareprovider-user/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text" th:text="#{menu.heading.healthcareprovider_user}">healthcareprovider User</span></a>                            	                        
+                    		</li>
+                    		<li>
+                        		<a th:href="@{'/healthcareproviderphoto/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text" th:text="#{menu.heading.healthcareprovider_photo}">healthcareprovider Photo</span></a>                            	                        
+                    		</li> 
+                    		
+                    		<li>
+                        		<a th:href="@{'/healthcareprovidertype/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text" th:text="#{menu.heading.healthcareprovider_type}">healthcareprovider Type</span></a>                            	                        
+                    		</li>
+                    		<li>
+                        		<a th:href="@{'/healthcareprovider-unit-feature/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text" th:text="#{menu.heading.healthcareprovider_unit_feature}">healthcareprovider Unit Feature</span></a>                            	                        
+                    		</li>                    		
+                    		<li>
+                        		<a th:href="@{'/specialty/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text" th:text="#{menu.heading.specialty}">Specialty</span></a>                            
+                    		</li>
+                    		<li>
+                        		<a th:href="@{'/specialty-treatment/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text" th:text="#{menu.heading.specialty_treatment}">Specialty</span></a>                            
+                    		</li>
+                        </ul>
+                    </li>
+                    <li class="mm-dropdown">
+                        <a href="#lsRet">
+                        	<span class="mm-text" th:text="#{menu.heading.practitioner}">Practitioner</span>
+                        </a>
+                        <ul>
+                           	<li>
+                   			     <a th:href="@{'/practitioner/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text" th:text="#{menu.heading.practitioner}">Practitioner</span></a>                        
+                    	   	</li>                    
+                    	   	<li>
+                        		<a th:href="@{'/practitioner-language/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text" th:text="#{menu.heading.practitioner_language}">Practitioner Language</span></a>                        
+                    	   	</li>                    		               
+                    		<li>
+                        		<a th:href="@{'/practitionertype/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text" th:text="#{menu.heading.practitioner_type}">Practitioner Type</span></a>
+                            	                        
+                    		</li>
+                    		<li>
+                        		<a th:href="@{'/attestations-practitioner/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text" th:text="#{menu.heading.attestations_practitioner}">Attestations Practitioner</span></a>
+                            	                        
+                    		</li>  
+                        </ul>
+                    </li>          
+                    <li class="mm-dropdown">
+                        <a href="#lsRet"><span class="mm-text" th:text="#{menu.heading.patient}">Patient</span>
+                        </a>
+                        <ul>
+                           	<li>
+                   			     <a th:href="@{'/patient/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text" th:text="#{menu.heading.patient}">Patient</span></a>                        
+                    	   	</li>                    
+                    	   	<li>
+                        		<a th:href="@{'/patientcase/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text" th:text="#{menu.heading.patient_case}">Patient Case</span></a>                        
+                    	   	</li>
+                    		<li>
+                        		<a th:href="@{'/patientcaseaudit/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text" th:text="#{menu.heading.patient_case_audit}">Patient Case Audit</span></a>
+                            </li>               
+                    		<li>
+                        		<a th:href="@{'/patientcasebooking/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text" th:text="#{menu.heading.patient_case_booking}">Patient Case Booking</span></a>
+                            </li>
+                            <li>
+                        		<a th:href="@{'/patientcasemessages/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text" th:text="#{menu.heading.patient_case_email}">Patient Case Email</span></a>
+                            </li>
+                            <li>
+                        		<a th:href="@{'/patientcasefile/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text" th:text="#{menu.heading.patient_case_file}">Patient Case File</span></a>
+                            </li>
+                            <li>
+                        		<a th:href="@{'/patientconference/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text" th:text="#{menu.heading.patient_conference}">Patient Conference</span></a>
+                            </li>
+                            <li>
+                        		<a th:href="@{'/patientreview/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text" th:text="#{menu.heading.patient_review}">Patient Review</span></a>
+                            </li>
+                            <li>
+                        		<a th:href="@{'/patientreviewratings/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text" th:text="#{menu.heading.patient_review_ratings}">Patient Review Ratings</span></a>
+                            </li>  
+                        </ul>
+                    </li>             
+                            
+                    <li class="mm-dropdown">
+                        <a href="#lsRet">
+                        	<span class="mm-text" th:text="#{menu.heading.treatment}">Treatment</span>
+                        </a>
+                        <ul>
+                           	<li>
+                        		<a th:href="@{'/treatment/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text" th:text="#{menu.heading.treatment}">Treatment</span></a>                                                    
+                    		</li>
+                    		<li>
+                        		<a th:href="@{'/treatment-alias/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text" th:text="#{menu.heading.treatment_alias}">Treatment Alias</span></a>                                                    
+                    		</li>                    		
+                    		<li>
+                        		<a th:href="@{'/document/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text" th:text="#{menu.heading.document}">Document</span></a>                                                    
+                    		</li>
+                    		<li>
+                        		<a th:href="@{'/treatment-document/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text" th:text="#{menu.heading.treatment_document}">Treatment Document</span></a>                                                    
+                    		</li>
+                    		<li>
+                        		<a th:href="@{'/treatment-price/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text" th:text="#{menu.heading.treatment_price}">Treatment Price</span></a>                                                    
+                    		</li>
+                    		<li>
+                        		<a th:href="@{'/treatmentdays/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text" th:text="#{menu.heading.treatmentdays}">Treatment Days</span></a>                                                    
+                    		</li>
+                    		<li>
+                        		<a th:href="@{'/daily-expense/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text" th:text="#{menu.heading.dailyexpense}">Daily Expense</span></a>                                                    
+                    		</li>                    		
+                    		<li>
+                        		<a th:href="@{'/questionnaire/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text" th:text="#{menu.heading.questionnaire}">Questioneer</span></a>                                                    
+                    		</li>
+                    		<li>
+                        		<a th:href="@{'/treatment-questionnaire/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text" th:text="#{menu.heading.treatment_questionnaire}">Treatment Questioneer</span></a>                                                    
+                    		</li>
+                    		<li>
+                        		<a th:href="@{'/patientcase-treatment-questionnaire/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text" th:text="#{menu.heading.patientcase_treatment_questionnaire}">Patientcase Treatment Questioneer</span></a>                                                    
+                    		</li>
+                    		<li>
+                        		<a th:href="@{'/patientcase-price/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text">Patientcase Price</span></a>                            
+                    		</li>
+                        </ul>
+                    </li>                   
+                    
+                    <li class="mm-dropdown">
+                        <a href="#lsRet">
+                        	<span class="mm-text" th:text="#{menu.heading.corporate_company}">Corporate Company</span>
+                        </a>
+                        <ul> 
+                        	<li>
+                        		<a th:href="@{'/association/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text" th:text="#{menu.heading.association}">Association</span></a>                            
+                    		</li>
+                    		<li>
+                        		<a th:href="@{'/associate/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text" th:text="#{menu.heading.associate}">Associate</span></a>                            
+                    		</li>       
+                        	<li>
+                        		<a th:href="@{'/corporatecompany/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text" th:text="#{menu.heading.corporate_company}">Company</span></a>                            
+                    		</li>                       	
+                    		<li>
+                        		<a th:href="@{'/corporatecompany-insurance/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text" th:text="#{menu.heading.corporate_company_insurance}">Company</span></a>                            
+                    		</li>
+                    		<li>
+                        		<a th:href="@{'/employee-corporatecompany/index'}"><i class="fa fa-pencil"></i><span class="sidebar-text" th:text="#{menu.heading.employee_corporate_company}">Company</span></a>                            
+                    		</li>
+                        </ul>
+                    </li>
+                                                    
+                </ul>
+            </div>
+     </div>
+   
+  </html>

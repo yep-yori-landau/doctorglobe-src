@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:include="layouts/layout::page">
+<body>
+	<main id="main-content" th:fragment='content'>	
+	  <div class="wrap">
+			<aside th:replace="fragments/practitionersidebar :: sidebar"></aside>
+			<div id="container">
+				<div class="my-block">
+					<h3 class="hel-med fs-16 title-in">
+						<a th:href="@{/home/practitioner}" th:text="#{page.hospital.practitioner.edit.back_to_dashboard}">Back to Dashboard</a>	        
+					</h3>
+					<h3 class="hel-med fs-16" th:text="#{page.hospital.practitioner.stats.professional_questionnaire}"></h3>
+					<form th:action="@{/home/practitioner/stats}" th:object="${practitionerStatsForm}" method="post">
+						<input type="hidden" th:field="*{healthcareprovider}"/>
+						<input type="hidden" th:field="*{practitioner}"/>                            
+                            <ul class="my-form mt-20">
+                                <li>
+                                    <label for="specialty" th:text="#{page.hospital.practitioner.method.specialty}">Specialty:</label>
+                                    <select class="my-select practitioner-specialty-treatment w-40 specialty" th:field="*{specialty}" required="required">
+                                        <option th:each="specialtyModel : ${practitionerSpecialtyList}" th:value="${specialtyModel.id}" th:text="${specialtyModel.name}">Body Odour</option>                                        
+                                    </select>    
+                                </li>
+                                <li>
+                                    <label for="treatments" th:text="#{page.hospital.practitioner.method.treatments}">Treatments</label>
+                                    <select th:field="*{treatment}" class="my-select practitioner-specialty-treatment-method w-40 treatment" required="required">																					     
+									</select>                                    
+                                </li>
+                                <li>
+                                    <label for="method" th:text="#{page.hospital.practitioner.methods}">Methods</label>
+                                    <select th:field="*{method}" class="my-select practitioner-specialty-treatment-method-stats method w-40" required="required">																					     
+									</select>                                    
+                                </li>
+                            </ul>    
+                            <div class="statsview"></div>                            
+                            <div class="tc my-btn-block hide">
+                                <button class="btn btn-sm btn-dk-blue" type="reset" th:text="#{page.hospital.btn_cancel}">Cancel</button>
+                                <button class="btn btn-sm btn-blue" type="submit" th:text="#{page.hospital.btn_save_changes}">Save Changes</button>
+                            </div>                          
+					</form>
+				</div>
+			</div>
+				<script type="text/javascript" th:inline='javascript'>
+			$(document).ready(function() {
+				/*<![CDATA[*/
+				$("select.specialty").change(function(){						
+						var hosturl = /*[[${application.hostbaseurl} ]]*/;
+						var specialty = $(this).val();
+						var practitioner = $('#practitioner').val();
+						var healthcareprovider = $('#healthcareprovider').val();	
+						$("select#treatment").msDropDown().data("dd").destroy();
+						$.ajax({
+							url:hosturl+'/home/practitioner/specialty-treatment-selected?practitioner='+practitioner+'&healthcareprovider='+healthcareprovider+'&specialty='+specialty,
+							success : function(data){						    
+								    if(data.length > 0){								    	
+								    	var options = '';
+								    	$(data).each(function(index){
+								    		options += '<option value="' + data[index].id + '">' + data[index].name + '</option>';						    		
+								    	});						    							    	
+							            $('.treatment').html(options);
+							            var t = getParameterByName('t');
+							            if(t != ''){
+							            	$('select.treatment').val(t).trigger('change');
+							            }else{
+							            	$('select.treatment').trigger('change');
+							            }
+							            $(".treatment").msDropDown().data("dd");
+								    }
+							}
+						});
+							
+					}).change();
+				
+				$("select.treatment").change(function(){					
+					    $("select#method").msDropDown().data("dd").destroy();       
+						var hosturl = /*[[${application.hostbaseurl} ]]*/;
+						var treatment = $(this).val();
+						var practitioner = $('#practitioner').val();
+						var healthcareprovider = $('#healthcareprovider').val();	
+						var specialty = $('select.specialty').val();						
+						$.ajax({
+							url:hosturl+'/home/practitioner/specialty-treatment-method-selected?practitioner='+practitioner+'&healthcareprovider='+healthcareprovider+'&specialty='+specialty+'&treatment='+treatment,
+							success : function(data){						    
+								    if(data.length > 0){								    	
+								    	var options = '';
+								    	$(data).each(function(index){
+								    		options += '<option value="' + data[index].id + '">' + data[index].name + '</option>';						    		
+								    	});						    							    	
+							            $('.method').html(options);
+							            var m = getParameterByName('m');
+							            if(m != ''){
+							            	$('select.method').val(m).trigger('change');
+							            }else{
+							            	$('select.method').trigger('change');
+							            }							            
+							            $(".method").msDropDown().data("dd");
+								    }
+							}
+						});
+							
+					});
+				
+				$("select.method").change(function(){					     
+						var hosturl = /*[[${application.hostbaseurl} ]]*/;
+						var method = $(this).val();
+						var practitioner = $('#practitioner').val();
+						var healthcareprovider = $('#healthcareprovider').val();	
+						var specialty = $('select.specialty').val();						
+						var treatment = $('select.treatment').val();
+						$('.statsview').html('');
+						$.ajax({
+							url:hosturl+'/home/practitioner/specialty-treatment-method-stats?practitioner='+practitioner+'&healthcareprovider='+healthcareprovider+'&specialty='+specialty+'&treatment='+treatment+'&method='+method,
+							success : function(data){								
+								    if(data.length > 0){								    	
+								    	var table = '<table class="mt-20 data-table">';
+								    	$(data).each(function(index){
+								    		var count = index+1;
+								    		var yesselected = '';
+								    		var noselected = '';
+								    		if(data[index].description == 'yes'){
+								    			yesselected = 'checked';
+								    		}else if(data[index].description == 'no'){
+								    			noselected = 'checked';
+								    		}
+								    		table += '<tr>';	
+								    		table += '<td>';
+								    		table += count+'.'+' '+data[index].statName;
+								    		table += '</td>';								    		
+								    		table += '<td>';
+								    		table += '<label class="cust-radio">';
+								    		table += '<input type="radio" name="practitionerStatsFormModel['+index+'].description" value="yes" '+yesselected+' />';     
+								    		table += '<span class="box"></span>';
+								    		table += '<span>Yes</span>';
+								    		table += '</label>';
+								    		table += '</td>';
+								    		table += '<td>';
+								    		table += '<label class="cust-radio">';
+								    		table += '<input type="radio" name="practitionerStatsFormModel['+index+'].description" value="no" '+noselected+' />';     
+								    		table += '<span class="box"></span>';
+								    		table += '<span>No</span>';
+								    		table += '</label>';
+								    		table += '</td>';
+								    		table += '<td>';
+								    		table += '<input type="hidden" name="practitionerStatsFormModel['+index+'].id" value="'+data[index].id+'"/>';
+								    		table += '<input type="hidden" name="practitionerStatsFormModel['+index+'].healthcareproviderSpecialtyTreatmentMethodPractitioner" value="'+data[index].healthcareproviderSpecialtyTreatmentMethodPractitioner+'"/>';
+								    		table += '<input type="hidden" name="practitionerStatsFormModel['+index+'].stat" value="'+data[index].stat+'"/>';
+								    		table += '</td>';
+								    		table += '</tr>';
+								    		table += '</table>'
+								    	});
+								    	$('.statsview').html(table);
+								    	$('.my-btn-block').removeClass('hide');
+								    }
+							}
+						});
+							
+					});
+				
+					function getParameterByName(name) {
+					    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+					    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+					        results = regex.exec(location.search);
+					    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+					}
+				  /*]]>*/
+			});	
+			</script>
+		</div>
+	</main>
+</body>
+</html>					

@@ -1,0 +1,62 @@
+$(document).ready(function () {
+
+    /* smooth scrolling for scroll to top */
+    $('.scroll-top').hide();
+	$('.logo2').hide();
+    $('.scroll-top').click(function () {
+        $('body,html').animate({scrollTop: 0}, 1000);
+    })
+
+    $(window).scroll(function () {
+        if ($(this).scrollTop() > 0) {
+            $('#task_flyout').addClass('fixed');
+            $('.scroll-top').fadeIn();
+			$('.logo1').hide();
+			$('.logo2').show();
+			$('.nav ul li a').css('color','#9e9e9e');
+			$('.nav ul li.active').css('color','#457e89');
+			$('.nav ul li').css('padding-bottom','0px');
+			
+        } else {
+            $('#task_flyout').removeClass('fixed');
+            $('.scroll-top').hide();
+			$('.logo1').show();
+			$('.logo2').hide();
+			$('.nav ul li a').css('color','rgba(255, 255, 255, 0.6)');
+			$('.nav ul li.active').css('color','#fff');
+			//$('.nav ul li').css('padding-bottom','10px');
+        }
+    });
+
+    $('.scroll-link').on('click', function (event) {
+        event.preventDefault();
+        var sectionID = $(this).attr("data-id");
+        var offSet = 50;
+        var targetOffset = $('#' + sectionID).offset().top - offSet;
+        $('html,body').animate({scrollTop: targetOffset}, 750);
+        $('.scroll-link').removeClass("active");
+        $(this).addClass('active');
+    });
+
+    $("#contactform").submit(function (event) {
+        event.preventDefault();
+        var name = $("#name").val();
+        var email = $("#email").val();
+        var message = $("#message").val();
+
+        $.ajax({
+            type: "POST",
+            url: "mailer.php",
+            data: "name=" + name + "&email=" + email + "&message=" + message,
+            success: function (text) {
+                if (text == "success") {
+                    formSuccess();
+                }
+            }
+        });
+    });
+
+    $("a[rel^='prettyPhoto']").prettyPhoto({"social_tools": false});   
+    
+
+});

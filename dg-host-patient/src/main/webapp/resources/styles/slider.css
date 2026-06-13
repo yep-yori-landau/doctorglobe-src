@@ -1,0 +1,85 @@
+.slider_container{
+	position: relative; top: 0px; left: 0px; width: 800px; height: 456px; background: #191919; overflow: hidden;
+}
+.slider_loading{
+position: absolute; top: 0px; left: 0px;
+}
+.slider_subloading{
+filter: alpha(opacity = 70); opacity: 0.7; position: absolute; display: block; background-color: #000000; top: 0px; left: 0px; width: 100%; height: 100%;
+}
+
+.slider_image{
+	cursor: move; position: absolute; left: 0px; top: 0px; width: 800px; height: 356px; overflow: hidden;
+}
+.slider_cursor{cursor: move;}
+.jssort01_inner{
+	position: absolute; width: 72px; height: 72px; top: 0; left: 0;
+}
+.thumbnailtemplate{width: 100%; height: 100%; border: none; position: absolute; top: 0; left: 0;}
+
+.jssora05l {
+	position: absolute;
+	cursor: pointer;
+	display: block;
+	background: url(../images/a17.png) no-repeat;
+	overflow: hidden;
+	width: 40px; height: 40px; top: 158px; left: 8px;
+} 
+.jssora05r{
+	position: absolute;
+	cursor: pointer;
+	display: block;
+	background: url(../images/a17.png) no-repeat;
+	overflow: hidden;
+	width: 40px; height: 40px; top: 158px; right: 8px;
+} 
+.jssora05ldn{
+	position: absolute;
+	cursor: pointer;
+	display: block;
+	background: url(../images/a17.png) no-repeat;
+	overflow: hidden;
+} 
+.jssora05rdn {position: absolute;cursor: pointer;display: block;background: url(../images/a17.png) no-repeat;overflow: hidden;}
+.jssora05l {background-position: -10px -40px;}
+.jssora05r {background-position: -70px -40px;}
+.jssora05l:hover {background-position: -130px -40px;}
+.jssora05r:hover {background-position: -190px -40px;}
+.jssora05ldn {background-position: -250px -40px;}
+.jssora05rdn {background-position: -310px -40px;}
+.jssora05l .jssora05r .jssora05ldn .jssora05rdn {position: absolute;cursor: pointer;display: block;background: url(../images/a17.png) no-repeat;overflow: hidden;}
+.jssora05l {background-position: -10px -40px;}
+.jssora05r {background-position: -70px -40px;}
+.jssora05l:hover {background-position: -130px -40px;}
+.jssora05r:hover {background-position: -190px -40px;}
+.jssora05ldn {background-position: -250px -40px;}
+.jssora05rdn {background-position: -310px -40px;}
+.jssort01{position: absolute; width: 800px; height: 100px; left: 0px; bottom: 0px;}
+.loading{position: absolute; display: block; background: url(../images/loading.gif) no-repeat center center; top: 0px; left: 0px; width: 100%; height: 100%;}
+
+.ui-bonus-filter{background-color: #54c5d0 !important;border:none;height:5px;position:relative;}
+.ui-bonus-filter .ui-widget-header {background-color: #d6d8d9 !important;}
+.ui-slider-horizontal {background-color: #d6d8d9;border:none;height:5px;position:relative;}
+.ui-slider-horizontal:before {background-color:#a8a9aa;content: " ";display: inline-block;height:15px;left:-1px;position:absolute;top:-5px;width:1px;}
+.ui-slider-horizontal:after {background-color: #a8a9aa;content: " ";display:inline-block;height:15px;right:-1px;position:absolute;top:-5px;width:1px;}
+.ui-widget-content .ui-state-default {background: transparent url('../images/ico-slider.png') 0 0 no-repeat;border: none;height:17px;width: 17px;}
+.ui-slider-horizontal .ui-slider-handle {top: -0.4em;}
+.ui-slider-horizontal .ui-widget-header {background-color: #54c5d0;}
+.my-slider {margin: 5px 0 10px 8px;width: 80%;}
+.my-slider ul {margin-left: -8px;margin-right: -14px;margin-bottom: 8px;}
+.my-slider ul > li {display: inline-block;float: left;text-align: left;width: 33%;}
+.my-slider ul > li.lbl-second {text-align: center;}
+.my-slider ul > li.lbl-third {text-align: right;}
+.my-bonus-slider {margin: 5px 0 10px 8px;width: 80%;}
+.my-bonus-slider ul {margin-left: -8px;margin-right: -14px;margin-bottom: 8px;}
+.my-bonus-slider ul > li {display: inline-block;float: left;text-align: left;width:33%;}
+.my-bonus-slider ul > li.lbl-second {text-align: center;width:33%;display:block;}
+.my-bonus-slider ul > li.lbl-third {text-align: right;}
+.ui-slider-label-ticks1{text-align: left;padding-left:41px;}
+.ui-slider-label-ticks2{text-align: left;padding-left:33px;}
+.ui-slider-label-ticks3{text-align: left;padding-left:18px;}
+.ui-slider-label-ticks4{text-align: left;padding-left:35px;}
+.ui-slider-label-ticks5{text-align: left;padding-left:14px;}
+.ps{position:relative;top:8px;height:10px;display-inline:block;}
+
+.pl-27{padding-left:27px;}

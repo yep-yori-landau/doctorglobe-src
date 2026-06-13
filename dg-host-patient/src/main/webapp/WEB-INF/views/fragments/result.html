@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="result" id="ajaxresult">            
+            <div class="my-block res-info " th:if="${totalhealthcareproviders !=null}">
+					<h3 class="fl ico ico-sm-search-bl">
+						<span th:text="${totalhealthcareproviders}" class="totalfound"></span>
+						<span th:text="#{healthcareproviders.healthcareprovidersfound}+ ' '+${treatmentName}"></span>					
+					</h3>
+					<h4 class="fr">
+						<span th:text="#{page.sortby.text}">Sort by:</span> 
+						<span class="sort-nav">
+							<strong>
+								<select class="sort-select js-select">									
+									<option th:text="#{sortby.rating}" th:value="rankings"></option>
+									<option th:if="${forcorporate}" th:text="#{sortby.price}" th:value="bonus"></option>
+									<option th:unless="${forcorporate}" th:text="#{sortby.price}" th:value="price"></option>
+									<option th:text="#{sortby.availability}" th:value="availabilitydays"></option>
+									<option th:text="#{sortby.distance}" th:value="flighthour"></option>
+								</select>
+							</strong>	
+						</span>
+					</h4>
+				</div>				
+				<div class="my-block res-info notfound" th:if="${totalhealthcareproviders == null}">
+					<h3 class="fl ico ico-sm-search-bl"	th:text="#{page.noresultfound.text}"></h3>
+				</div>
+			<ul>
+				<li th:each="f : ${healthcareproviders}" class="resli" th:if="${f.isAvailable}">				
+					<article
+						th:class="my-block+' '+resultsdiv+' '+res+' '+${f.regionName.toLowerCase().replace(' ','')} + ' ' + ${f.amenity}+ ' ' + ${f.accreditation}+ ' ' + ${f.equipment}"
+						th:id="${f.id}">
+						<button class="ico ico-close"></button>
+						<ul>
+							<li>
+								<figure class="fig-block imagehide">
+									<img th:each="healthcareproviderImage :${healthcareproviderImage.get(f.id)}"  th:src="@{${healthcareproviderImage}}" height="136" width="147" th:alt="${{f.name}}" />																		
+									<!--<button title="Show more pics" th:id="hospital+''+${f.id}">
+										<i class="ico ico-plus"></i>
+									</button>-->
+								</figure>
+							</li>
+							<li>
+								<h3 th:text="${{f.name}}">Saint Clare's Hospital</h3>
+								<p>
+									<span th:text="${{f.location}}">Boonton NY USA</span>
+								</p>								
+								<div class="my-tabs">
+									<ol class="my-tab-head tabs">
+										<li class="active"><a href="javascript:;" class="general"
+											th:title="#{page.general.text}" th:id="general+''+${{f.id}}"
+											th:text="#{page.general.text}">General</a></li>
+										<li><a href="javascript:;" class="fac"
+											th:title="#{page.facility.text}"
+											th:id="fac+''+${{f.id}}" th:text="#{page.facility.text}"></a></li>
+										<li><a href="javascript:;" class="location"
+											th:title="#{page.location.text}"
+											th:id="location+''+${{f.id}}" th:text="#{page.location.text}">Location</a></li>
+									</ol>
+									<div
+										th:class="general+''+${{f.id}} + ' ' +my-tab-content+' '+generals ">
+										<p>
+											<strong th:text="#{page.description.text}"></strong> <span
+												th:text="${{f.description}}" th:class="description"></span>
+										</p>
+									</div>
+									<div th:class="fac+''+${{f.id}} + ' ' +my-tab-content+ ' '+ facs +' '+hide">
+									        <strong th:if="${hcpAmenities.get(f.id) != null}" th:text="#{page.amenities.text}"></strong>										
+											<ul th:each="hcpAmenities :${hcpAmenities.get(f.id)}">																							    
+												<li th:text="${{hcpAmenities}}" th:class="description"></li>												
+											</ul>										
+											<br/>
+											<strong th:if="${hcpEquipments.get(f.id) != null}" th:text="#{page.equipments.text}"></strong>
+											<ul th:each="hcpEquipments :${hcpEquipments.get(f.id)}">																							    
+												<li th:text="${{hcpEquipments}}" th:class="description"></li>												
+											</ul>										
+									</div>
+									<div
+										th:class="location+''+${{f.id}} + ' ' + my-tab-content+' ' +locations">
+										<script type="text/javascript" th:inline='javascript' th:if="${f.lat != null}">
+											$(document).ready(function() {
+												/*[+
+													var mapid = "map"+[[${f.id}]];
+													var lat = [[${{f.lat}}]];
+													var lon = [[${{f.lon}}]];					
+													var loc = [[${{f.location}}]];
+												+]*/												
+												var map = new GMaps(
+														{
+															/*[+	
+															el : mapid,															
+															lat : [[${f.lat}]],
+															lng : [[${f.lon}]],
+															+]*/
+														});		
+												map.addMarker({
+											        lat: lat,
+											        lng: lon,											     
+											      });
+											});
+										</script>					
+										<script type="text/javascript" th:inline='javascript' th:if="${f.lat == null}">
+											$(document)
+													.ready(
+															function() {
+																/*[+
+																var mapid = "map"+[[${f.id}]];
+																var loc = [[${{f.location}}]];
+																+]*/
+																var map;
+																map = new GMaps(
+																		{
+																			/*[+	
+																			el : mapid,
+																			lat : [[${f.lat}]],
+																			lng : [[${f.lon}]],
+																			+]*/
+																		});
+																GMaps
+																		.geocode({
+																			address : loc,
+																			callback : function(
+																					results,
+																					status) {
+																				if (status == 'OK') {
+																					var latlng = results[0].geometry.location;
+																					map
+																							.setCenter(
+																									latlng
+																											.lat(),
+																									latlng
+																											.lng());
+																					map
+																							.addMarker({
+																								lat : latlng
+																										.lat(),
+																								lng : latlng
+																										.lng(),																									
+																							});
+																				}
+																			}
+																		});
+															});
+										</script>
+										<div class="map-block" th:id="map+''+${{f.id}}" style="height: 142px; width: 361px"></div>
+									</div>
+								</div>
+							</li>
+							<li>								
+								<!--  <p>
+									<span th:text="#{page.rating.text}"></span>: <i
+										class="rating-sm"> <span class="ratings hide"
+										th:text="${f.rating}"></span> <span
+										th:class="rating-+ ${{f.rating}}"></span>
+									</i>
+								</p>-->
+								<p th:if="${forcorporate}">
+									<strong th:text="#{page.youget.text}"></strong>
+									<span th:text="${f.currencyCode}"></span>
+									<span><strong th:text="${#numbers.formatDecimal(f.youGetUpTo ,0,'COMMA',0,'POINT')}"></strong></span>
+									<span class="price hide" th:text="${f.youGetUpTo}"></span>
+									<span class="bonus hide" th:text="${f.youGetUpTo}"></span>	
+									<span class="rankings hide" th:text="${f.ranking}"></span>																	
+								</p>
+								<p th:if="${forcorporate}">
+									<strong th:text="#{page.youpay.text}"></strong>
+									<span th:text="${f.currencyCode}"></span>
+									<span>
+										<strong th:text="${#numbers.formatDecimal(f.youPayUpTo ,0,'COMMA',0,'POINT')}" class="strikeover">0</strong>
+										<strong th:text="${0}">0</strong>
+									</span>								
+								</p>
+								<p th:unless="${forcorporate}">
+									<span th:text="#{page.estimatedcost.text}"></span>
+									<strong th:if="${forcorporate}" th:text="#{page.youpay.text}"></strong>
+									<span th:text="${f.currencyCode}"></span>
+									<span><strong th:text="${#numbers.formatDecimal(f.estimatedCost,0,'COMMA',0,'POINT')}"></strong></span>
+									<span class="price hide" th:text="${f.estimatedCost}"></span>
+									<span class="rankings hide" th:text="${f.ranking}"></span>
+								</p>
+								<p th:if="${f.flightHour}">
+									<span th:text="#{page.flight_duration.text}"></span>
+									<span th:text="${#numbers.formatDecimal(f.flightHour,0,'COMMA',0,'POINT')}" class="flighthour"></span>
+									<span th:text="#{page.hours.text}"></span>
+								</p>
+								<p>
+									<span th:text="#{page.availablewithin.text}"></span>
+									<span th:text="${{f.availableDays}}" class="availabilitydays"></span>
+									<span th:text="#{page.availablewithindays.text}"></span>
+								</p>
+								<p>
+									<span th:text="#{page.affiliateexperts.text}"></span><span
+										th:text="${{f.experts}}"></span>
+								</p>																
+								<p>
+									<span th:text="#{page.ranking.ranked}"></span>&nbsp;&nbsp;<span th:text="${{f.ranking}}" class="rankresult"></span>&nbsp;&nbsp;<span th:text="#{page.ranking.of}"></span>&nbsp;&nbsp;<span th:text="${totalhealthcareproviders}" class="totalresult"></span>
+								</p>
+								<div class="btn-block">
+									<a
+										th:href="@{'/practitioners'(healthcareprovider=${f.id},treatment=${treatment})}"><button
+											class="btn btn-green btn-sm fl"
+											th:text="#{page.selecthospital.text}">Select
+											Hospital</button></a>
+									<!--<a href="javascript:;"><button class="btn btn-blue fl active ico ico-star-bl"></button></a> -->
+								</div>
+							</li>
+						</ul>
+					</article>
+					<div th:replace="fragments/slider :: slider"></div>				
+				</li>
+			</ul>
+			<div class="res-footer" th:if="${viewmore}"><a href="javascript:;" class="fl viewmore" th:text="#{page.viewmore.text}" data-value="1"></a></div>
+			<script th:src="@{/resources/scripts/pace.min.js}"></script>
+	       <link rel="stylesheet" th:href="@{/resources/styles/pace.css}"/>	
+	
+	</div>
+</body>
+</html>

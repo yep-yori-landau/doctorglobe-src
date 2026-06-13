@@ -1,0 +1,37 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<body>
+<footer id="main-footer" th:fragment="footer">
+	<div class="wrap">
+		<ul class="nav-footer fl">
+			<li><a href="#" th:title="Contact" th:text="#{footer.contact}">Contact</a></li>
+			<li><a href="#" th:title="About" th:text="#{footer.about}">About</a></li>
+			<li><a href="#" th:title="FAQ" th:text="#{footer.faq}">FAQ</a></li>
+			<li><a href="#" th:title="Supprt" th:text="#{footer.support}">Support</a></li>
+			<li><a href="#" th:title="Termsandconditions" th:text="#{footer.termsandconditions}"></a></li>
+		</ul>
+		<ul class="nav-social fr">
+			<li th:text="#{footer.findusontheweb}">Find us on the web:</li>
+			<li><a href="#" th:title="LinkedIn" class="ico ico-linkedin"></a></li>
+			<li><a href="#" th:title="Twitter" class="ico ico-twitter"></a></li>
+			<li><a href="#" th:title="Googleplus" class="ico ico-google"></a></li>
+			<li><a href="#" th:title="Facebook" class="ico ico-facebook"></a></li>
+		</ul>		
+		<script th:inline="javascript" sec:authorize="hasRole('ROLE_USER')">								
+				$(document).ready(function() {
+					function getTotalNewMessage(){
+						$.ajax({
+							url: /*[[${application.practitionerNewMessagesurl}]]*/,
+							success : function(data){													   
+								$('.mails').attr('title',data);
+								$('.totalnewmsg').text(data);
+							}
+						});
+					}
+					getTotalNewMessage();
+					setInterval(function(){getTotalNewMessage()},5000);										
+				});
+		</script>		 
+	</div>
+</footer>
+</body>
+</html>

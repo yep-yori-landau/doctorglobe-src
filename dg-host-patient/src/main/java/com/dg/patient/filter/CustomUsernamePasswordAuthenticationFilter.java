@@ -1,0 +1,58 @@
+package com.dg.patient.filter;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+/**
+ * A Filter to include additional values in login details 
+ * @author DoctorGlobe
+ *
+ */
+public class CustomUsernamePasswordAuthenticationFilter
+		extends UsernamePasswordAuthenticationFilter {
+
+	private static final Logger logger = LoggerFactory
+			.getLogger(CustomUsernamePasswordAuthenticationFilter.class);
+
+	private String delimiter = "--";
+
+	/**
+	 * Add additional host url in user name
+	 */
+	@Override
+	protected String obtainUsername(HttpServletRequest request) {
+		String hostProto = request.getHeader("X-Forwarded-Proto");
+		String hostUrl = request.getHeader("X-Forwarded-Host");
+		logger.info("request header {}", hostUrl);
+		if (hostUrl == null) {
+			hostUrl = request.getScheme() + "://" + request.getServerName();
+		}
+		else {
+			hostUrl = hostProto + "://" + hostUrl;
+		}
+		String username = request.getParameter("email");
+		super.setUsernameParameter("email");
+		super.setPasswordParameter("password");
+		String combinedUsername = username + this.getDelimiter() + hostUrl;
+		return combinedUsername;
+	}
+
+	/**
+	 * @return The delimiter string used to separate the username and extra
+	 * input values in the string returned by <code>obtainUsername()</code>
+	 */
+	public String getDelimiter() {
+		return this.delimiter;
+	}
+
+	/**
+	 * @param delimiter The delimiter string used to separate the username and
+	 * extra input values in the string returned by
+	 * <code>obtainUsername()</code>
+	 */
+	public void setDelimiter(String delimiter) {
+		this.delimiter = delimiter;
+	}
+}

@@ -1,0 +1,123 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:include="layout::page" class='sidebar-large'>
+<div class="container" th:fragment="content">					
+<div class="page-title"> <i class="icon-custom-left"></i>               
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading bg-red">
+							<h3 class ="panel-title"><strong th:text="#{page.heading.patientcase_price}">Patientcase Price</strong></h3>
+						</div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                <form action="#" th:action="@{/patientcase-price/save}" th:object="${patientcasePrice}" method="post" id="patientcasePrice" class="form-horizontal">
+					<div class="form-group">
+	                                   <ul>
+		   <li th:each="e : ${#fields.detailedErrors()}" th:class="${e.global}? globalerr : fielderr">
+                   <span class='text-danger' th:text="${e.global}?'*':${e.fieldName}">The field name </span> 
+                   | <span class='text-danger' th:text="${e.message}">The error message</span>                   
+                   </li>
+                </ul>
+					<div th:errors="${patientcasePrice}"></div>
+					</div>
+                                	<input type="hidden" class="form-control" th:field="*{id}" th:value="*{id}"/>
+                     
+ 					                     <div class='form-group'>
+                                            <label class='col-sm-3 control-label'>List Price<span class='asterisk'>*</span>
+                                            </label>
+                                            <div class='col-sm-9'>
+                                              <input type='text' required='' class='form-control' th:field="*{listPrice}" th:value="*{listPrice}"/>                                                
+                                            </div>
+                                        </div>
+                                        <div class='form-group'>
+                                            <label class='col-sm-3 control-label'>You Pay List Price<span class='asterisk'>*</span>
+                                            </label>
+                                            <div class='col-sm-9'>
+                                              <input type='text' required='' class='form-control' th:field="*{youpayListPrice}" th:value="*{youpayListPrice}"/>                                                
+                                            </div>
+                                        </div>
+                                        
+                                        <div class='form-group'>
+                                            <label class='col-sm-3 control-label'>Bonus List Price<span class='asterisk'>*</span>
+                                            </label>
+                                            <div class='col-sm-9'>
+                                              <input type='text' required='' class='form-control' th:field="*{bonusListPrice}" th:value="*{bonusListPrice}"/>                                                
+                                            </div>
+                                        </div>
+                                        
+                                        <div class='form-group'>
+                                            <label class='col-sm-3 control-label'>Quote Price</label>
+                                            <div class='col-sm-9'>
+                                              <input type='text' class='form-control' th:field="*{quotePrice}" th:value="*{quotePrice}"/>                                                
+                                            </div>
+                                        </div>
+                                        <div class='form-group'>
+                                            <label class='col-sm-3 control-label'>You Pay Quote Price</label>
+                                            <div class='col-sm-9'>
+                                              <input type='text' class='form-control' th:field="*{youpayQuotePrice}" th:value="*{youpayQuotePrice}"/>                                                
+                                            </div>
+                                        </div>
+                                        
+                                        <div class='form-group'>
+                                            <label class='col-sm-3 control-label'>Bonus Quote Price</label>
+                                            <div class='col-sm-9'>
+                                              <input type='text' class='form-control' th:field="*{bonusQuotePrice}" th:value="*{bonusQuotePrice}"/>                                                
+                                            </div>
+                                        </div>
+                                        
+                                        <div class='form-group'>
+                                            <label class='col-sm-3 control-label'>Billed Price</label>
+                                            <div class='col-sm-9'>
+                                              <input type='text' class='form-control' th:field="*{billedPrice}" th:value="*{billedPrice}"/>                                                
+                                            </div>
+                                        </div>
+                                        <div class='form-group'>
+                                            <label class='col-sm-3 control-label'>You Pay Billed Price</label>
+                                            <div class='col-sm-9'>
+                                              <input type='text' class='form-control' th:field="*{youpayBilledPrice}" th:value="*{youpayBilledPrice}"/>                                                
+                                            </div>
+                                        </div>
+                                        
+                                        <div class='form-group'>
+                                            <label class='col-sm-3 control-label'>Bonus Billed Price</label>
+                                            <div class='col-sm-9'>
+                                              <input type='text' class='form-control' th:field="*{bonusBilledPrice}" th:value="*{bonusBilledPrice}"/>                                                
+                                            </div>
+                                        </div>
+
+                      					<div class='form-group'>
+                                            <label class='col-sm-3 control-label'>healthcareprovider_specialty_treatment_method_practitioner<span class='asterisk'>*</span>
+                                            </label>
+                                             <div class='col-sm-9'>
+                                              <select th:field="*{healthcareproviderSpecialtyTreatmentMethodPractitioner}" class="form-control">
+                                                <option th:each = "var : ${healthcareproviderSpecialtyTreatmentMethodPractitionerList}" th:value="${var.id}" th:text="${var.id}"></option>
+                                              </select>                                                                                                 
+                                     		 </div>
+                                        </div>
+                      					<div class='form-group'>
+                                            <label class='col-sm-3 control-label'>Patient_case<span class='asterisk'>*</span>
+                                            </label>
+                                            <div class='col-sm-9'>
+                                              <select th:field="*{patientCase}" class="form-control">
+												<option th:each="var : ${patientcaseList}"
+												th:value="${var.id}" th:text="${var.description}"></option>
+											  </select>   
+                                            </div>
+                                        </div>
+
+                                                                          
+                                        <div class="col-sm-9 col-sm-offset-3">
+                                            <div class="pull-right">
+                                                <button class="btn btn-primary m-b-10" onclick="javascript:$('#patientcasePrice').parsley('validate');" th:text="#{page.button.submit}">Submit</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>			
+</div>
+</div>
+</html>

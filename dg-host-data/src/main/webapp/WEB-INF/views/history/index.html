@@ -1,0 +1,53 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:include="layout::page" class='sidebar-large'>
+<div class="container" th:fragment="content">					
+			<div class="row">
+				<div class="col-md-12">
+					<div class="panel panel-default">
+                                        <div class="panel-heading" th:if="${message} != null">
+						<h3 class ="panel-title"><strong th:text="${message}"></strong></h3>
+					</div>
+					<div class="panel-heading bg-red">
+						<h3 class ="panel-title"><strong th:text="#{page.heading.history}">history</strong></h3>
+					</div>
+					<div class="panel-body">
+                            <div class="row">                               
+                      <div class="col-md-12 col-sm-12 col-xs-12 table-responsive table-red">
+                            <table class="table table-striped table-hover dataTable" id="table-editable">          
+								<thead>
+									<tr>
+										<th th:text="#{history.id}">id</th>
+										<th th:text="#{history.name}">name</th>
+										<th th:text="#{history.original_data}">type</th>
+										<th th:text="#{history.modify_data}">value</th>							
+										<th th:text="#{history.modify_date}">value</th>
+										<th th:text="#{history.user_type}">value</th>
+										<th th:text="#{history.user}">value</th>
+										<th class="text-center sorting" th:text="#{page.text.options}">Options</th>
+									</tr>
+								</thead>
+						<tbody>							
+								<tr th:each="model :${models}">
+								<td th:text="${model.id}"></td>
+								<td th:text="${model.name}"></td>
+								<td th:text="${model.originalData}"></td>
+								<td th:text="${model.modifyData}"></td>
+								<td th:text="${model.modifyDate}"></td>
+								<td th:text="${model.userType}"></td>
+								<td th:text="${model.user}"></td>																
+								<td class="text-center">
+								<a class="delete btn btn-danger" th:href="@{'/history/delete'(id=${model.id})}">
+								<i class="fa fa-times-circle"></i>
+								Remove								
+								</a>
+								</td>
+								</tr>							
+						</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+		</div>
+</div>
+</html>

@@ -1,0 +1,120 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:include="layout::page" class='sidebar-large'>
+<div class="container" th:fragment="content">					
+			<div class="row">
+				<div class="col-md-12">
+					<div class="panel panel-default">
+                                        <div class="panel-heading" th:if="${message} != null">
+						<h3 class ="panel-title"><strong th:text="${message}"></strong></h3>
+					</div>
+					<div class="panel-heading bg-red">
+						<h3 class ="panel-title"><strong th:text="#{page.heading.healthcareprovider}">healthcareprovider</strong></h3>
+					</div>
+					<div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12 m-b-20">
+                                    <div class="btn-group">
+                                       <a id="table-edit_new" class="btn btn-danger" th:href="@{'/healthcareprovider/edit'}">
+                                            Add New <i class="fa fa-plus"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                      <div class="col-md-12 col-sm-12 col-xs-12 table-responsive table-red">
+                            <table class="table table-striped table-hover dataTable" id="table-editable">          
+								<thead>
+									<tr>
+										<th th:text="#{healthcareprovider.id}">id</th>
+							<th th:text="#{healthcareprovider.name}">name</th>
+							<th th:text="#{healthcareprovider.address_1}">address_1</th>
+							<th th:text="#{healthcareprovider.address_2}">address_2</th>
+							<th th:text="#{healthcareprovider.zip_code}">zip_code</th>
+							<th th:text="#{healthcareprovider.website}">website</th>
+							<th th:text="#{healthcareprovider.contact_name}">contact_name</th>
+							<th th:text="#{healthcareprovider.phone_1}">phone_1</th>
+							<th th:text="#{healthcareprovider.phone_2}">phone_2</th>
+							<th th:text="#{healthcareprovider.email}">email</th>
+							<th th:text="#{healthcareprovider.fax}">fax</th>
+							<th th:text="#{healthcareprovider.description}">description</th>
+							<th th:text="#{healthcareprovider.established}">established</th>
+							<th th:text="#{healthcareprovider.building_commissioned}">building_commissioned</th>
+							<th th:text="#{healthcareprovider.renovated}">renovated</th>
+							<th th:text="#{healthcareprovider.affiliation}">affiliation</th>
+							<th th:text="#{healthcareprovider.cms_certificate}">cms_certificate</th>
+							<th th:text="#{healthcareprovider.npi}">npi</th>
+							<th th:text="#{healthcareprovider.teaching_hospital}">teaching_hospital</th>
+							<th th:text="#{healthcareprovider.readmission_rate}">readmission_rate</th>
+							<th th:text="#{healthcareprovider.mortality_rate}">mortality_rate</th>
+							<th th:text="#{healthcareprovider.infection_rate}">infection_rate</th>
+							<th th:text="#{healthcareprovider.medical_lawsuit}">medical_lawsuit</th>
+							<th th:text="#{healthcareprovider.lat}">lat</th>
+							<th th:text="#{healthcareprovider.lon}">lon</th>
+							<th th:text="#{healthcareprovider.branch}">branch</th>
+							<th th:text="#{healthcareprovider.chain}">chain</th>
+							<th th:text="#{healthcareprovider.city}">city</th>							
+							<th th:text="#{healthcareprovider.type}">city</th>
+							<th th:text="#{healthcareprovider.currency}">currency</th>
+							<th th:text="#{healthcareprovider.drg_id}">Drg Id</th>
+							<th th:text="#{healthcareprovider.hrr_description}">Hrr Description</th>
+							<th th:text="#{healthcareprovider.aha_id}">Aha Id</th>
+							<th th:text="#{healthcareprovider.aha_name}">Aha Name</th>
+							<th th:text="#{healthcareprovider.admin_title}">Admin Title</th>
+							
+										<th class="text-center sorting" th:text="#{page.text.options}">Options</th>
+									</tr>
+								</thead>
+						<tbody>							
+								<tr th:each="model :${models}">
+								<td th:text="${model.id}"></td>
+								<td th:text="${model.name}"></td>
+								<td th:text="${model.address_1}"></td>
+								<td th:text="${model.address_2}"></td>
+								<td th:text="${model.zipCode}"></td>
+								<td th:text="${model.website}"></td>
+								<td th:text="${model.contactName}"></td>
+								<td th:text="${model.phone_1}"></td>
+								<td th:text="${model.phone_2}"></td>
+								<td th:text="${model.email}"></td>
+								<td th:text="${model.fax}"></td>
+								<td th:text="${model.description}"></td>
+								<td th:text="${model.established}"></td>
+								<td th:text="${model.buildingCommissioned}"></td>
+								<td th:text="${model.renovated}"></td>
+								<td th:text="${model.affiliation}"></td>
+								<td th:text="${model.cmsCertificate}"></td>
+								<td th:text="${model.npi}"></td>
+								<td th:text="${model.teachingHospital}"></td>
+								<td th:text="${model.readmissionRate}"></td>
+								<td th:text="${model.mortalityRate}"></td>
+								<td th:text="${model.infectionRate}"></td>
+								<td th:text="${model.medicalLawsuit}"></td>
+								<td th:text="${model.lat}"></td>
+								<td th:text="${model.lon}"></td>
+								<td th:text="${model.branch}"></td>
+								<td th:text="${model.chain}"></td>
+								<td th:text="${model.city}"></td>								
+								<td th:text="${model.type}"></td>
+								<td th:text="${model.currency}"></td>
+								<td th:text="${model.drgId}"></td>
+								<td th:text="${model.hrrDescription}"></td>
+								<td th:text="${model.ahaId}"></td>
+								<td th:text="${model.ahaName}"></td>
+								<td th:text="${model.adminTitle}"></td>								
+								<td class="text-center">
+								<a class="edit btn btn-dark" th:href="@{'/healthcareprovider/edit'(id=${model.id})}"><i class="fa fa-pencil-square-o"></i>
+								Edit
+								</a>								
+								<a class="delete btn btn-danger" th:href="@{'/healthcareprovider/delete'(id=${model.id})}">
+								<i class="fa fa-times-circle"></i>
+								Remove								
+								</a>
+								</td>
+								</tr>							
+						</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+		</div>
+</div>
+</html>

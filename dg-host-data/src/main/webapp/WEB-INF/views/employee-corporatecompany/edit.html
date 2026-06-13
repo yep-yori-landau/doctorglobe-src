@@ -1,0 +1,73 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:include="layout::page" class='sidebar-large'>
+<div class="container" th:fragment="content">					
+<div class="page-title"> <i class="icon-custom-left"></i>               
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading bg-red">
+							<h3 class ="panel-title"><strong>Employee Corporate Company</strong></h3>
+						</div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                <form action="#" th:action="@{/employee-corporatecompany/save}" th:object="${employeeCorporatecompany}" method="post" id="employeecorporatecompany" class="form-horizontal">
+                                		<input type="hidden" class="form-control" th:field="*{id}" th:value="*{id}"/>                 		
+									    
+									   			    							    
+										<div class='form-group'>
+                                            <label class='col-sm-3 control-label'>Corporate Company Insurance<span class='asterisk'>*</span>
+                                            </label>
+                                            <div class='col-sm-9'>
+                                              <select th:field="*{corporatecompanyInsurance}" class="form-control">
+                                                <option th:each = "var : ${corporatecompanyInsuranceList}" th:value="${var.id}" th:text="${var.programName}"></option>
+                                              </select>                                                 
+                                            </div>
+                                        </div>
+                                        <div class='form-group'>
+                                            <label class='col-sm-3 control-label'>Patient<span class='asterisk'>*</span>
+                                            </label>
+                                            <div class='col-sm-9'>
+                                              <select th:field="*{patient}" class="form-control">
+                                                <option th:each = "var : ${patientList}" th:value="${var.id}" th:text="${var.firstName}"></option>
+                                              </select>                                                 
+                                            </div>
+                                        </div>      
+                                        <div class='form-group'>
+											<label class='col-sm-3 control-label'>Employee Id
+											</label>
+											<div class='col-sm-9'>
+												<input type="text" class='form-control'
+													th:field="*{employeeId}" th:value="*{employeeId}" />
+											</div>
+									    </div>		
+									    <div class='form-group'>
+											<label class='col-sm-3 control-label'>Policy Id
+											</label>
+											<div class='col-sm-9'>
+												<input type="text" class='form-control'
+													th:field="*{policyId}" th:value="*{policyId}" />
+											</div>
+									    </div>
+									    <div class='form-group'>
+											<label class='col-sm-3 control-label'>Email
+											</label>
+											<div class='col-sm-9'>
+												<input type="email" class='form-control'
+													th:field="*{email}" th:value="*{email}" />
+											</div>
+									    </div>		                                                                        
+                                        <div class="col-sm-9 col-sm-offset-3">
+                                            <div class="pull-right">
+                                                <button class="btn btn-primary m-b-10" onclick="javascript:$('#employeecorporatecompany').parsley('validate');">Submit</button>                                                
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>			
+</div>
+</div>
+</html>

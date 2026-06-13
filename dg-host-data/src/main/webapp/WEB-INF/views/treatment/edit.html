@@ -1,0 +1,82 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" th:include="layout::page"
+	class='sidebar-large'>
+<div class="container" th:fragment="content">
+	<div class="page-title">
+		<i class="icon-custom-left"></i>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="panel panel-default">
+				<div class="panel-heading bg-red">
+					<h3 class="panel-title">
+						<strong th:text="#{page.heading.treatment}">Treatment</strong>
+					</h3>
+				</div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-md-12 col-sm-12 col-xs-12">
+							<form action="#" th:action="@{/treatment/save}"
+								th:object="${treatment}" method="post" id="treatment"
+								class="form-horizontal">
+								<div class="form-group">
+									<ul>
+										<li th:each="e : ${#fields.detailedErrors()}"
+											th:class="${e.global}? globalerr : fielderr"><span
+											class='text-danger' th:text="${e.global}?'*':${e.fieldName}">The
+												field name </span> | <span class='text-danger'
+											th:text="${e.message}">The error message</span></li>
+									</ul>
+									<div th:errors="${treatment}"></div>
+								</div>
+								<input type="hidden" class="form-control" th:field="*{id}"
+									th:value="*{id}" />
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'
+										th:text="#{treatment.name}">Name<span class='asterisk'>*</span>
+									</label>
+									<div class='col-sm-9'>
+										<input type="text" required='' class='form-control'
+											th:field="*{name}" th:value="*{name}" />
+									</div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'
+										th:text="#{treatment.drg_definition}">Drg Definition</label>
+									<div class='col-sm-9'>
+										<input type="text" class='form-control'
+											th:field="*{drgDefinition}" th:value="*{drgDefinition}" />
+									</div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'
+										th:text="#{treatment.drg_code}">Drg Code</label>
+									<div class='col-sm-9'>
+										<input type="text" class='form-control'
+											th:field="*{drgCode}" th:value="*{drgCode}" />
+									</div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'
+										th:text="#{treatment.usnewsName}">Drg Code</label>
+									<div class='col-sm-9'>
+										<input type="text" class='form-control'
+											th:field="*{usnewsName}" th:value="*{usnewsName}" />
+									</div>
+								</div>
+								<div class="col-sm-9 col-sm-offset-3">
+									<div class="pull-right">
+										<button class="btn btn-primary m-b-10"
+											onclick="javascript:$('#treatment').parsley('validate');"
+											th:text="#{page.button.submit}">Submit</button>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</html>

@@ -1,0 +1,94 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:include="layout::page" class='sidebar-large'>
+<div class="container" th:fragment="content">					
+			<div class="row">
+				<div class="col-md-12">
+					<div class="panel panel-default">
+                                        <div class="panel-heading" th:if="${message} != null">
+						<h3 class ="panel-title"><strong th:text="${message}"></strong></h3>
+					</div>
+					<div class="panel-heading bg-red">
+						<h3 class ="panel-title"><strong th:text="#{page.heading.corporate-company}">CorporateCompany</strong></h3>
+					</div>
+					<div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12 m-b-20">
+                                    <div class="btn-group">
+                                       <a id="table-edit_new" class="btn btn-danger" th:href="@{'/corporatecompany/edit'}">
+                                            Add New <i class="fa fa-plus"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                      <div class="col-md-12 col-sm-12 col-xs-12 table-responsive table-red">
+                            <table class="table table-striped table-hover dataTable" id="table-editable">          
+								<thead>
+									<tr>
+										<th th:text="#{corporate-company.id}">id</th>
+										<th th:text="#{corporate-company.name}">name</th>
+										<th th:text="#{corporate-company.address_1}">address_1</th>
+										<th th:text="#{corporate-company.address_2}">address_2</th>
+										<th th:text="#{corporate-company.zip_code}">zip_code</th>
+										<th th:text="#{corporate-company.website}">website</th>
+										<th th:text="#{corporate-company.phone_1}">phone_1</th>
+										<th th:text="#{corporate-company.phone_2}">phone_2</th>
+										<th th:text="#{corporate-company.email}">email</th>
+										<th th:text="#{corporate-company.description}">description</th>										
+										<th th:text="#{corporate-company.whitelabel_url}">whitelabel_url</th>
+										<th th:text="#{corporate-company.minimum_amount_spread}">Minimum Amount Spread</th>
+										<th th:text="#{corporate-company.minimum_percentage_spread}">Minimum Percentage Spread</th>
+										<th th:text="#{corporate-company.currency}">Currency</th>
+										<th th:text="#{corporate-company.dg_commission}">DG Commission</th>
+										<th th:text="#{corporate-company.worker_incentive}">Worker Incentive</th>										
+										<th th:text="#{corporate-company.city}">city</th>
+										<th th:text="#{corporate-company.association}">association</th>
+										<th th:text="#{corporate-company.theme}">theme</th>	
+										<th th:text="#{corporate-company.ein}">ein</th>
+										<th th:text="#{corporate-company.first_name}">first name</th>
+										<th th:text="#{corporate-company.last_name}">last_name</th>									
+										<th class="text-center sorting" th:text="#{page.text.options}">Options</th>
+									</tr>
+								</thead>
+						<tbody>							
+								<tr th:each="model :${models}">
+								<td th:text="${model.id}"></td>
+								<td th:text="${model.name}"></td>
+								<td th:text="${model.address_1}"></td>
+								<td th:text="${model.address_2}"></td>
+								<td th:text="${model.zipCode}"></td>
+								<td th:text="${model.website}"></td>
+								<td th:text="${model.phone_1}"></td>
+								<td th:text="${model.phone_2}"></td>
+								<td th:text="${model.email}"></td>
+								<td th:text="${model.description}"></td>								
+								<td th:text="${model.whitelabelUrl}"></td>
+								<td th:text="${model.minimumAmountSpread}"></td>
+								<td th:text="${model.minimumPercentageSpread}"></td>
+								<td th:text="${model.currency}"></td>
+								<td th:text="${model.dgCommission}"></td>
+								<td th:text="${model.workerIncentive}"></td>
+								<td th:text="${model.city}"></td>
+								<td th:text="${model.association}"></td>
+								<td th:text="${model.theme}"></td>
+								<td th:text="${model.ein}"></td>
+								<td th:text="${model.firstName}"></td>
+								<td th:text="${model.lastName}"></td>
+								
+								<td class="text-center">
+								<a class="edit btn btn-dark" th:href="@{'/corporatecompany/edit'(id=${model.id})}"><i class="fa fa-pencil-square-o"></i>
+								Edit
+								</a>								
+								<a class="delete btn btn-danger" th:href="@{'/corporatecompany/delete'(id=${model.id})}">
+								<i class="fa fa-times-circle"></i>
+								Remove								
+								</a>
+								</td>
+								</tr>							
+						</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+		</div>
+</div>
+</html>

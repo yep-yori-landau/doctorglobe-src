@@ -1,0 +1,67 @@
+ <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:include="layouts/layout::page" class='sidebar-large'>
+<body th:class="page-common">
+	<main id="main-content" th:fragment='content'>	
+	<div class='loginbox'>		
+	     <div class="my-loginbox" th:if="${errors != 0}">
+	     	<div class="login-error-msgbox" th:if="${errors != null}">	     		
+            	<p><i class="error-icon"></i><span th:text="#{page.forgotbox.errormessage}"></span></p>            	
+        	</div>								
+	        <h1 th:text="#{forgot.reset_password}"></h1><br/>
+			<form class="form-horizontal" id='forgotform' method='post' th:object="${forgotForm}" th:action="@{forgot}">							
+				<p class="text-center"	th:text="#{page.forgotbox.heading}"></p>				        		
+	        		<div class="form-group">
+	        			<label for="email" class="col-sm-2 control-label" th:text="#{page.loginbox.email}">Email</label>
+	        			<div class="col-sm-10">
+	        				<input type="email" class="form-control" placeholder="Email address" th:field="*{email}"
+								th:value="*{email}"/>
+							<label class="error pl0" for="email"></label>	
+	        			</div>
+	        		</div>        		
+	        		<div class="form-group">
+	        			<div class="col-sm-offset-2 col-sm-10">        
+	        				<button class="btn btn-green btn-sm" type="submit" th:text="#{page.forgotbox.btn.submit}">Sign in</button>	        				        				
+	        			</div>	        			
+	        		</div>
+	        		<div class="form-group">	        			
+						<span th:text="#{page.forgotbox.did_you_remember_your_password}"></span> 
+						<a th:href="@{/}" th:text="#{page.forgotbox.login}">Login</a>	        			
+	        		</div>
+	      	</form>	      	   			
+      	</div>      	
+      	
+      	<div class="my-loginbox" th:if="${errors == 0}">
+				<h1 th:text="#{forgot.check_your_mail}"></h1><br/>
+        		<p>
+        			<span th:text="#{forgot.success_msg}"></span> 
+        			<span th:text="${emailaddress}"></span> 
+        			<span th:text="#{forgot.success_msg_is}"></span>
+        		</p>
+        		<div class="form-group">	        			
+						<span th:text="#{page.forgotbox.did_you_remember_your_password}"></span> 
+						<a th:href="@{/}" th:text="#{page.forgotbox.login}">Login</a>	        			
+	        	</div>
+      	</div>
+	</div>	
+	<script type="text/javascript" th:inline='javascript'>
+					$(document).ready(function() {
+						$("#forgotform").validate({
+							rules:{												
+								email:{
+									required : true,
+									email : true
+								},								
+							},
+							messages:{
+								email 		: "Please enter a valid email address",							
+							},
+							
+							submitHandler: function(form){
+								form.submit();
+							}
+						});
+					});
+			</script>  
+	</main>
+</body>
+</html>    

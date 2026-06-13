@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:include="layouts/layout::page">
+<body>
+	<main id="main-content" th:fragment='content'>	
+	  <div class="wrap">
+			<aside th:replace="fragments/practitionersidebar :: sidebar"></aside>
+			<div id="container">
+				<div class="my-block">
+					<h3 class="hel-med fs-16 title-in">
+						<a th:href="@{/home/practitioner}" th:text="#{page.hospital.practitioner.edit.back_to_dashboard}">Back to Dashboard</a>	                
+					</h3>
+					<h3 class="hel-med fs-16" th:text="#{page.hospital.practitioner.attestation}"></h3>
+					<form th:action="@{/home/practitioner/attestation}" th:object="${practitionerAttestationsForm}" method="post">											
+							<table class="mt-20 data-table">
+                                <tr th:each="practitionerAttestationsFormModel,rowStat : ${practitionerAttestationsForm.practitionerAttestationsFormModel}">                                	
+                                    <td width="80%" th:text="${rowStat.count}+'. '+${practitionerAttestationsFormModel.attestationName}"></td>
+                                     <td>
+                                        <label class="cust-radio">
+                                            <input type="radio" th:field="*{practitionerAttestationsFormModel[__${rowStat.index}__].value}" value="1"/>     
+                                            <span class="box"></span>
+                                            <span th:text="#{hospital.radio.btn.yes}">Yes</span>
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <label class="cust-radio">
+                                            <input type="radio" th:field="*{practitionerAttestationsFormModel[__${rowStat.index}__].value}" value="0"/>     
+                                            <span class="box"></span>
+                                            <span th:text="#{hospital.radio.btn.no}">No</span>
+                                        </label>
+                                    </td>
+                                    <td class="hide">
+                                    	<input type="hidden" th:field="*{practitioner}"/>
+                                    	<input type="hidden" th:field="*{practitionerAttestationsFormModel[__${rowStat.index}__].id}"/>                                	                                                        
+                                		<input type="hidden" th:field="*{practitionerAttestationsFormModel[__${rowStat.index}__].practitioner}"/>
+                                		<input type="hidden" th:field="*{practitionerAttestationsFormModel[__${rowStat.index}__].attestation}"/>
+                                	</td>
+                                </tr>                            
+                            </table>
+                            <div th:if="${!practitionerAttestationsForm.practitionerAttestationsFormModel.isEmpty()}" class="tc my-btn-block">
+                                <button class="btn btn-sm btn-dk-blue" type="reset" th:text="#{page.hospital.btn_cancel}">Cancel</button>
+                                <button class="btn btn-sm btn-blue" type="submit" th:text="#{page.hospital.btn_save_changes}">Save Changes</button>
+                            </div>
+					</form>
+					
+				</div>
+			</div>
+		</div>
+	</main>
+</body>
+</html>

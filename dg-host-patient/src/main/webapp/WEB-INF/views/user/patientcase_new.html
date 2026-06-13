@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	th:include="layouts/layoutresult::page" class='sidebar-large'>
+<body th:class="page-common">
+	<main id="main-content" th:fragment='content'>
+	<div class="wrap">
+                <!-- topbar-->
+                <div class="my-block my-block-padding">                    
+					<div class="sucess-heading"> 
+					    <figure class="fl">                  
+                    	 	<img th:src="@{/resources/images/sign.jpg}"/>
+                     	</figure>                    
+                    </div>
+                    <p><h3 class="fs-22 hel-med h3-margin" th:text="#{user.success.text}"></h3></p>
+                    
+                    <p th:text="#{page.confirmation.congratulation}" class="fs-15"></p>
+                    
+                    <p class="fs-15">
+                    	<span th:text="#{page.confirmation.your_next_step}"></span>
+                    	<span th:text="${treatmentName}"></span>
+                    	<span th:text="#{page.confirmation.your_next_step_at}"></span>
+                    	<span th:text="${practitionerModel.healthcareproviderName}"></span>
+                    	<span th:text="#{page.confirmation.it}"></span>                  	
+                    </p>
+                    	
+                    <p th:text="#{page.confirmation.you_should}" class="fs-15"></p>
+                    
+                    <p th:text="#{page.confirmation.thanks_you}" class="fs-15"></p>
+                    
+                    <p th:text="#{page.confirmation.the_doctor_globe_team}" class="fs-15"></p>                 
+                   
+                    <div class="sucess-img"> 
+						    <figure class="fl">                  
+                    	 	<img th:src="@{/resources/images/l.jpg}"/>
+                    	 	</figure>                    
+                    </div>
+                    <div class="fr margin-140">                    
+                    <p>                    
+                    	<a th:href="@{'/healthcareproviders'(treatment=${treatment})}">
+                    		<button class="btn btn-dk-blue btn-sm" th:text="#{user.hospital_page.text}"></button>
+                    	</a>                      	   	
+                    </p>                    
+                   </div>
+                </div>                
+    </div>    	
+	</main>
+</body>
+</html>	

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="ajaxcity">
+	<script type="text/javascript" th:inline='javascript'>
+		$(document).ready(function() {			
+			$("select.country").change(function(){
+				var val = $(this).val();
+				if(val != ""){
+					$("select#ajaxcity").msDropDown().data("dd").destroy();
+					$('#ajaxcity').html('');		
+					$("#ajaxcity").msDropDown().data("dd");
+					var hosturl = /*[[${application.hostbaseurl} ]]*/;				
+					$("select#state").msDropDown().data("dd").destroy();				
+					$.ajax({
+						url: hosturl+'/state/country/'+val,
+						success : function(data){						    
+							    if(data.length > 0){
+							    	var options = '<option value="">All States</option>';
+							    	$(data).each(function(index){
+							    		options += '<option value="' + data[index].id + '">' + data[index].name + '</option>';						    		
+							    	});						    							    	
+						            $('#state').html(options);
+						            $("#state").msDropDown().data("dd");
+							    }else{						    	
+							    	var options = '<option value="">No States</option>';
+						        	$('#state').html(options);
+						        	$("#state").msDropDown().data("dd");
+						        	$("select#ajaxcity").msDropDown().data("dd").destroy();
+						        	$.ajax({
+						    			url: hosturl+'/city/country/'+val,
+						    			success : function(data){
+						    					if(data.length > 0){
+						    						var options = '<option value="">All Cities</option>';
+						    						$(data).each(function(index){
+						    			                options += '<option value="' + data[index].id + '">' + data[index].name + '</option>';
+						    			            });
+						    			            $('select#ajaxcity').html(options);
+						    			            $("#ajaxcity").msDropDown().data("dd");
+						    					}else {  
+						    			        	var options = '<option value="">No City</option>';
+						    			        	$('select#ajaxcity').html(options);
+						    			        	$("#ajaxcity").msDropDown().data("dd");					    			        	
+						    					}
+						    				}
+						        	});
+								}						    
+						},
+					});
+				}else{
+					$("select#ajaxcity").msDropDown().data("dd").destroy();
+					$('#ajaxcity').html('');		
+					$("#ajaxcity").msDropDown().data("dd");
+					$("select#state").msDropDown().data("dd").destroy();
+					$('select#state').html('');		
+					$("select#state").msDropDown().data("dd");
+				}
+			});
+			
+			$("select.state").change(function(){
+				var val = $(this).val();		
+				var hosturl = /*[[${application.hostbaseurl} ]]*/;
+				$("select#ajaxcity").msDropDown().data("dd").destroy();
+				$.ajax({
+					url: hosturl+'/city/state/'+val,				
+					success : function(data){
+						console.log(data);
+							if(data.length > 0){
+								var options = '<option value="">All Cities</option>';
+								$(data).each(function(index){
+	    			                options += '<option value="' + data[index].id + '">' + data[index].name + '</option>';
+	    			            });
+					            $('#ajaxcity').html(options); 
+					            $("select#ajaxcity").msDropDown().data("dd");
+							}else{
+								var options = '<option value="">None</option>';
+								$('#ajaxcity').html(options);
+								$("select#ajaxcity").msDropDown().data("dd");
+							}
+					}
+				});
+			});
+			
+			$("select#ajaxcity").change(function(){
+				$('#city').val($(this).val());
+			});
+			
+			var city = $("#city").val();
+				if(city.length > 0){		
+					var val = $("#city").val();
+					var hosturl = /*[[${application.hostbaseurl} ]]*/;
+					$("select.country").msDropDown().data("dd").destroy();
+					$("select#state").msDropDown().data("dd").destroy();
+					$("select#ajaxcity").msDropDown().data("dd").destroy();					
+					$.ajax({
+							url: hosturl+'/city/id/'+val,
+							success : function(data){																								
+								$('select.country').val(data.country);		
+								$("select#country").msDropDown().data("dd");
+								var country = data.country;
+								var state = data.state;
+								var hosturl = /*[[${application.hostbaseurl} ]]*/;
+								if(state !=null){
+									$.ajax({
+										url: hosturl+'/state/country/'+country,
+										success : function(data){			
+											if(data.length > 0){
+												var options = '<option value="">All State</option>';
+												$(data).each(function(index){
+					    			                options += '<option value="' + data[index].id + '">' + data[index].name + '</option>';
+					    			            });
+									            $('#state').html(options);
+									            $('select.state').val(state);
+									            $("#state").msDropDown().data("dd");
+									            var hosturl = /*[[${application.hostbaseurl} ]]*/;
+									            $.ajax({
+													url: hosturl+'/city/state/'+state,
+													success : function(data){			
+														if(data.length > 0){
+															var options = '<option value="">All City</option>';
+															$(data).each(function(index){
+								    			                options += '<option value="' + data[index].id + '">' + data[index].name + '</option>';
+								    			            });
+												            $('#ajaxcity').html(options);
+												            $('select#ajaxcity').val(val);
+												            $("#ajaxcity").msDropDown().data("dd");												           						            				            
+														}					
+													}
+												});	
+											}		
+										}
+									});	
+								}else{
+									var options = '<option value="">No States</option>';
+									var hosturl = /*[[${application.hostbaseurl} ]]*/;
+						        	$('#state').html(options);
+						        	$("#state").msDropDown().data("dd");
+						        	$.ajax({
+						    			url: hosturl+'/city/country/'+country,
+						    			success : function(data){
+						    					if(data.length > 0){
+						    						var options = '';
+						    						$(data).each(function(index){
+						    			                options += '<option value="' + data[index].id + '">' + data[index].name + '</option>';
+						    			            });
+						    			            $('#ajaxcity').html(options);
+						    			            $('select#ajaxcity').val(val);
+						    			            $("#ajaxcity").msDropDown().data("dd");									    			            
+						    					}else {  
+						    			        	var options = '<option value="">No City</option>';
+						    			        	$('#ajaxcity').html(options);   		
+						    			        	$("#ajaxcity").msDropDown().data("dd");
+						    					}
+						    				}
+						        	});
+								}			
+							}															
+					});			
+				}
+
+
+		});
+   </script>
+</div>
+</body>
+</html>

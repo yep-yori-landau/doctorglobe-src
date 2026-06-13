@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:include="layouts/layout::page">
+<body>
+	<main id="main-content" th:fragment='content'>	
+	  <div class="wrap">
+			<aside th:replace="fragments/sidebar :: sidebar"></aside>
+			<div id="container">
+				<div class="my-block">
+				<form th:object="${hospitalSpecialityTreatmentForm}" th:action="@{/home/speciality-treatment}" method="post">
+					<h3 class="hel-med fs-16 title-in">
+						<span th:text="#{page.hospital.treatment.speciality_of}">Speciality of</span>						
+						<span th:text="${specialityMap.get(hospitalSpecialityTreatmentForm.hospitalSpecialityModel.speciality)}">Aesthetics</span>
+	                    <span th:if="${success != null}" th:text="#{page.hospital.success.edited}" class="fr text-danger"></span>
+					</h3>					
+                    <h3 class="hel-med fs-16" th:text="#{page.hospital.treatment.general_specialites_info}">General Specialities Info:</h3>
+                            <input type="hidden" th:field="*{hospitalSpecialityModel.id}" />
+                            <input type="hidden" th:field="*{hospitalSpecialityModel.speciality}" />
+                            <input type="hidden" th:field="*{hospitalSpecialityModel.healthcareprovider}" />
+                            <ul class="my-form mt-20">                            
+                                <li>                                	
+                                    <label for="built" th:text="#{page.hospital.treatment.was_built_at}">Was built at:</label>
+                                    <input type="text" th:field="*{hospitalSpecialityModel.built}" readonly="readonly" class="one-third datepicker"/>
+                                </li>
+                                <li>
+                                    <label for="renovated" th:text="#{page.hospital.treatment.renovated_at}">Renovated at:</label>
+                                    <input type="text" th:field="*{hospitalSpecialityModel.renovated}" readonly="readonly" class="one-third datepicker"/>
+                                </li>                                
+                                <li>
+                                    <label for="rename" th:text="#{page.hospital.treatment.rename_speciality_optional}">Rename Speciality (optional):</label>
+                                    <input type="text" th:field="*{hospitalSpecialityModel.name}" class="one-third" required="required"/>
+                                </li>
+                                <li>
+                                    <ul class="row my-scroll-block">
+                                        <li class="fl w-40 pr-20">
+                                            <h3 class="hel-med fs-16" th:text="#{page.hospital.treatment.suggested_treatments}">Suggested Treatments:</h3>
+                                            <div class="my-scroll">
+                                                <select th:field="*{specialityTreatment}" multiple="multiple" class="mylistbox listbox">
+											      <option th:each="specialityTreatmentModel : ${specialityTreatmentList}" th:value="${{specialityTreatmentModel.id}}" th:text="${treatmentMap.get(specialityTreatmentModel.id)}">Alderaan</option>											     
+											    </select>
+                                            </div>
+                                        </li>
+                                        <li class="tc w-20">
+                                            <div class="my-btn-block top single w-20">
+                                                <button class="btn btn-fixed btn-gray addbtn" type="button" th:text="#{page.hospital.speciality.btn_add}">Add &gt;</button>
+                                                <button class="btn btn-fixed btn-gray removebtn" type="button" th:text="#{page.hospital.speciality.btn_remove}">&lt; Remove</button>
+                                            </div>
+                                            <div class="my-btn-block bottom single w-20">
+                                                <button class="btn btn-fixed btn-gray addallbtn" type="button" th:text="#{page.hospital.speciality.btn_add_all}">Add all</button>
+                                                <button class="btn btn-fixed btn-gray removeallbtn" type="button" th:text="#{page.hospital.speciality.btn_remove_all}">Remove all</button>
+                                            </div>
+                                        </li>
+                                        <li class="fr w-40 pl-20">
+                                            <h3 class="hel-med fs-16">
+                                            	<span th:text="#{page.hospital.treatment.available_in}">Available in </span>
+                                            	<span th:text="${specialityMap.get(hospitalSpecialityTreatmentForm.hospitalSpecialityModel.speciality)}">Aesthetics</span>
+                                            	<span th:text="#{page.hospital.treatment.speciality}"> Speciality:</span>                                            
+                                            </h3>
+                                            <div class="my-scroll">
+                                                <select th:field="*{selectedTreatment}" multiple="multiple" class="mylistbox1 listbox">
+											      <option th:each="selectedTreatment : ${selectedTreatmentList}" th:value="${{selectedTreatment.id}}" th:text="${selectedTreatment.name}">Alderaan</option>											     
+											    </select>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <div class="tc my-btn-block">
+                                <button class="btn btn-sm btn-dk-blue" type="reset" th:text="#{page.hospital.treatment.btn_cancel}">Cancel</button>
+                                <button class="btn btn-sm btn-blue btn-list-submit" type="submit" th:text="#{page.hospital.treatment.btn_save_changes}">Save Changes</button>
+                            </div>
+                        </form>
+				</div>
+			</div>
+		</div>
+	</main>
+</body>
+</html>					

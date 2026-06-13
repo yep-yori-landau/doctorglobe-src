@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:include="layouts/layout::page">
+<body>
+	<main id="main-content" th:fragment='content'>	
+	  <div class="wrap">
+			<aside th:replace="fragments/practitionersidebar :: sidebar"></aside>
+			<div id="container">
+				<div class="my-block">
+					<h3 class="hel-med fs-16 title-in">
+						<a th:href="@{/home/practitioner}" th:text="#{page.hospital.practitioner.edit.back_to_dashboard}">Back to Dashboard</a>	                   
+					</h3>
+					<form th:action="@{/home/practitioner/medical}" th:object="${practitionerModel}" method="post">					
+						<input type="hidden" th:field="*{id}"/>
+                        <input type="hidden" th:field="*{password}"/>
+                        <input type="hidden" th:field="*{photo}"/>
+                        <input type="hidden" th:field="*{role}"/>
+                        <input type="hidden" th:field="*{address_1}"/>
+                        <input type="hidden" th:field="*{address_2}"/>
+                        <input type="hidden" th:field="*{zipCode}"/>
+                        <input type="hidden" th:field="*{city}"/>                        
+						<h3 class="hel-med fs-16" th:text="#{page.hospital.practitioner.doctor_details}">Doctor Details:</h3>
+						<ul class="my-form mt-20">						
+                               <li class="hide">
+                                    <label for="title" th:text="#{page.hospital.practitioner.title}">Title:</label>
+                                    <select th:field="*{title}" class="my-select half" id="title">
+                                        <option value="Dr">Dr</option>
+                                        <option value="Mr">Mr</option>
+                                    </select>
+                                </li>
+                                <li class="hide">
+                                    <label for="firstName" th:text="#{page.hospital.practitioner.first_name}">First name:</label>
+                                    <input type="text" th:field="*{firstName}" class="w-40"/>
+                                </li>
+                                <li class="hide">
+                                    <label for="lastName" th:text="#{page.hospital.practitioner.last_name}">Last name:</label>
+                                    <input type="text" th:field="*{lastName}" class="w-40"/>
+                                </li>
+                                <li class="hide">
+                                    <label for="dob" th:text="#{page.hospital.practitioner.dob}">Dob:</label>
+                                    <input type="text" th:field="*{dob}" class="w-40 datepicker"/>                                    
+                                </li>
+                                <li class="hide">
+                                    <label for="gender" th:text="#{page.hospital.practitioner.gender}">Gender:</label>
+                                    <select th:field="*{gender}" class="my-select half" required="required" id="gender">
+                                          <option th:value="M" th:text="M"></option>
+                                          <option th:value="F" th:text="F"></option>                                              	                                            
+                                          <option th:value="U" th:text="U"></option>
+                                    </select>                                   
+                                </li>
+                                <li class="hide">
+                                    <label for="mobile" th:text="#{page.hospital.practitioner.mobile}">Mobile:</label>
+                                    <input type="text" th:field="*{mobile}" class="w-40"/>
+                                </li>
+                                <li class="hide">
+                                    <label for="mobile" th:text="#{page.hospital.practitioner.phone}">Phone:</label>
+                                    <input type="text" th:field="*{phone}" class="w-40"/>
+                                </li>
+                                <li class="hide">
+                                    <label for="email" th:text="#{page.hospital.practitioner.email_address}">Email Address:</label>
+                                    <input type="text" th:field="*{email}" class="w-40" required="required"/>
+                                </li>                                
+                                <li>
+                                    <label for="medicalLicense" th:text="#{page.hospital.practitioner.medical_license}"></label>
+                                    <input type="text" th:field="*{medicalLicense}" class="w-40" required="required"/>
+                                </li>                                                        
+		                       <li>
+                                    <label for="usacertification" th:text="#{page.hospital.practitioner.usa_certification}"></label>
+                                    <select th:field="*{usaCertification}" class="form-control my-select half" id="usacertification">
+                                              	<option th:value="None" th:text="None"></option>
+                                              	<option th:value="Inforce" th:text="Inforce"></option>                                              	                                            
+                                              	<option th:value="Expired" th:text="Expired"></option>
+                                    </select>                                         
+                                </li>
+                                <li>
+                                    <label for="training" th:text="#{page.hospital.practitioner.usa_training}"></label>
+                                    <select th:field="*{usaTraining}" class="form-control my-select half" id="training">
+                                              	<option th:value="1" th:text="Yes"></option>
+                                              	<option th:value="0" th:text="No"></option>                                              	                                            
+                                    </select>                                     
+                                </li>
+                                <li>
+                                    <label for="gDate" th:text="#{page.hospital.practitioner.graduation_dt}">Graduation date: </label>
+                                    <input type="text" class='w-40 datepicker datepickergraduation' th:field="*{graduationDt}"/>
+                                    <button class="ico ico-cal btn-cal" type="button" th:id="datepickergraduation"></button>
+                                </li>
+                                 <li>
+                                    <label for="gInstitution" th:text="#{page.hospital.practitioner.graduation_institution}">Graduation Institution: </label>
+                                    <input type="text" class='w-40' th:field="*{graduationInstitution}"/>
+                                </li>
+                                <li>
+                                    <label for="sDate" th:text="#{page.hospital.practitioner.specialty_dt}"></label>
+                                    <input type="text" class='w-40 datepicker datepickerspecialty' th:field="*{specialtyDt}"/>
+                                    <button class="ico ico-cal btn-cal" type="button" th:id="datepickerspecialty"></button>
+                                </li>
+                                <li>
+                                    <label for="sInstitution" th:text="#{page.hospital.practitioner.specialty_institution}"></label>
+                                    <input type="text" th:field="*{specialtyInstitution}" class="w-40"/>
+                                </li>
+                               <li>
+                                    <label for="degree" th:text="#{page.hospital.practitioner.degree}"></label>
+                                    <input type="text" th:field="*{degree}" class="w-40" required="required"/>
+                                </li>                                                                 
+		                         <li class="hide">
+                                    <label for="type" th:text="#{page.hospital.practitioner.type}">Type:</label>
+                                    <input type="text" th:field="*{type}" class="w-40" required="required"/>                                    
+                                </li>
+                                <li class="hide">
+                                    <label for="description" th:text="#{page.hospital.practitioner.description}">Description:</label>
+                                    <textarea th:field="*{description}" class="w-40"></textarea>
+                                </li>		                                  
+                          </ul>      
+                          <div class="tc my-btn-block">
+                                <button class="btn btn-sm btn-dk-blue btn-cancel" type="button" th:text="#{page.hospital.btn_cancel}">Cancel</button>
+                                <button class="btn btn-sm btn-blue" type="submit" th:text="#{page.hospital.btn_save_changes}">Save Changes</button>
+                            </div>
+					</form>								
+				</div>
+			</div>
+		</div>
+	</main>
+</body>
+</html>					

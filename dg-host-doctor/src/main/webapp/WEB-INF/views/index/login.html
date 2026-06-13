@@ -1,0 +1,63 @@
+ <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:include="layouts/layout::page" class='sidebar-large'>
+<body th:class="page-common">
+	<main id="main-content" th:fragment='content'>	
+	<div class='loginbox'>
+	     <div class="my-loginbox">			
+			<form class="form-horizontal" id='loginform' method='post' th:object="${loginForm}" th:action="@{login.do}">
+			<div class="error-msgbox" th:if="${error != null}">
+				<p>	<i class="error-icon"></i>
+	            	<span th:text="#{page.loginbox.errormessage}"></span>            	
+	            </p>			
+			</div><br/>        									
+			<h2 class="text-center"	th:text="#{page.loginbox.heading}"></h2>			
+        		<div class="form-group">
+        			<label for="email" class="col-sm-2 control-label" th:text="#{page.loginbox.email}">Email</label>
+        			<div class="col-sm-10">
+        				<input type="email" class="form-control" th:placeholder="#{page.loginbox.email.placeholder}" th:field="*{email}"
+							th:value="*{email}"/>
+        			</div>
+        		</div>
+        		<div class="form-group">	
+        			<label for="password" class="col-sm-2 control-label" th:text="#{page.loginbox.password}">Password</label>
+        			<div class="col-sm-10">
+        				<input type="password" class="form-control" th:placeholder="#{page.loginbox.password.placeholder}" th:field="*{password}"
+							th:value="*{password}"/>
+        			</div>	
+        		</div>
+        		<div class="form-group">
+        			<div class="col-sm-offset-2 col-sm-10">        
+        				<button class="btn btn-green btn-sm" type="submit" th:text="#{page.loginbox.btn.sign_in}">Sign in</button>
+        				<a th:href="@{/forgot}" class="fr forgotcall" th:text="#{page.loginbox.forgot_password}"></a>
+        			</div>
+        		</div>
+      		</form>      		
+      		<script type="text/javascript" th:inline='javascript'>
+					$(document).ready(function() {
+						$("#loginform").validate({
+							rules:{												
+								email:{
+									required : true,
+									email : true
+								},
+								password:{
+									required : true,									
+								}
+							},
+							messages:{
+								email 		: "Please enter a valid email address",
+								password	: "Please enter your password",
+							
+							},
+							
+							submitHandler: function(form){
+								form.submit();
+							}
+						});
+					});
+			</script>
+      	</div>      	
+	</div>	
+	</main>
+</body>
+</html>    

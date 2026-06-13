@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:include="layouts/layout::page">
+<body>
+	<main id="main-content" th:fragment='content'>	
+	  <div class="wrap">
+			<aside th:replace="fragments/sidebar :: sidebar"></aside>
+			<div id="container">
+				<div class="my-block">
+					<h3 class="hel-med fs-16 title-in">
+						<span th:text="#{page.hospital.general}">General</span>					
+					</h3>				
+                        <form name="hospitalForm" class="w-75" th:object="${hospitalForm}" th:method="post" id="hospitalform">
+                            <h3 class="hel-med fs-16" th:text="#{page.hospital.general_info}"></h3>
+                            <ul class="my-form mt-20">                            	
+                                <li>
+                                	<input type="hidden" th:field="*{id}" th:value="*{id}" />
+                                	<input type="hidden" th:field="*{city}"/> 
+                                	<input type="hidden" th:field="*{isPolicyCoveredPractitioners}"/>
+                                	<input type="hidden" th:field="*{insuranceCap}"/>
+                                	<input type="hidden" th:field="*{policyFile}"/>
+                                	<input type="hidden" th:field="*{insuranceCarrier}"/>
+                                	<input type="hidden" th:field="*{policyNumber}"/>
+                                	<input type="hidden" th:field="*{perCaseInsuranceCap}"/>                                	
+                                    <label for="name" th:text="#{page.hospital.hospital_name}">Hospital Name</label>
+                                    <input type="text" th:field="*{name}" />
+                                    <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger ml-145"></span> 
+                                </li>
+                                <li>
+                                    <label for="address1" th:text="#{page.hospital.hospital_address1}">Hospital Address 1</label>
+                                    <input type="text" th:field="*{address_1}"/>
+                                    <span th:if="${#fields.hasErrors('address_1')}" th:errors="*{address_1}" class="text-danger ml-145"></span> 
+                                </li>
+                                <li>
+                                    <label for="address2" th:text="#{page.hospital.hospital_address2}">Hospital Address 2</label>
+                                    <input type="text" th:field="*{address_2}"/> 
+                                    <span th:if="${#fields.hasErrors('address_2')}" th:errors="*{address_2}" class="text-danger ml-145"></span>
+                                </li>
+                                <li>
+                                    <label for="country" th:text="#{page.hospital.country}" class="mt-8">Country</label>
+                                    <select class="form-control my-select country w-403" id="country" name="country">
+										<option value="">All Countries</option>
+										<option th:each="c : ${countryList}" th:text="${c.name}" th:value="${c.id}"></option>										
+									</select>
+									<label for="country" class="error"></label> 
+                                </li>
+                                <li>
+                                    <label for="state" th:text="#{page.hospital.state}" class="mt-8">State</label>
+                                    <select class="form-control my-select state w-403" id="state"></select>									 
+                                </li>
+                                <li>
+                                    <label for="ajaxcity" th:text="#{page.hospital.city}" class="mt-8">City</label>
+                                    <select class="form-control my-select w-403" id="ajaxcity" name="ajaxcity"></select>
+                                    <span th:if="${#fields.hasErrors('city')}" th:errors="*{city}" class="text-danger ml-145"></span>
+                                    <label for="ajaxcity" class="error"></label>                                    
+                                </li>
+                                <li>
+                                    <label for="zipCode" th:text="#{page.hospital.zip_code}">Zip code</label>
+                                    <input type="text" th:field="*{zipCode}"/>
+                                    <span th:if="${#fields.hasErrors('zipCode')}" th:errors="*{zipCode}" class="text-danger ml-145"></span> 
+                                </li>
+                                <li>
+                                    <label for="lat" th:text="#{page.hospital.latitude}">Latitude</label>
+                                    <input type="text" th:field="*{lat}"/> 
+                                    <span th:if="${#fields.hasErrors('lat')}" th:errors="*{lat}" class="text-danger ml-145"></span>
+                                </li>
+                                <li>
+                                    <label for="lon" th:text="#{page.hospital.longitude}">Longitude</label>
+                                    <input type="text" th:field="*{lon}"/>
+                                    <span th:if="${#fields.hasErrors('lon')}" th:errors="*{lon}" class="text-danger ml-145"></span> 
+                                </li>
+                                <li>
+                                    <label for="description" th:text="#{page.hospital.hospital_description}">Hospital Description</label>
+                                    <textarea cols="" rows="5" th:field="*{description}"></textarea>
+                                   <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="text-danger ml-145"></span>
+                                </li>
+                            </ul>
+                            <h3 class="hel-med fs-16 mt-10" th:text="#{page.hospital.contact_info}">Contact Info:</h3>
+                            <ul class="my-form mt-20">
+                                <li>
+                                    <label for="website" th:text="#{page.hospital.website}">Website</label>
+                                    <input type="url" th:field="*{website}"/> 
+                                    <span th:if="${#fields.hasErrors('website')}" th:errors="*{website}" class="text-danger ml-145"></span>
+                                </li>
+                                <li>
+                                    <label for="contactName" th:text="#{page.hospital.contact_name}">Contact name</label>
+                                    <input type="text" th:field="*{contactName}"/>
+                                    <span th:if="${#fields.hasErrors('contactName')}" th:errors="*{contactName}" class="text-danger ml-145"></span> 
+                                </li>
+                                <li>
+                                    <label for="phone1" th:text="#{page.hospital.telephone1}">Telephone</label>
+                                    <input type="text" th:field="*{phone_1}"/> 
+                                    <span th:if="${#fields.hasErrors('phone_1')}" th:errors="*{phone_1}" class="text-danger ml-145"></span>
+                                </li>
+                                <li>
+                                    <label for="phone2" th:text="#{page.hospital.telephone2}">Telephone</label>
+                                    <input type="text" th:field="*{phone_2}"/> 
+                                    <span th:if="${#fields.hasErrors('phone_2')}" th:errors="*{phone_2}" class="text-danger ml-145"></span>
+                                </li>
+                                <li>
+                                    <label for="email" th:text="#{page.hospital.email_address}">Email Address</label>
+                                    <input type="email" th:field="*{email}"/>
+                                    <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger ml-145"></span> 
+                                </li>
+                                <li>
+                                    <label for="fax" th:text="#{page.hospital.fax}">Fax</label>
+                                    <input type="text" th:field="*{fax}"/> 
+                                    <span th:if="${#fields.hasErrors('fax')}" th:errors="*{fax}" class="text-danger ml-145"></span>
+                                </li>
+                                <li class="hide">
+                                    <label for="established" th:text="#{page.hospital.established}">Established</label>
+                                    <input type="text" th:field="*{established}" class="datepicker" readonly="readonly"/>
+                                    <span th:if="${#fields.hasErrors('established')}" th:errors="*{established}" class="text-danger ml-145"></span> 
+                                </li>
+                                <li class="hide">
+                                    <label for="buildingCommissioned" th:text="#{page.hospital.building_commissioned}">Building Commissioned</label>
+                                    <input type="text" th:field="*{buildingCommissioned}" class="datepicker" readonly="readonly"/>
+                                    <span th:if="${#fields.hasErrors('buildingCommissioned')}" th:errors="*{buildingCommissioned}" class="text-danger ml-145"></span> 
+                                </li>
+                                <li class="hide">
+                                    <label for="renovated" th:text="#{page.hospital.renovated}">Renovated</label>
+                                    <input type="text" th:field="*{renovated}" class="datepicker" readonly="readonly"/>
+                                     <span th:if="${#fields.hasErrors('renovated')}" th:errors="*{renovated}" class="text-danger ml-145"></span>
+                                </li>
+                                <li class="hide">
+                                    <label for="affiliation" th:text="#{page.hospital.affiliation}">Affiliation</label>
+                                    <input type="text" th:field="*{affiliation}"/> 
+                                    <span th:if="${#fields.hasErrors('affiliation')}" th:errors="*{affiliation}" class="text-danger ml-145"></span>
+                                </li>
+                                <li class="hide">
+                                    <label for="cmsCertificate" th:text="#{page.hospital.cms_certificate}">Cns Certificate</label>
+                                    <input type="text" th:field="*{cmsCertificate}"/>
+                                    <span th:if="${#fields.hasErrors('cmsCertificate')}" th:errors="*{cmsCertificate}" class="text-danger ml-145"></span> 
+                                </li>
+                                <li class="hide">
+                                    <label for="npi" th:text="#{page.hospital.npi}">Npi</label>
+                                    <input type="text" th:field="*{npi}"/> 
+                                    <span th:if="${#fields.hasErrors('npi')}" th:errors="*{npi}" class="text-danger ml-145"></span>
+                                </li>
+                                <li class="hide">
+                                    <label for="teachingHospital" th:text="#{page.hospital.teaching_hospital}">Teaching Hospital</label>                                    
+                                    <select th:field="*{teachingHospital}" class="my-select w-403">
+										<option th:value="1" th:text="Yes"></option>
+										<option th:value="0" th:text="No"></option>										
+									</select>                 
+									<span th:if="${#fields.hasErrors('teachingHospital')}" th:errors="*{teachingHospital}" class="text-danger ml-145"></span>            
+                                </li>
+                                <li class="hide">
+                                    <label for="readmissionRate" th:text="#{page.hospital.readmission_rate}">Readmission Rate</label>
+                                    <input type="text" th:field="*{readmissionRate}"/> 
+                                </li>
+                                <li class="hide">
+                                    <label for="mortalityRate" th:text="#{page.hospital.mortality_rate}">Mortality Rate</label>
+                                    <input type="text" th:field="*{mortalityRate}"/> 
+                                </li>
+                                <li class="hide">
+                                    <label for="infectionRate" th:text="#{page.hospital.infection_rate}">Infection Rate</label>
+                                    <input type="text" th:field="*{infectionRate}"/> 
+                                </li>
+                                <li class="hide">
+                                    <label for="medicalLawsuit" th:text="#{page.hospital.medical_lawsuit}">Medical Lawsuit</label>
+                                    <select th:field="*{medicalLawsuit}" class="my-select w-403">
+										<option th:value="1" th:text="Yes"></option>
+										<option th:value="0" th:text="No"></option>										
+									</select>                                  
+                                </li>
+                                <li class="hide">
+                                    <label for="branch" th:text="#{page.hospital.branch}" class="mt-8">Branch</label>
+                                    <select th:field="*{branch}" class="form-control my-select w-403">
+                                       <option th:value="null" th:text="None"></option>                                                
+                                       <option th:each = "var : ${branchList}" th:value="${var.id}" th:text="${var.name}"></option>
+                                    </select>                                        
+                                </li>
+                                <li class="hide">
+                                    <label for="chain" th:text="#{page.hospital.chain}">Chain</label>
+                                    <select th:field="*{chain}" class="form-control my-select w-403">
+                                       <option th:value="null" th:text="None"></option>                                                
+                                       <option th:each = "var : ${chainList}" th:value="${var.id}" th:text="${var.name}"></option>
+                                    </select>                                         
+                                </li>                                
+                                <li class="hide">
+                                    <label for="type" th:text="#{page.hospital.type}">type</label>
+                                    <select th:field="*{type}" class="my-select w-403">
+										<option th:value="private" th:text="Private"></option>
+										<option th:value="public" th:text="Public"></option>										
+									</select>                                     
+                                </li>
+                                <li>
+                                    <label for="currency" th:text="#{page.hospital.currency}" class="mt-8">Currency</label>
+                                    <select th:field="*{currency}" class="form-control my-select w-403">                                    	                                                                                      
+                                       <option th:each = "currency : ${currencyList}" th:value="${currency}" th:text="${currency}"></option>
+                                    </select>                                         
+                                    <span th:if="${#fields.hasErrors('currency')}" th:errors="*{currency}" class="text-danger ml-145"></span>
+                                </li>
+                                <li>
+                                    <label for="cc_email" th:text="#{page.hospital.cc_email}" class="mt-8">CC Email</label>
+                                    <select th:field="*{ccEmail}" class="form-control my-select w-403">                                    
+                                       <option th:text="#{page.hospital.ccemail.yes}" th:value="1"></option>
+                                       <option th:text="#{page.hospital.ccemail.no}" th:value="0"></option>
+                                    </select>                                         
+                                    <span th:if="${#fields.hasErrors('ccEmail')}" th:errors="*{ccEmail}" class="text-danger ml-145"></span>
+                                </li>
+                                 <li>
+                                    <label for="drgId" th:text="#{page.hospital.drg_id}">Drg Id</label>
+                                    <input type="text" th:field="*{drgId}"/> 
+                                    <span th:if="${#fields.hasErrors('drgId')}" th:errors="*{drgId}" class="text-danger ml-145"></span>
+                                </li>
+                                <li>
+                                    <label for="hrrDescription" th:text="#{page.hospital.hrr_description}">Hrr Description</label>
+                                    <input type="text" th:field="*{hrrDescription}"/> 
+                                </li>
+                                <li>
+                                    <label for="ahaId" th:text="#{page.hospital.aha_id}">Aha Id</label>
+                                    <input type="text" th:field="*{ahaId}"/> 
+                                </li>
+                                <li>
+                                    <label for="ahaName" th:text="#{page.hospital.aha_name}">Aha Name</label>
+                                    <input type="text" th:field="*{ahaName}"/> 
+                                </li>
+                                <li>
+                                    <label for="adminTitle" th:text="#{page.hospital.admin_title}">Admin Title</label>
+                                    <input type="text" th:field="*{adminTitle}"/> 
+                                </li>
+                            </ul>
+                            <div class="tr my-btn-block">
+                                <button class="btn btn-sm btn-dk-blue btn-cancel" type="button" th:text="#{page.hospital.btn_cancel}">Cancel</button>
+                                <button class="btn btn-sm btn-blue" type="submit" th:text="#{page.hospital.btn_save_changes}">Save Changes</button>
+                            </div>
+                        </form>
+				</div>
+				<aside th:replace="fragments/ajaxcity :: ajaxcity"></aside>
+				
+				<script type="text/javascript" th:inline='javascript'>
+					$(document).ready(function() {
+						$("#hospitalform").validate({
+							rules:{
+								name:     {
+									required : true
+								},
+								country:  {
+									required : true
+								},
+								ajaxcity: {
+									required : true
+								},
+								website:{
+									url : true
+								},
+								email:{
+									required : true,
+									email : true
+								}
+							},
+							messages:{
+								name 		: "Please enter hospital name",
+								country		: "Please select country",
+								ajaxcity	: "Please select city",
+								website     : "Please enter valid website url",
+								email       : "Please enter a valid email address"
+							},
+							
+							submitHandler: function(form){
+								form.submit();
+							}
+						});
+					});
+				</script>
+			</div>
+	  </div>
+	</main>
+</body>
+</html>    

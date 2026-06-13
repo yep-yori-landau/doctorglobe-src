@@ -1,0 +1,38 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:include="layouts/layout_new::page">
+<body>
+<div th:fragment="content">	
+	<div class="container-fluid bg-color" th:fragment="forgot">
+	    <div class="container pt-128 pb-80">
+	        <div class="row">
+	            <div class="col-md-6 col-xs-12 col-sm-6">
+	                <h1 class="fa-42">Find, Compare, and <br/>Reserve, Your Care <span class="cr">&#174;</span></h1>
+	                	<form name="forgotform" id="forgotform" th:object="${forgotform}" method='post' th:action="@{/forgot}" class="mt-20" th:if="${forgoterror != 0}">
+	                        <p th:text="#{forgot.reset_password_message}"></p>
+	                        <div class="form-group">
+	                            <input type="email" placeholder="Email Address" class="wt-350" required="required" th:field="*{email}"/>
+	                            <button type="submit" class="btn login-b" th:text="#{forgot.submit}">Submit</button>
+	                        </div>	                      
+	                       <div class="form-group">	                           
+	                            <p class="hide forgoterror" th:text="${forgoterror}"></p>                        
+                        		<p th:if="${forgoterror == 1}" th:text="#{forgot_invalid_email}" th:class="error">Invalid Email Address</p>
+	                            <!--<a href="#lsRet" class="forgot-txt" th:text="#{signin.forgot_my_password}">Forgot Password</a>-->
+	                        </div>
+	                    </form>
+	                    <div class="form-group" th:if="${forgoterror == 0}">
+	                    	<h1 th:text="#{forgot.check_your_mail}"></h1><br/>
+        					<p><span th:text="#{forgot.success_msg}"></span> <span th:text="${emailaddress}"></span> <span th:text="#{forgot.success_msg_is}"></span></p>
+	                    </div>	 
+	            </div>
+	            <div class="col-md-6 col-xs-12 col-sm-6 img-pt-50">
+	                <figure>
+	                    <img th:src="@{/resources/img/dg-slider.png}" alt="" class="img-responsive"/>
+	                </figure>
+	            </div>
+	        </div>
+	    </div>
+    </div>
+	<div th:replace="fragments/banner :: banner"></div>
+</div>		
+</body>
+</html>

@@ -1,0 +1,222 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" th:include="layout::page"
+	class='sidebar-large'>
+<div class="container" th:fragment="content">
+	<div class="page-title">
+		<i class="icon-custom-left"></i>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="panel panel-default">
+				<div class="panel-heading bg-red">
+					<h3 class="panel-title">
+						<strong th:text="#{page.heading.patient}">Patient</strong>
+					</h3>
+				</div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-md-12 col-sm-12 col-xs-12">
+							<form action="#" th:action="@{/patient/save}"
+								th:object="${patient}" method="post" id="patient"
+								class="form-horizontal" enctype="multipart/form-data">
+								<div class="form-group">
+									<ul>
+										<li th:each="e : ${#fields.detailedErrors()}"
+											th:class="${e.global}? globalerr : fielderr"><span
+											class='text-danger' th:text="${e.global}?'*':${e.fieldName}">The
+												field name </span> | <span class='text-danger'
+											th:text="${e.message}">The error message</span></li>
+									</ul>
+									<div th:errors="${patient}"></div>
+								</div>
+								<input type="hidden" class="form-control" th:field="*{id}"
+									th:value="*{id}" />
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'>Title</label>
+									<div class='col-sm-9'>
+										<input type="text" class='form-control' th:field="*{title}"
+											th:value="*{title}" />
+									</div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'>First_name<span
+										class='asterisk'>*</span>
+									</label>
+									<div class='col-sm-9'>
+										<input type="text" required='' class='form-control'
+											th:field="*{firstName}" th:value="*{firstName}" />
+									</div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'>Last_name<span
+										class='asterisk'>*</span>
+									</label>
+									<div class='col-sm-9'>
+										<input type="text" required='' class='form-control'
+											th:field="*{lastName}" th:value="*{lastName}" />
+									</div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'>Dob</label>
+									<div class='col-sm-9'>
+										<input type="text" class='form-control date-picker'
+											th:field="*{dob}" th:value="*{dob}" />
+									</div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'>Gender<span
+										class='asterisk'>*</span>
+									</label>
+									<div class='col-sm-9'>
+										<select th:field="*{gender}" class="form-control">
+											<option th:value="M" th:text="M"></option>
+											<option th:value="F" th:text="F"></option>
+											<option th:value="U" th:text="U"></option>
+										</select>
+									</div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'>Mobile</label>
+									<div class='col-sm-9'>
+										<input type="text" class='form-control' th:field="*{mobile}"
+											th:value="*{mobile}" />
+									</div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'>Email<span
+										class='asterisk'>*</span>
+									</label>
+									<div class='col-sm-9'>
+										<input type="text" required='' class='form-control'
+											th:field="*{email}" th:value="*{email}" />
+									</div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'>Phone</label>
+									<div class='col-sm-9'>
+										<input type="text" class='form-control'
+											th:field="*{phone}" th:value="*{phone}" />
+									</div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'>Password<span
+										class='asterisk'>*</span>
+									</label>
+									<div class='col-sm-9'>
+										<input type="password" required='' class='form-control'
+											th:field="*{password}" th:value="*{password}" />
+									</div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'>Address<span
+										class='asterisk'>*</span>
+									</label>
+									<div class='col-sm-9'>
+										<input type="text" required='' class='form-control'
+											th:field="*{address}" th:value="*{address}" />
+									</div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'>Zip Code<span
+										class='asterisk'>*</span>
+									</label>
+									<div class='col-sm-9'>
+										<input type="text" required='' class='form-control'
+											th:field="*{zipCode}" th:value="*{zipCode}" />
+									</div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'>City<span
+										class='asterisk'>*</span>
+									</label>
+									<div class='col-sm-9'>
+										<select th:field="*{city}" class="form-control">
+											<option th:each="var : ${cityList}" th:value="${var.id}"
+												th:text="${var.name}"></option>
+										</select>
+									</div>
+								</div>
+								<div class='form-group'>
+                                            <label class='col-sm-3 control-label'>Photo</label>
+                                            <div class='col-sm-9'>
+                                              <input type="hidden" class='form-control' th:field="*{photo}" th:value="*{photo}"/>   
+                                              <input type="file" name="file"/>
+                                            </div>
+                                </div>
+								
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'>Active<span
+										class='asterisk'>*</span>
+									</label>
+									<div class='col-sm-9'>
+										<select th:field="*{active}" class="form-control">
+											<option th:value="1" th:text="Yes"></option>
+											<option th:value="0" th:text="No"></option>
+										</select>
+									</div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'>Lat<span
+										class='asterisk'>*</span>
+									</label>
+									<div class='col-sm-9'>
+										<input type="text" required='' class='form-control'
+											th:field="*{lat}" th:value="*{lat}" />
+									</div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'>Lon<span
+										class='asterisk'>*</span>
+									</label>
+									<div class='col-sm-9'>
+										<input type="text" required='' class='form-control'
+											th:field="*{lon}" th:value="*{lon}" />
+									</div>
+								</div>
+								
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'>User Agreement<span
+										class='asterisk'>*</span>
+									</label>
+									<div class='col-sm-9'>
+										<select th:field="*{userAgreement}" class="form-control">
+											<option th:value="1" th:text="Yes"></option>
+											<option th:value="0" th:text="No"></option>
+										</select>
+									</div>
+								</div>
+								
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'>Dependent</label>
+									<div class='col-sm-9'>
+										<select th:field="*{dependent}" class="form-control">
+											<option th:value="null" th:text="None"></option>
+											<option th:each="var : ${dependentList}" th:value="${var.id}"
+												th:text="${var.firstName +' '+ var.lastName}"></option>
+										</select>
+									</div>
+								</div>
+								
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'>Ytd Oop</label>
+									<div class='col-sm-9'>
+										<input type="text" class='form-control' th:field="*{ytdOop}" th:value="*{ytdOop}" />
+									</div>
+								</div>	
+
+								<div class="col-sm-9 col-sm-offset-3">
+									<div class="pull-right">
+										<button class="btn btn-primary m-b-10"
+											onclick="javascript:$('#patient').parsley('validate');"
+											th:text="#{page.button.submit}">Submit</button>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</html>

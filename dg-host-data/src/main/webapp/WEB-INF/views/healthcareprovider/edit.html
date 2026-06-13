@@ -1,0 +1,379 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" th:include="layout::page"
+	class='sidebar-large'>
+<div class="container" th:fragment="content">
+	<div class="page-title">
+		<i class="icon-custom-left"></i>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="panel panel-default">
+				<div class="panel-heading bg-red">
+					<h3 class="panel-title">
+						<strong th:text="#{page.heading.healthcareprovider}">healthcareprovider</strong>
+					</h3>
+				</div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-md-12 col-sm-12 col-xs-12">
+							<form action="#" th:action="@{/healthcareprovider/save}"
+								th:object="${healthcareprovider}" method="post" id="healthcareprovider"
+								class="form-horizontal">
+								<div class="form-group">
+									<ul>
+										<li th:each="e : ${#fields.detailedErrors()}"
+											th:class="${e.global}? globalerr : fielderr"><span
+											class='text-danger' th:text="${e.global}?'*':${e.fieldName}">The
+												field name </span> | <span class='text-danger'
+											th:text="${e.message}">The error message</span></li>
+									</ul>
+									<div th:errors="${healthcareprovider}"></div>
+								</div>
+								<input type="hidden" class="form-control" th:field="*{id}"
+									th:value="*{id}" />
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'>Name<span
+										class='asterisk'>*</span>
+									</label>
+									<div class='col-sm-9'>
+										<input type="text" required='' class='form-control'
+											th:field="*{name}" th:value="*{name}" />
+									</div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'>Address_1<span
+										class='asterisk'>*</span>
+									</label>
+									<div class='col-sm-9'>
+										<input type="text" required='' class='form-control'
+											th:field="*{address_1}" th:value="*{address_1}" />
+									</div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'>Address_2</label>
+									<div class='col-sm-9'>
+										<input type="text" class='form-control'
+											th:field="*{address_2}" th:value="*{address_2}" />
+									</div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'>Zip_code<span
+										class='asterisk'>*</span>
+									</label>
+									<div class='col-sm-9'>
+										<input type="text" required='' class='form-control'
+											th:field="*{zipCode}" th:value="*{zipCode}" />
+									</div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'>Website
+									</label>
+									<div class='col-sm-9'>
+										<input type="text" class='form-control'
+											th:field="*{website}" th:value="*{website}" />
+									</div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'>Contact_name
+									</label>
+									<div class='col-sm-9'>
+										<input type="text" class='form-control'
+											th:field="*{contactName}" th:value="*{contactName}" />
+									</div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'>Phone_1
+									</label>
+									<div class='col-sm-9'>
+										<input type="text"  class='form-control'
+											th:field="*{phone_1}" th:value="*{phone_1}" />
+									</div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'>Phone_2
+									</label>
+									<div class='col-sm-9'>
+										<input type="text"  class='form-control'
+											th:field="*{phone_2}" th:value="*{phone_2}" />
+									</div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'>Email<span
+										class='asterisk'>*</span>
+									</label>
+									<div class='col-sm-9'>
+										<input type="text" required='' class='form-control'
+											th:field="*{email}" th:value="*{email}" />
+									</div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'>Fax
+									</label>
+									<div class='col-sm-9'>
+										<input type="text"  class='form-control'
+											th:field="*{fax}" th:value="*{fax}" />
+									</div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'>Description
+									</label>
+									<div class='col-sm-9'>
+										<input type="text" class='form-control'
+											th:field="*{description}" th:value="*{description}" />
+									</div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'>Established
+									</label>
+									<div class='col-sm-9'>
+										<input type="text" class='form-control date-picker'
+											th:field="*{established}" th:value="*{established}" />
+									</div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'>Building_commissioned
+									</label>
+									<div class='col-sm-9'>
+										<input type="text" class='form-control date-picker'
+											th:field="*{buildingCommissioned}"
+											th:value="*{buildingCommissioned}" /> 
+									</div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'>Renovated
+									</label>
+									<div class='col-sm-9'>
+										<input type="text" class='form-control date-picker'
+											th:field="*{renovated}" th:value="*{renovated}" />
+									</div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'>Affiliation
+									</label>
+									<div class='col-sm-9'>
+										<input type="text" class='form-control'
+											th:field="*{affiliation}" th:value="*{affiliation}" />
+									</div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'>Cms_certificate
+									</label>
+									<div class='col-sm-9'>
+										<input type="text" class='form-control'
+											th:field="*{cmsCertificate}" th:value="*{cmsCertificate}" />
+									</div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'>Npi
+									</label>
+									<div class='col-sm-9'>
+										<input type="text" class='form-control'
+											th:field="*{npi}" th:value="*{npi}" />
+									</div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'>Teaching_hospital
+									</label>
+									<div class='col-sm-9'>                                              
+                                              <select th:field="*{teachingHospital}" class="form-control">
+                                                <option th:value="0" th:text="No"></option>
+                                                <option th:value="1" th:text="Yes"></option>
+                                              </select>                                                 
+                                   </div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'>Readmission_rate
+									</label>
+									<div class='col-sm-9'>
+										<input type="text" class='form-control'
+											th:field="*{readmissionRate}" th:value="*{readmissionRate}" />
+									</div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'>Mortality_rate
+									</label>
+									<div class='col-sm-9'>
+										<input type="text"  class='form-control'
+											th:field="*{mortalityRate}" th:value="*{mortalityRate}" />
+									</div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'>Infection_rate
+									</label>
+									<div class='col-sm-9'>
+										<input type="text" class='form-control'
+											th:field="*{infectionRate}" th:value="*{infectionRate}" />
+									</div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'>Medical_lawsuit
+									</label>
+									<div class='col-sm-9'>                                              
+                                              <select th:field="*{medicalLawsuit}" class="form-control">
+                                                <option th:value="0" th:text="No"></option>
+                                                <option th:value="1" th:text="Yes"></option>
+                                              </select>                                                
+                                    </div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'>Lat
+									</label>
+									<div class='col-sm-9'>
+										<input type="text" class='form-control'
+											th:field="*{lat}" th:value="*{lat}" />
+									</div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'>Lon
+									</label>
+									<div class='col-sm-9'>
+										<input type="text" class='form-control'
+											th:field="*{lon}" th:value="*{lon}" />
+									</div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'>Branch
+									</label>
+									<div class='col-sm-9'>                                              
+                                              <select th:field="*{branch}" class="form-control">
+                                                <option th:value="null" th:text="None"></option>                                                
+                                                <option th:each = "var : ${healthcareproviderList}" th:value="${var.id}" th:text="${var.name}"></option>
+                                              </select>                                                                                        
+                                    </div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'>Chain
+									</label>
+									 <div class='col-sm-9'>                                              
+                                              <select th:field="*{chain}" class="form-control">
+                                              	<option th:value="null" th:text="None"></option>                                                
+                                                <option th:each = "var : ${healthcareproviderchainList}" th:value="${var.id}" th:text="${var.name}"></option>
+                                              </select>                                                                                       
+                                     </div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'>City<span
+										class='asterisk'>*</span>
+									</label>
+									<div class='col-sm-9'>                                              
+                                              <select th:field="*{city}" class="form-control">
+                                                <option th:each = "var : ${cityList}" th:value="${var.id}" th:text="${var.name}"></option>
+                                              </select>                                                
+                                    </div>
+								</div>								
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'>Type
+									</label>
+									<div class='col-sm-9'>                                              
+                                              <select th:field="*{type}" class="form-control">
+                                                <option th:value="private" th:text="Private"></option>
+                                                <option th:value="public" th:text="Public"></option>
+                                              </select>                                                 
+                                   </div>
+								</div>
+
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'>Currency
+									</label>
+									<div class='col-sm-9'>                                              
+                                       <select th:field="*{currency}" class="form-control" required="required">
+                                    		<option value="">Please Select</option>                                                                                      
+                                       		<option th:each = "currency : ${currencyList}" th:value="${currency}" th:text="${currency}"></option>
+                                    	</select>                                                  
+                                   </div>
+								</div>
+								
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'>CC Email
+									</label>
+									<div class='col-sm-9'>                                              
+                                              <select th:field="*{ccEmail}" class="form-control">
+                                              	<option th:value="1" th:text="Yes"></option>
+                                                <option th:value="0" th:text="No"></option>                                                
+                                              </select>                                                 
+                                   </div>
+								</div>
+								
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'>Insurance Cap
+									</label>
+									<div class='col-sm-9'>                                              
+                                          <input type="text" class='form-control date-picker'
+											th:field="*{insuranceCap}" th:value="*{insuranceCap}" />                 
+                                   </div>
+								</div>
+								
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'>Policy Upload  
+									</label>
+									<div class='col-sm-9'>                                              
+                                          <input type="text" class='form-control date-picker'
+											th:field="*{policyFile}" th:value="*{policyFile}" />                 
+                                   </div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'>Is Policy Covered Practitioners
+									</label>
+									<div class='col-sm-9'>                                              
+                                              <select th:field="*{isPolicyCoveredPractitioners}" class="form-control">
+                                                <option th:value="0" th:text="No"></option>
+                                                <option th:value="1" th:text="Yes"></option>
+                                              </select>                                                 
+                                   </div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-3 control-label' th:text="#{healthcareprovider.drg_id}">
+									</label>
+									<div class='col-sm-9'>                                              
+                                              <input type="text" class='form-control'
+											th:field="*{drgId}" th:value="*{drgId}" />                                                 
+                                   </div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-3 control-label' th:text="#{healthcareprovider.hrr_description}">
+									</label>
+									<div class='col-sm-9'>                                              
+                                              <input type="text" class='form-control date-picker'
+											th:field="*{hrrDescription}" th:value="*{hrrDescription}" />                                                  
+                                   </div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-3 control-label' th:text="#{healthcareprovider.aha_id}">
+									</label>
+									<div class='col-sm-9'>                                              
+                                              <input type="text" class='form-control '
+											th:field="*{ahaId}" th:value="*{ahaId}" />                                                 
+                                   </div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-3 control-label' th:text="#{healthcareprovider.aha_name}">
+									</label>
+									<div class='col-sm-9'>                                              
+                                              <input type="text" class='form-control '
+											th:field="*{ahaName}" th:value="*{ahaName}" />                                                 
+                                   </div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-3 control-label' th:text="#{healthcareprovider.admin_title}">
+									</label>
+									<div class='col-sm-9'>                                              
+                                              <input type="text" class='form-control'
+											th:field="*{adminTitle}" th:value="*{adminTitle}" />                                                 
+                                   </div>
+								</div>
+								<div class="col-sm-9 col-sm-offset-3">
+									<div class="pull-right">
+										<button class="btn btn-primary m-b-10"
+											onclick="javascript:$('#healthcareprovider').parsley('validate');"
+											th:text="#{page.button.submit}">Submit</button>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</html>

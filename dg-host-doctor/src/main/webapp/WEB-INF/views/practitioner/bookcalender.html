@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	th:include="layouts/layoutcontext::page" class='sidebar-large'>
+<body>
+	<div th:fragment='content'>
+		<div class="overlay o-sm my-calender-overlay">
+			<div class="overlay-header bg">
+				<h3 th:text="#{page.doctorarea.mycalender}">My Calender:</h3>
+				<button class="ico ico-close btn btn-blue fancyclose"></button>
+			</div>
+			<div class="overlay-content">				
+				<h3 class="mt-10" th:text="#{page.doctorarea.scheduled_procedure}">Scheduled Procedure:</h3>
+				<ul class="row col-2 gt-10 mt-10">
+					<li>
+						<article class="com-block no-pad" th:each="p :${patientBookingList}">
+							<p>
+								<strong th:text="${#dates.format(p.bookingDt,'yyyy-MM-dd HH:mm')}"></strong>
+							</p>
+							<p><span th:text="#{page.doctorarea.scheduled_procedure_with}"></span><span th:text="${' '+p.name}"></span></p>
+						</article>						
+					</li>										
+				</ul>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

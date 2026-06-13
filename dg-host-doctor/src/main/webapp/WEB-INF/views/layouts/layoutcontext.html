@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:fragment="page">
+<head>
+		<meta charset="utf-8"/>
+        <title th:text="#{page.title}">DoctorGlobe</title>
+        <meta name="description" content=""/>
+        <meta name="viewport" content="width=device-width"/>
+        <link rel="shortcut icon" th:href="@{/resources/images/6df2b309.favicon.ico}"/>
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+        <link rel="stylesheet" th:href="@{/resources/styles/jquery-ui.css}"/>
+        <link rel="stylesheet" th:href="@{/resources/styles/style.css}"/>    
+        <link rel="stylesheet" th:href="@{/resources/styles/tooltipster/tooltipster.css}"/>
+        <link rel="stylesheet" th:href="@{/resources/styles/jquery.datetimepicker.css}"/>            
+        <link th:href="@{/webjars/fancybox/2.1.5/jquery.fancybox.css}" rel="stylesheet" />
+        <script th:src="@{/webjars/jquery/2.1.1/jquery.min.js}"></script>      	
+		<script th:src="@{/resources/scripts/jquery-ui.js}"></script>
+		<script th:src="@{/webjars/jquery-validation/1.11.1/jquery.validate.js}"></script>		
+	  	<script th:src="@{/webjars/fancybox/2.1.5/jquery.fancybox.js}"></script>
+	  	<script type="text/javascript" th:src="@{/resources/scripts/tooltipster/jquery.tooltipster.min.js}"></script>	  		  	
+	  	<script type="text/javascript" th:src="@{/resources/scripts/jquery.datetimepicker.js}"></script>
+	  	<script type="text/javascript" th:src="@{/resources/scripts/timezones.full.min.js}"></script>
+	  	<script type="text/javascript" th:src="@{/resources/scripts/web.js}"></script>
+</head>
+<body th:class="page-common">	
+	<div th:include="this::content"></div>
+	<script>
+	$(document).ready(function() {		
+		
+		$('.datetimepicker').datetimepicker({		
+			minDate:0, // today is minimum date
+			minTime:new Date(),
+			format:'M d, Y h:i a',			
+			step:'30',			
+			onShow : function(ct,$input){
+				var date = new Date($input.val());
+			    var currentDate = new Date();
+			    if(date > currentDate){			    	
+			    	this.setOptions({
+			    		minTime:'00:00'	
+			    	})
+			    }else{			    	
+			    	this.setOptions({
+			    		minTime:new Date(),	
+			    	})
+			    }		
+			},
+			onChangeDateTime:function(dp,$input){
+			    var date = new Date($input.val());
+			    var currentDate = new Date();
+			    if(date > currentDate){
+			    	this.setOptions({
+			    		minTime:'00:00'	
+			    	})
+			    }else{
+			    	this.setOptions({
+			    		minTime:new Date(),	
+			    	})
+			    }		    
+			},
+		});
+		
+		$('.datepicker').datetimepicker({
+			inline : true,
+			timepicker:false,
+			format:'M d, Y',
+			minDate:0,
+			onShow : function(ct,$input){
+				var date = new Date($input.val());
+			    var currentDate = new Date();			    
+			    if(date > currentDate){			    	
+			    	$('.timepicker').setOptions({
+			    		minTime:'00:00',	
+			    	});
+			    }else{			    	
+			    	$('.timepicker').setOptions({
+			    		minTime:new Date(),	
+			    	});
+			    }
+			},
+			onChangeDateTime:function(dp,$input){
+			    var date = new Date($input.val());
+			    var currentDate = new Date();
+			    if(date > currentDate){			    	
+			    	$('.timepicker').setOptions({
+			    		minTime:'00:00'	
+			    	})
+			    }else{
+			    	$('.timepicker').setOptions({
+			    		minTime:new Date(),	
+			    	})
+			    }		    
+			},
+		});
+		
+		$('.timepicker').datetimepicker({			
+			datepicker:false,
+			format:'h:i a',			
+			step:15,			
+		});
+	
+	});
+	</script>		   	
+</body>
+</html>

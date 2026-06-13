@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<body>
+	<aside class="sidebar" th:fragment="usersidebar">
+		 <!-- module: Nav -->
+                    <div class="my-block no-pad">
+                        <ul class="sidebar-nav">
+                            <li class="doc">
+                                <a class="ico ico-doc" th:href="@{'/user/myarea'}" th:title="#{usersidebar.find_facility}" th:text="#{usersidebar.find_facility}"></a>
+                                <i th:class="${hospitalSelectedIcon}"></i>
+                            </li>
+                            <li class="disc">
+                                <a class="ico ico-disc" th:href="@{'/user/select-doc'}" th:title="#{usersidebar.select_doctor}" th:text="#{usersidebar.select_doctor}"></a>
+                                <i th:class="${hospitalPractitionerSelectedIcon}"></i>
+                            </li>
+                            <li class="fav">
+                                <a class="ico ico-fav" th:href="@{'/user/reserve'}" th:title="#{usersidebar.reserve_care}" th:text="#{usersidebar.reserve_care}"></a>
+                            </li>
+                            <li class="file">
+                                <a class="ico ico-file" th:href="@{'/user/book'}" th:title="#{usersidebar.book_your_ride}" th:text="#{usersidebar.book_your_ride}"></a>                                
+                            </li>
+                            <li class="msg">
+                                <a class="ico ico-msg" th:href="@{'/user/claim-bouns'}" th:title="#{usersidebar.claim_bonus}" th:text="#{usersidebar.claim_bonus}"></a>
+                            </li>                           
+                        </ul>
+                    </div>                    
+	</aside>
+</body>
+</html>	

@@ -1,0 +1,14 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:include="layout::page" class='sidebar-large'>
+<div class="container" th:fragment="content">					
+			<div class="row">
+				<div class="col-md-12">
+					<div class="panel panel-default">
+						<div class="panel-heading" th:if="${exception} != null">
+							<h3 class ="panel-title"><strong>Exception Thrown:</strong><strong th:text="${exception.message}"></strong></h3>
+						</div>
+					</div>
+				</div>
+			</div>
+</div>		
+
+</html>

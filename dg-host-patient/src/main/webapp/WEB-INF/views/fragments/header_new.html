@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<body>
+
+<div class="container-fluid bg-color1 customanim" id="task_flyout" th:fragment="header">
+<div class="container pt-10">
+        <div class="row">
+            <div class="col-md-6 col-xs-12 col-sm-6 wt-370" sec:authorize="hasRole('ROLE_USER')">
+                <figure class="logo1">
+                    <a th:href="@{/search}" class="logo-1"></a>               
+                </figure>
+                 <figure class="logo2">                
+                    <a th:href="@{/search}" class="logo-2"></a>
+                </figure>
+            </div>
+            <div class="col-md-6 col-xs-12 col-sm-6 wt-370" sec:authorize="!hasRole('ROLE_USER')">
+                <figure class="logo1">
+                    <a th:href="@{/}" class="logo-1"></a>               
+                </figure>
+                 <figure class="logo2">                
+                    <a th:href="@{/}" class="logo-2"></a>
+                </figure>
+            </div>
+            <div class="col-md-6 col-xs-12 col-sm-6 wt-370">
+                <nav class="nav pt-38">
+                    <ul>
+                        <li><a href="#lsRet" th:title="#{header.search}" class="active" th:text="#{header.search}" th:href="@{/search}">Search</a></li>
+                        <li sec:authorize="hasRole('ROLE_USER')" th:if="${isMyareaShow}"><a th:href="@{/user/myarea}" th:text="#{header.userarea}">My Area</a></li>                                            
+                        <li sec:authorize="hasRole('ROLE_USER')" th:if="${isProfileShow}"><a th:href="@{/user/profile}" th:title="#{header.userprofile}" th:text="#{header.userprofile}">My Profile</a></li>                                                     
+                        <li sec:authorize="hasRole('ROLE_USER')" style="display:none" th:if="${!userAgreement}"><a th:href="@{/user/useragreement}" id="js-tc" class="fancybox fancybox.iframe" data-fancybox-width="645" data-fancybox-height="313"></a></li>
+                        <li sec:authorize="hasRole('ROLE_USER')">
+                        	<a th:href="@{/logout}" th:title="#{header.signout}" th:text="#{header.signout}">Sign Out</a>
+                        </li>
+                        <li sec:authorize="hasRole('ROLE_USER')" id="user-nav">
+                            <div class="user-menu global">
+                                <span class="user-info">
+                                    <a href="#lsRet" class="pad">
+                                        <img th:if="${userImage != null}" th:src="@{${userImage}}" height="24" width="24"/>                                        
+                                        <span th:text="${userName}" class="pr-4"></span>
+                                    </a>
+                                    <!--<a href="#lsRet" class="user-ico ico-sm-mail mails" th:title="${totalNewMessage}"></a>-->
+                                </span>                               
+                            </div>
+                        </li>
+                         <li sec:authorize="!hasRole('ROLE_ASSOCIATE')">
+                        	<a th:if="${associateId != null}" th:href="@{/admin-area}" th:title="#{header.backtoadmin}" th:text="#{header.backtoadmin}">Back To Admin Area</a>                        	
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <script th:inline="javascript" th:if="${!userAgreement}">								
+					    $(document).ready(function() {
+					    	$(".fancybox").fancybox({		
+					    		fitToView	: false,		
+					    		padding     : 0,
+					    		autoSize	: false,
+					    		closeClick	: false,
+					    		closeBtn	: false,
+					    		openEffect	: 'none',
+					    		closeEffect	: 'none',			
+					    		helpers   : { 
+					    			   overlay : {closeClick: false} // prevents closing when clicking OUTSIDE fancybox 
+					    			  },
+					    		beforeLoad  : function(){
+					    			this.width = parseInt(660);					    			
+					    		},
+					    		keys : {
+					    		    close  : null
+					    		  }
+					    	});
+					    	$("#js-tc").trigger('click');
+							
+						});
+		</script> 
+					
+			
+</div>
+</div>
+</body>
+</html>

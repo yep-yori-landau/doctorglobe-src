@@ -1,0 +1,101 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" th:include="layout::page"
+	class='sidebar-large'>
+<div class="container" th:fragment="content">
+	<div class="page-title">
+		<i class="icon-custom-left"></i>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="panel panel-default">
+				<div class="panel-heading bg-red">
+					<h3 class="panel-title">
+						<strong th:text="#{page.heading.healthcareproviderphoto}">healthcareproviderphoto</strong>
+					</h3>
+				</div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-md-12 col-sm-12 col-xs-12">
+							<form th:action="@{/healthcareproviderphoto/save}" enctype="multipart/form-data"
+								th:object="${healthcareproviderphoto}" method="post" id="healthcareproviderphoto"
+								class="form-horizontal">
+								<div class="form-group">
+									<ul>
+										<li th:each="e : ${#fields.detailedErrors()}"
+											th:class="${e.global}? globalerr : fielderr"><span
+											class='text-danger' th:text="${e.global}?'*':${e.fieldName}">The
+												field name </span> | <span class='text-danger'
+											th:text="${e.message}">The error message</span></li>
+									</ul>
+									<div th:errors="${healthcareproviderphoto}"></div>
+								</div>
+								<input type="hidden" class="form-control" th:field="*{id}"
+									th:value="*{id}" />
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'>File<span
+										class='asterisk'>*</span>
+									</label>
+									<div class='col-sm-9'>
+										<input type="hidden" class='form-control'
+											th:field="*{path}" th:value="*{path}" />
+										<input type="file" name="file" required=""/>
+										<input type="hidden" class='form-control'
+											th:field="*{type}" th:value="*{type}" />	
+									</div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'>Description<span
+										class='asterisk'>*</span>
+									</label>
+									<div class='col-sm-9'>
+										<input type="text" required='' class='form-control'
+											th:field="*{description}" th:value="*{description}" />
+									</div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'>healthcareprovider<span
+										class='asterisk'>*</span>
+									</label>
+									<div class='col-sm-9'>
+										<select th:field="*{healthcareprovider}" class="form-control">
+											<option th:each="var : ${healthcareproviderList}" th:value="${var.id}"
+												th:text="${var.name}"></option>
+										</select>
+									</div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'>Is Primary<span
+										class='asterisk'>*</span>
+									</label>
+									<div class='col-sm-9'>
+										<select th:field="*{isPrimary}" class="form-control">
+											<option th:value="1" th:text="Yes"></option>
+											<option th:value="0" th:text="No"></option>
+										</select>
+									</div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'>Name<span
+										class='asterisk'>*</span>
+									</label>
+									<div class='col-sm-9'>
+										<input type="text" required='' class='form-control'
+											th:field="*{name}" th:value="*{name}" />
+									</div>
+								</div>
+								<div class="col-sm-9 col-sm-offset-3">
+									<div class="pull-right">
+										<button class="btn btn-primary m-b-10"
+											onclick="javascript:$('#healthcareproviderphoto').parsley('validate');"
+											th:text="#{page.button.submit}">Submit</button>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</html>

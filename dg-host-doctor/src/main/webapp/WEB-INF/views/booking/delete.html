@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	th:include="layouts/layoutcontext::page" class='sidebar-large'>
+<body>
+<div th:fragment='content' >
+	<div class="overlay o-sm js-conference-overlay">
+        <div class="overlay-header bg">
+            <h3 th:if="${dc == 1}" th:text="#{page.cancel.heading.delete_case}"></h3>
+            <h3 th:if="${dc == 0}" th:text="#{page.cancel.heading.cancel_scheduled_procedure}"></h3>
+            <button class="ico ico-close btn btn-blue fancyclose"></button>
+        </div>
+        <div class="overlay-content height261">      
+            <p>
+            	<span th:if="${dc == 1}" th:text="#{page.cancel.deletecase.cancelmessage}"></span>
+				<span th:if="${dc == 0}" th:text="#{page.cancel.cancelprocedure.cancelmessage}"></span>
+				<span th:text="${patientname}"></span>            	
+            </p>            
+            <form class="form-block" name="cancelForm" method='post' th:object="${cancelForm}" th:action="@{/home/case/delete}">
+            	<input type ="hidden" name="patientcase" id="patientcase" required="required" th:field="*{patientcase}"/>
+            	<input type ="hidden" name="hcpstmp" id="hcpstmp" required="required" th:field="*{hcpstmp}"/>
+            	<input type ="hidden" name="receiver" id="receiver" required="required" th:field="*{receiver}"/>
+            	<input type ="hidden" name="delete" id="deletecase" required="required" th:field="*{deletecase}"/>
+	            <p>
+	              <button type="submit" class="btn btn-green btn-sm" th:text="#{page.schedule.btn.ok}">Send Request</button>
+	              <button type="button" class="btn btn-green btn-sm fancyclose" th:text="#{page.schedule.btn.cancel}">Send Request</button>
+	            </p>
+            </form>       		         
+        </div>
+           <script type="text/javascript" th:inline='javascript'>
+				$(document).ready(function() {
+					/*[+
+					var msg = [[${message}]];			
+					+]*/			
+					if(msg == 1){
+						parent.jQuery.fancybox.close();											
+					}
+				});
+		</script>
+      </div>
+   </div>
+  </body>  
+</html>

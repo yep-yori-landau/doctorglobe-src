@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	th:include="layouts/layoutcontext::page">
+<body>
+	<div th:fragment='content'>
+	<div class="overlay o-sm js-upload-overlay">
+        <div class="overlay-header">
+            <h3 th:text="#{page.hospital.upload_hospital_photos}" th:if="${uploadFileForm.id == null}">Upload Hospital Photos</h3>
+            <h3 th:text="#{page.hospital.upload_photo.edit}" th:if="${uploadFileForm.id != null}">Edit Hospital Photos</h3>
+            <button class="ico ico-close btn fancyclose"></button>
+        </div>        
+        <div class="overlay-content upload-content">
+           <form class="form-block" th:action="@{/home/upload}" th:object="${uploadFileForm}" method="post" enctype="multipart/form-data" id="uploadform">
+           			<input type="hidden" th:field="*{id}" th:value="*{id}" />
+           			<input type="hidden" th:field="*{path}" th:value="*{path}" />
+           			<input type="hidden" th:field="*{type}" th:value="*{type}" />
+               		<input type="hidden" th:field="*{healthcareprovider}" th:value="*{healthcareprovider}" />
+               		<input type="hidden" th:field="*{isPrimary}" th:value="*{isPrimary}" />
+           	<div class="uploadformshow" th:classappend="${success == 1} ? hideupload : null">
+           		<div class="login-error-msgbox" th:if="${errors != null}">
+	            	<p><i class="error-icon"></i>
+	            		<span th:if="${sizeerror != null}" th:text="#{page.upload.file.size.error}"></span>
+	            		<span th:if="${typeerror != null}" th:text="#{page.upload.file.type.error}"></span>
+	            		<span th:if="${servererror != null}" th:text="#{page.upload.file.server.error}"></span>
+	            	</p>
+	        	</div>		
+	        	<br/>	
+				<h3 class="hel-med fs-15" th:text="#{page.hospital.upload_photo.please}" th:if="${uploadFileForm.id == null}">Please choose photos or video files to upload:</h3>
+				<p th:text="#{page.hospital.upload_photo.supported}" th:if="${uploadFileForm.id == null}">Supported formats: JPG, PNG, GIF, AVI, MPG, MKV</p>
+               <ul class="row my-form mt-20">               		
+                   <li>
+						<label>
+						   <span th:title="#{page.hospital.upload_photo.browse}" class="w-55 my-file" th:if="${uploadFileForm.id == null}">
+								<input type="file" name="file" required="required" class="fileupload"/>								
+							</span>					
+						</label>						   
+						<span class="filepath"></span>				
+						<span class="error" th:if="${sizeerror != null}" th:text="#{page.upload.file.size.error}"></span>
+                   </li>
+                   <li>
+                       <label for="name" th:text="#{page.hospital.upload_photo.name}">Name</label>
+                       <input type="text" th:field="*{name}" required="required"/>
+                   </li>                   
+                   <li>
+                       <label for="description" th:text="#{page.hospital.upload_photo.description}">Description</label>
+                       <textarea th:field="*{description}" required="required"></textarea>
+                   </li>
+               </ul>
+               <p class="tr">
+                   <button type="submit" class="btn btn-blue btn-sm" th:text="#{page.hospital.upload_photo.upload}">Upload</button>
+               </p>
+             </div>  
+               <div class="uploadshow" th:classappend="${success == 0} ? hide : null">
+	           	   <h3 class="hel-med fs-15 imgname1" th:text="${name}" th:title="${name}">Hospital Exterior</h3>				
+					<ul class="mt-20 row">
+						<li class="fl w-70">
+							<figure>
+								<img th:src="@{${path}}" height="288" width="380"/>
+							</figure>
+						</li>
+						<li>						
+							<p><span th:text="#{page.hospital.upload_photo.description}">Description:</span> <br /> <span th:text="${description}"></span></p>
+						</li>
+					
+					</ul>
+	               
+					<p class="tc mt-20" th:classappend="${uploadFileForm.id != null} ? hide : null">
+						<button type="button" class="btn btn-dk-blue btn-sm fancyclose" th:text="#{page.hospital.upload_photo.btn_finish}">Finish</button>
+						 &nbsp; <button type="button" class="btn btn-blue btn-sm showuploadform" th:text="#{page.hospital.upload_photo.btn_upload_another}">Upload Another</button>
+					</p>
+			</div>	
+               
+           </form>
+       </div>        
+    </div>
+	</div>
+</body>
+</html>

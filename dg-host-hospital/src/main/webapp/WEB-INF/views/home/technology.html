@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:include="layouts/layout::page">
+<body>
+	<main id="main-content" th:fragment='content'>	
+	  <div class="wrap">
+			<aside th:replace="fragments/sidebar :: sidebar"></aside>
+			<div id="container">
+				  <div class="my-block">
+                        <h3 class="hel-med fs-16 title-in">
+                        	<span th:text="#{page.hospital.technology}">Technology</span>                        	
+                        </h3>                    
+                        <form th:action="@{/home/technology}" th:object="${technologyForm}" method="post">                        
+                        <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th th:text="#{page.hospital.technology.device}">Device:</th>
+                                        <th th:text="#{page.hospital.technology.date_of_purchase}">Date of purchase:</th>                                        
+                                        <th th:text="#{page.hospital.technology.brand}">Brand:</th>
+                                        <th th:text="#{page.hospital.technology.version}">Version:</th>                                        
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                   <tr th:each="hospitalEquipmentModel,rowStat : ${technologyForm.hospitalEquipmentModel}" class="technologyresult">
+                                        <td th:text="${equipmentsMap.get(hospitalEquipmentModel.equipment)}">Angio</td>                                        
+                                        <td>
+                                            <input type="hidden" th:field="*{hospitalEquipmentModel[__${rowStat.index}__].id}"/>
+                                            <input type="hidden" th:field="*{hospitalEquipmentModel[__${rowStat.index}__].healthcareprovider}"/>                                            
+                                            <input type="hidden" th:field="*{hospitalEquipmentModel[__${rowStat.index}__].hoursUsed}"/>
+                                            <input type="hidden" th:field="*{hospitalEquipmentModel[__${rowStat.index}__].equipment}"/>
+                                            <input type="text" th:field="*{hospitalEquipmentModel[__${rowStat.index}__].purchaseDt}" th:class="datepicker+' '+datepicker+${rowStat.index}" readonly="true"/>                                          
+                                            <button class="ico ico-cal btn-cal" type="button" th:id="datepicker+${rowStat.index}"></button>
+                                        </td>                                        
+                                        <td>
+                                            <input type="text" th:field="*{hospitalEquipmentModel[__${rowStat.index}__].brand}"/>
+                                        </td>
+                                        <td>
+                                            <input type="text" th:field="*{hospitalEquipmentModel[__${rowStat.index}__].version}"/>
+                                        </td>                                       
+                                     	<td>
+                                            <a th:href="@{'/home/delete-technology'(id=${hospitalEquipmentModel.id})}" th:text="#{page.hospital.technology.delete}"></a>
+                                        </td>                                                                  
+                                    </tr>                                                                                                                            
+                                </tbody>                                
+                            </table>
+                            <div class="tr my-btn-block">
+                            	<button class="btn btn-sm btn-gray addrows fl" type="button" th:text="#{page.hospital.technology.add_another}" th:attr="data-healthcareprovider-id=${healthcareprovider}">+ Add new Doctor</button>
+                                <button class="btn btn-sm btn-dk-blue my-btn-block-show btn-cancel" type="button" th:text="#{page.hospital.third_party_rating.btn_cancel}">Cancel</button>
+                                <button class="btn btn-sm btn-blue my-btn-block-show" type="submit" th:text="#{page.hospital.third_party_rating.btn_save_changes}">Save Changes</button>
+                            </div>
+                        </form>
+                    </div>
+			</div>
+			<script type="text/javascript" th:inline='javascript'>
+				$(document).ready(function() {
+					btnHide();
+					$(document).on('click','.addrows',function(){
+						/*[+
+						var data = [[${equipmentList}]];
+						+]*/
+						var i = -1;
+						$('.technologyresult').each(function(){
+							i++;
+						});		
+						var newrowid = i+1;
+						var healthcareprovider = $(this).attr("data-healthcareprovider-id");
+						var select ='<select id="equipment' + newrowid + '" name="hospitalEquipmentModel[' + newrowid + '].equipment" class="my-select mw-240">';
+						$(data).each(function(index){
+				    		select += '<option value="' + data[index].id + '">' + data[index].name + '</option>';						    		
+				    	});		
+						select += '</select>';
+						var tr=	'<tr class="technologyresult">'
+								+'<td>'+select+'</td>'
+								+'<td>'
+								+'<input type="hidden" id="hospitalEquipmentModel' + newrowid + '.id" name="hospitalEquipmentModel[' + newrowid + '].id"/>'
+								+'<input type="hidden" id="hospitalEquipmentModel' + newrowid + '.healthcareprovider" name="hospitalEquipmentModel[' + newrowid + '].healthcareprovider" value="'+healthcareprovider+'"/>'
+								+'<input type="hidden" id="hospitalEquipmentModel' + newrowid + '.hoursUsed" name="hospitalEquipmentModel[' + newrowid + '].hoursUsed" value="0"/>'
+								+'<input type="text" id="hospitalEquipmentModel' + newrowid + '.purchaseDt" name="hospitalEquipmentModel[' + newrowid + '].purchaseDt" value="" class="datepicker datepicker'+newrowid+'" readonly="readonly"/>'
+								+'<button type="button" id="datepicker' + newrowid + '" class="ico ico-cal btn-cal"></button>'
+								+'</td>'
+								+'<td>'
+								+'<input type="text" id="hospitalEquipmentModel' + newrowid + '.brand" name="hospitalEquipmentModel[' + newrowid + '].brand"/>'																
+								+'</td>'
+								+'<td>'
+								+'<input type="text" id="hospitalEquipmentModel' + newrowid + '.version" name="hospitalEquipmentModel[' + newrowid + '].version"/>'																
+								+'</td>'
+								+'<td>'
+								+'<a class="deleterow">Delete</a>'																
+								+'</td>'
+								+'</tr>';
+						$('.data-table tr:last').after(tr);
+						$('select.my-select').msDropDown();
+						$('.datepicker').datetimepicker({
+							timepicker:false,
+							format : 'Y-m-d',
+							scrollInput : false,		
+							closeOnDateSelect: true,	
+						});
+						$('.my-btn-block-show').show();
+					});
+					
+					$(document).on('click','.deleterow',function(){
+						$(this).parents('tr').remove();
+						btnHide();
+					});
+					
+					function btnHide(){
+						var i = -1;
+						$('.technologyresult').each(function(){
+							i++;
+						});	
+						if(i == -1){$('.my-btn-block-show').hide()}												
+					}
+					
+				});
+		</script>
+	  </div>
+	</main>	
+</body>
+</html>		

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:include="layouts/layout::page">
+<body>
+	<main id="main-content" th:fragment='content'>	
+	  <div class="wrap">
+			<aside th:replace="fragments/sidebar :: sidebar"></aside>
+			<div id="container">
+				  <div class="my-block">
+                        <h3 class="hel-med fs-16 title-in">
+                        	<span th:text="#{page.hospital.facility}">Facility</span>                        	
+                        </h3>
+                        <form th:action="@{/home/facility}" th:object="${facilityForm}" method="post" enctype="multipart/form-data">
+                        	<h3 class="hel-med fs-16" th:text="#{page.hospital.facility.general_info}">General Info</h3>
+                        	<ul class="my-form mt-20">
+                        		<li>
+                                	<input type="hidden" th:field="${facilityForm.hospitalModel.id}" />
+                                	<input type="hidden" th:field="${facilityForm.hospitalModel.city}"/>                                    
+                                    <input type="hidden" th:field="${facilityForm.hospitalModel.name}"/> 
+                                    <input type="hidden" th:field="${facilityForm.hospitalModel.address_1}"/>
+                                    <input type="hidden" th:field="${facilityForm.hospitalModel.address_2}"/>
+                                    <input type="hidden" th:field="${facilityForm.hospitalModel.zipCode}"/>
+                                    <input type="hidden" th:field="${facilityForm.hospitalModel.website}"/>
+                                    <input type="hidden" th:field="${facilityForm.hospitalModel.contactName}"/>
+                                    <input type="hidden" th:field="${facilityForm.hospitalModel.phone_1}"/>
+                                    <input type="hidden" th:field="${facilityForm.hospitalModel.phone_2}"/>
+                                    <input type="hidden" th:field="${facilityForm.hospitalModel.email}"/>
+                                    <input type="hidden" th:field="${facilityForm.hospitalModel.fax}"/>
+                                    <input type="hidden" th:field="${facilityForm.hospitalModel.description}"/>
+                                    <input type="hidden" th:field="${facilityForm.hospitalModel.mortalityRate}"/>
+                                    <input type="hidden" th:field="${facilityForm.hospitalModel.infectionRate}"/>
+                                    <input type="hidden" th:field="${facilityForm.hospitalModel.readmissionRate}"/>
+                                    <input type="hidden" th:field="${facilityForm.hospitalModel.lat}"/>
+                                    <input type="hidden" th:field="${facilityForm.hospitalModel.lon}"/>
+                                    <input type="hidden" th:field="${facilityForm.hospitalModel.medicalLawsuit}"/>
+                                    <input type="hidden" th:field="${facilityForm.hospitalModel.branch}"/>
+                                    <input type="hidden" th:field="${facilityForm.hospitalModel.currency}"/>
+                                    <input type="hidden" th:field="${facilityForm.hospitalModel.ccEmail}"/>
+                                    <input type="hidden" th:field="${facilityForm.hospitalModel.drgId}"/>
+                                    <input type="hidden" th:field="${facilityForm.hospitalModel.hrrDescription}"/>
+                                    <input type="hidden" th:field="${facilityForm.hospitalModel.ahaId}"/>
+                                    <input type="hidden" th:field="${facilityForm.hospitalModel.ahaName}"/>
+                                    <input type="hidden" th:field="${facilityForm.hospitalModel.adminTitle}"/>                                    
+                                    <label th:text="#{page.hospital.facility.hospital_type}"></label>
+                                    <label class="cust-radio">
+										<input type="radio" th:field="${facilityForm.hospitalModel.type}" value="private"/>     
+										<span class="box"></span>
+										<span th:text="#{page.hospital.facility.hospital_type_private}">Private</span>
+									</label>
+									<label class="cust-radio">
+										<input type="radio" th:field="${facilityForm.hospitalModel.type}" value="public"/>     
+										<span class="box"></span>
+										<span th:text="#{page.hospital.facility.hospital_type_public}">Public</span>
+									</label>
+                                </li>
+                                <li>
+                                    <label for="chain" th:text="#{page.hospital.facility.chain}">Chain</label>
+                                    <select th:field="${facilityForm.hospitalModel.chain}" class="w-40 my-select" id="chain">
+                                       <option th:value="null" th:text="None"></option>                                                
+                                       <option th:each = "var : ${chainList}" th:value="${var.id}" th:text="${var.name}"></option>
+                                    </select>                                         
+                                </li>
+                                <li>
+                                    <label for="established" th:text="#{page.hospital.established}">Established</label>
+                                    <input type="text" th:field="${facilityForm.hospitalModel.established}" class="datepicker w-40 datepickerestablished"/>
+                                    <button class="ico ico-cal btn-cal" type="button" th:id="datepickerestablished"></button> 
+                                </li>
+                                <li>
+                                    <label for="buildingCommissioned" th:text="#{page.hospital.building_commissioned}">Building Commissioned</label>
+                                    <input type="text" th:field="${facilityForm.hospitalModel.buildingCommissioned}" class="datepicker w-40 datepickerbuilding"/>
+                                    <button class="ico ico-cal btn-cal" type="button" th:id="datepickerbuilding"></button> 
+                                </li>
+                                <li>
+                                    <label for="renovated" th:text="#{page.hospital.renovated}">Renovated</label>
+                                    <input type="text" th:field="${facilityForm.hospitalModel.renovated}" class="datepicker w-40 datepickerrenovated"/>
+                                    <button class="ico ico-cal btn-cal" type="button" th:id="datepickerrenovated"></button> 
+                                </li>
+                                <li>
+                                    <label for="affiliation" th:text="#{page.hospital.affiliation}">Affiliation</label>
+                                    <input type="text" th:field="${facilityForm.hospitalModel.affiliation}" class="w-40"/> 
+                                </li>                                 
+                                <li class="hide">
+                                    <label for="cmsCertificate" th:text="#{page.hospital.cms_certificate}">Cms Certificate</label>
+                                    <input type="text" th:field="${facilityForm.hospitalModel.cmsCertificate}" class="w-40"/> 
+                                </li>
+                                <li class="hide">
+                                    <label for="npi" th:text="#{page.hospital.npi}">Npi</label>
+                                    <input type="text" th:field="${facilityForm.hospitalModel.npi}" class="w-40"/> 
+                                </li>
+                                <li>
+                                	<h3 class="hel-med fs-16" th:text="#{page.hospital.facility.mal_practice_insurance}">General Info</h3>
+                                </li>
+                                <li>
+                                	<label for="insuranceCarrier" th:text="#{page.hospital.facility.insurance_carrier}"></label>
+                                	<input type="text" th:field="${facilityForm.hospitalModel.insuranceCarrier}" class="w-40"/>
+                                	<span th:if="${#fields.hasErrors('hospitalModel.insuranceCarrier')}" th:errors="*{hospitalModel.insuranceCarrier}" class="text-danger"></span>
+                                </li>
+                                <li>
+                                	<label for="policyNumber" th:text="#{page.hospital.facility.policy_number}"></label>
+                                	<input type="text" th:field="${facilityForm.hospitalModel.policyNumber}" class="w-40"/>
+                                	<span th:if="${#fields.hasErrors('hospitalModel.policyNumber')}" th:errors="*{hospitalModel.policyNumber}" class="text-danger"></span>
+                                </li>
+                                <li>
+                                    <label for="insuranceCap" th:text="#{page.hospital.insurance_cap}">Insurance Cap</label>
+                                    <input type="text" th:field="${facilityForm.hospitalModel.insuranceCap}" class="w-40"/>
+                                    <span th:text="${facilityForm.hospitalModel.currency}"></span>                             
+                                    <span th:if="${#fields.hasErrors('hospitalModel.insuranceCap')}" th:errors="*{hospitalModel.insuranceCap}" class="text-danger"></span>                                     
+                                </li>
+                                <li>
+                                	<label for="perCaseInsuranceCap" th:text="#{page.hospital.facility.per_case_coverage_limits}"></label>
+                                	<input type="text" th:field="${facilityForm.hospitalModel.perCaseInsuranceCap}" class="w-40"/>
+                                	<span th:text="${facilityForm.hospitalModel.currency}"></span>                             
+                                    <span th:if="${#fields.hasErrors('hospitalModel.perCaseInsuranceCap')}" th:errors="*{hospitalModel.perCaseInsuranceCap}" class="text-danger"></span>
+                                </li>
+                                <li>
+                                    <label for="policyFile" th:text="#{page.hospital.policy_file}">Upload Policy</label>
+                                    <input type="text" th:field="${facilityForm.hospitalModel.policyFile}" class="w-30 policyfile"/>                                                                  
+                                    <span class="my-file insurance-file" th:title="#{page.hospital.policy_file_browse}">
+                                    	<input type="file" name="file" class="policyfileupload"/>                                    	
+                                    </span> 
+                                    <span th:text="#{page.hospital.policyfile.supported_format}">Supported formats JPG,PNG,GIF,PDF</span>                                  
+                                    <br/>
+                                    <span th:if="${sizeerror != null}" class="error ml192" th:text="#{page.upload.file.size.error}"></span>
+	            					<span th:if="${typeerror != null}" class="error ml192" th:text="#{page.upload.file.type.error}"></span>
+                                </li>
+                                
+                                <li>
+                                    <label for="isPolicyCoveredPractitioners" th:text="#{page.hospital.is_policy_covered_practitioners}">Policy covers all Doctors</label>
+                                    <select th:field="${facilityForm.hospitalModel.isPolicyCoveredPractitioners}" class="w-40 my-select" id="isPolicyCoveredPractitioners">
+										<option th:value="1" th:text="Yes"></option>
+										<option th:value="0" th:text="No"></option>										
+									</select>                              
+                                </li>
+                                <li>
+                                    <label for="teachingHospital" th:text="#{page.hospital.teaching_hospital}">Teaching Hospital</label>                                    
+                                    <select th:field="${facilityForm.hospitalModel.teachingHospital}" class="w-40 my-select" id="teachingHospital">
+										<option th:value="1" th:text="Yes"></option>
+										<option th:value="0" th:text="No"></option>										
+									</select>                             
+                                </li>
+                        		<li>
+                        			<h3 class="hel-med fs-16" th:text="#{page.hospital.facility.intl_accreditation}">Intl Accreditation</h3>                        			
+                        			<ul class="fl mt-20">
+										<li th:each="hospitalAccreditationFormModel,rowStat : ${facilityForm.hospitalAccreditationFormModel}">										
+											<input type="hidden" th:field="*{hospitalAccreditationFormModel[__${rowStat.index}__].id}"/>                                	                                                        
+                                			<input type="hidden" th:field="*{hospitalAccreditationFormModel[__${rowStat.index}__].healthcareprovider}"/>
+                                			<input type="hidden" th:field="*{hospitalAccreditationFormModel[__${rowStat.index}__].accreditation}"/>
+											<label th:for="*{hospitalAccreditationFormModel[__${rowStat.index}__].isChecked}">
+	                                        			<input type="checkbox" th:field="*{hospitalAccreditationFormModel[__${rowStat.index}__].isChecked}" class="accreditationcheck"/>     
+	                                        			<span class="box"></span>
+	                                        			<span th:text="${hospitalAccreditationFormModel.name}"></span>
+                                    		</label>                                    		
+                                    		<div class="fr tr">
+												<label for="accr-1-date" class="pl-20" th:text="#{page.hospital.facility.accreditation_date}">Accreditation Date:</label>
+												<input type="text" th:field="*{hospitalAccreditationFormModel[__${rowStat.index}__].accreditationDt}" th:class="one-fourth+' '+datepicker+' '+datepicker+${rowStat.index}"/>
+												<button class="ico ico-cal btn-cal" type="button" th:id="datepicker+${rowStat.index}"></button>
+											</div>
+										</li>
+									</ul>	
+                        		</li>
+                        		<li>
+                        			<h3 class="hel-med fs-16" th:text="#{page.hospital.facility.facility_type}"></h3>                        			
+                        			<ul class="fl ml-192">
+										<li th:each="hospitaltypeFormModel,rowStat : ${facilityForm.hospitaltypeFormModel}">
+											<input type="hidden" th:field="*{hospitaltypeFormModel[__${rowStat.index}__].id}"/>                                	                                                        
+                                			<input type="hidden" th:field="*{hospitaltypeFormModel[__${rowStat.index}__].healthcareprovider}"/>
+                                			<input type="hidden" th:field="*{hospitaltypeFormModel[__${rowStat.index}__].healthcareprovidertype}"/>
+											<label th:for="*{hospitaltypeFormModel[__${rowStat.index}__].isChecked}">
+	                                        			<input type="checkbox" th:field="*{hospitaltypeFormModel[__${rowStat.index}__].isChecked}"/>     
+	                                        			<span class="box"></span>
+	                                        			<span th:text="${hospitaltypeFormModel.name}"></span>
+                                    		</label>											
+										</li>
+									</ul>	
+                        		</li>
+                        	</ul>
+                        	<ul class="my-form mt-20">
+                        		<li th:each="hospitalUnitFeatureFormModel,rowStat : ${facilityForm.hospitalUnitFeatureFormModel}">
+                        					<h3 class="hel-med fs-16" th:text="${hospitalUnitFeatureFormModel.unitName}"></h3>
+											<input type="hidden" th:field="*{hospitalUnitFeatureFormModel[__${rowStat.index}__].id}"/>                                	                                                        
+                                			<input type="hidden" th:field="*{hospitalUnitFeatureFormModel[__${rowStat.index}__].healthcareprovider}"/>
+                                			<input type="hidden" th:field="*{hospitalUnitFeatureFormModel[__${rowStat.index}__].feature}"/>
+                                			<input type="hidden" th:field="*{hospitalUnitFeatureFormModel[__${rowStat.index}__].healthcareproviderunit}"/>
+											<label for="feature" th:text="${hospitalUnitFeatureFormModel.featureName}">hcahps score</label>
+											<select th:field="*{hospitalUnitFeatureFormModel[__${rowStat.index}__].description}" th:if="${hospitalUnitFeatureFormModel.featureName.equalsIgnoreCase('Patients per room')}" th:id="description+''+${rowStat.index}" class="my-select w-40">
+												<option th:value="#{page.hospital.facility.patient_per_room_option1}" th:text="#{page.hospital.facility.patient_per_room_option1}">1 per room</option>
+												<option th:value="#{page.hospital.facility.patient_per_room_option2}" th:text="#{page.hospital.facility.patient_per_room_option2}">2 per room</option>
+												<option th:value="#{page.hospital.facility.patient_per_room_option3}" th:text="#{page.hospital.facility.patient_per_room_option3}">3 per room</option>
+												<option th:value="#{page.hospital.facility.patient_per_room_option4}" th:text="#{page.hospital.facility.patient_per_room_option4}">4 per room</option>
+												<option th:value="#{page.hospital.facility.patient_per_room_option5}" th:text="#{page.hospital.facility.patient_per_room_option5}">more</option>
+											</select>
+											<select th:field="*{hospitalUnitFeatureFormModel[__${rowStat.index}__].description}" th:if="${hospitalUnitFeatureFormModel.featureName.equalsIgnoreCase('Patients per bath')}" th:id="description+''+${rowStat.index}" class="my-select w-40">
+												<option th:value="#{page.hospital.facility.patient_per_bath_option1}" th:text="#{page.hospital.facility.patient_per_bath_option1}">1 per room</option>
+												<option th:value="#{page.hospital.facility.patient_per_bath_option2}" th:text="#{page.hospital.facility.patient_per_bath_option2}">2 per room</option>
+												<option th:value="#{page.hospital.facility.patient_per_bath_option3}" th:text="#{page.hospital.facility.patient_per_bath_option3}">3 per room</option>
+												<option th:value="#{page.hospital.facility.patient_per_bath_option4}" th:text="#{page.hospital.facility.patient_per_bath_option4}">4 per room</option>
+											</select>
+											<select th:field="*{hospitalUnitFeatureFormModel[__${rowStat.index}__].description}" th:if="${hospitalUnitFeatureFormModel.featureName.equalsIgnoreCase('Nursing ratio')}" th:id="description+''+${rowStat.index}" class="my-select w-40">
+												<option th:value="#{page.hospital.facility.nursing_ratio_option1}" th:text="#{page.hospital.facility.nursing_ratio_option1}">1 per patient</option>
+												<option th:value="#{page.hospital.facility.nursing_ratio_option2}" th:text="#{page.hospital.facility.nursing_ratio_option2}">1 per 2 patients</option>
+												<option th:value="#{page.hospital.facility.nursing_ratio_option3}" th:text="#{page.hospital.facility.nursing_ratio_option3}">1 per 3 patients</option>
+												<option th:value="#{page.hospital.facility.nursing_ratio_option4}" th:text="#{page.hospital.facility.nursing_ratio_option4}">1 per 4 patients</option>
+												<option th:value="#{page.hospital.facility.nursing_ratio_option5}" th:text="#{page.hospital.facility.nursing_ratio_option5}">1 per 5 patient</option>
+												<option th:value="#{page.hospital.facility.nursing_ratio_option6}" th:text="#{page.hospital.facility.nursing_ratio_option6}">1 per 6 patients</option>
+												<option th:value="#{page.hospital.facility.nursing_ratio_option7}" th:text="#{page.hospital.facility.nursing_ratio_option7}">1 per 7 patients</option>
+												<option th:value="#{page.hospital.facility.nursing_ratio_option8}" th:text="#{page.hospital.facility.nursing_ratio_option8}">1 per 8 patients</option>
+												<option th:value="#{page.hospital.facility.nursing_ratio_option9}" th:text="#{page.hospital.facility.nursing_ratio_option9}">1 per 9 patients</option>
+												<option th:value="#{page.hospital.facility.nursing_ratio_option10}" th:text="#{page.hospital.facility.nursing_ratio_option10}">1 per 10 patients</option>
+												<option th:value="#{page.hospital.facility.nursing_ratio_option11}" th:text="#{page.hospital.facility.nursing_ratio_option11}">more</option>
+											</select>
+                                    		<input type="text" th:field="*{hospitalUnitFeatureFormModel[__${rowStat.index}__].description}" class="w-40" th:if="${!hospitalUnitFeatureFormModel.featureName.equalsIgnoreCase('Patients per room') and !hospitalUnitFeatureFormModel.featureName.equalsIgnoreCase('Patients per bath') and !hospitalUnitFeatureFormModel.featureName.equalsIgnoreCase('Nursing ratio')}"/>				
+								</li>                        	
+                        	</ul>
+                        	<div class="tr my-btn-block w-85">
+                                <button class="btn btn-sm btn-dk-blue btn-cancel" type="button" th:text="#{page.hospital.hospitality.btn_cancel}">Cancel</button>
+                                <button class="btn btn-sm btn-blue" type="submit" th:text="#{page.hospital.hospitality.btn_save_changes}">Save Changes</button>
+                            </div>
+                        </form>                        
+                   </div>
+			</div>
+	  </div>
+	</main>	
+</body>
+</html>		

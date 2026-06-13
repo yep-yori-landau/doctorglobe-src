@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	th:include="layouts/layoutcontext::page" class='sidebar-large'>
+<body>
+<div th:fragment='content' >
+	<div class="overlay o-sm js-conference-overlay scheduleheight">
+        <div class="overlay-header bg">
+            <h3 th:if="${schedule == 1}" th:text="#{page.schedule.heading.schedule_procedure}"></h3>
+            <h3 th:if="${schedule == 0}" th:text="#{page.schedule.heading.reschedule_procedure}"></h3>
+            <button class="ico ico-close btn btn-blue fancyclose"></button>
+        </div>
+        <div class="overlay-content">
+          <h3 th:if="${message != null}" th:text="#{page.book.success}"></h3>
+          <h3 th:if="${message == null}" th:text="#{page.schedule.subheading}"></h3>
+          <form class="form-block" name="patientBookingForm" method='post' th:object="${patientBookingForm}" th:action="@{/home/book}">
+            <ul class="row single-col">
+              <li>              
+                <input type ="hidden" name="id" id="id" required="" th:field="*{id}"/>             
+                <input type ="hidden" name="receiver" id="receiver" required="" th:field="*{receiver}"/>
+                <input type ="hidden" name="status" id="status" required="" th:field="*{status}"/>
+                <input type ="hidden" name="subject" id="subject" required="" th:field="*{subject}"/>
+                <input type ="hidden" name="healthcareproviderSpecialityTreatmentMethodPractitioner" id="healthcareproviderSpecialityTreatmentMethodPractitioner" required="" th:field="*{healthcareproviderSpecialityTreatmentMethodPractitioner}"/>
+                <input type="hidden" name="patientcase" id="patientcase" required="" th:field="*{patientcase}"/>
+                <label for="bookingDt" th:text="#{page.doctorarea.date}"></label>
+                <input type="text" name="bookingDt" id="bookingDt" required="" th:field="*{bookingDt}" class="datetimepicker" readonly = "true" />                
+              </li>
+              <li>
+                <label for="msg" th:text="#{page.schedule.message}">Message:</label>
+                <textarea rows="3" name="body" id="body" required="" th:field="*{body}"></textarea>
+              </li>
+            </ul>
+            <p class="tr">
+              <button type="submit" class="btn btn-green btn-sm" th:text="#{page.schedule.btn.send_request}">Send Request</button>
+            </p>
+          </form>   
+           <script type="text/javascript" th:inline='javascript'>
+		$(document).ready(function() {
+			/*[+
+			var msg = [[${message}]];			
+			+]*/			
+			if(msg == 1){
+				parent.jQuery.fancybox.close();											
+			}
+		});
+   </script>		       
+        </div>    
+      </div>
+   </div>
+  </body>  
+</html>

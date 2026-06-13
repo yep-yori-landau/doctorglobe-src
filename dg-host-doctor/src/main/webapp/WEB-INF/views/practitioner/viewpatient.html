@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/header :: header"></head>
+
+<body>
+	<div th:replace="fragments/menu :: menu"></div>	
+	<div class="container">
+
+		<div class="page-header">
+			<div class="row">
+				<div class="col-lg-12">
+					<h1 class="text-center text-uppercase"
+						th:text="#{page.heading.patient}">Title</h1>
+				</div>
+			</div>
+		</div>
+		
+		<div class="bs-docs-section">
+			<div class="row">
+				<div class="col-lg-12">
+					<table class="table table-hover">
+						<thead>
+							<tr>								
+								<th th:text="#{patient.name}">Name</th>
+								<th th:text="#{patient.dob}">Dob</th>
+								<th th:text="#{patient.gender}">Gender</th>
+								<th th:text="#{patient.mobile}">Mobile</th>
+								<th th:text="#{patient.email}">Email</th>
+								<th th:text="#{patient.phone}">Phone</th>														
+							</tr>
+						</thead>
+						<tbody>
+							<tr>								
+								<td th:text="${patient.title} + ' ' + ${patient.firstName} + ' ' + ${patient.lastName}"></td>								
+								<td th:text="${patient.dob}"></td>
+								<td th:text="${patient.gender}"></td>
+								<td th:text="${patient.mobile}"></td>
+								<td th:text="${patient.email}"></td>
+								<td th:text="${patient.phone}"></td>							
+							</tr>
+						</tbody>
+					</table>
+				</div>				
+			</div>
+		</div>
+	</div>
+</body>
+</html>

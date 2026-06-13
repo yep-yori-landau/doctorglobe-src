@@ -1,0 +1,637 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- DispatcherServlet Context: defines this servlet's request-processing 
+		infrastructure -->
+    
+	<!-- enable Matrix variable -->
+	<mvc:annotation-driven/>
+	
+	<beans:bean id="contentNegotiationManager"
+	    class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+	    <beans:property name="defaultContentType" value="application/json" />
+	    <beans:property name="favorPathExtension" value="false" />
+	    <beans:property name="favorParameter" value="false" />
+	    <beans:property name="parameterName" value="mediaType" />
+	    <beans:property name="ignoreAcceptHeader" value="false" />
+	    <beans:property name="useJaf" value="false" />
+ 	</beans:bean>
+
+	<beans:bean id="templateResolver"
+		class="org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver">
+		<beans:property name="prefix" value="/WEB-INF/views/" />
+		<beans:property name="suffix" value=".html" />
+		<beans:property name="templateMode" value="HTML5" />
+		<!-- Template cache is set to false (default is true). -->
+		<beans:property name="cacheable" value="false" />
+	</beans:bean>
+
+	<beans:bean id="templateEngine" class="org.thymeleaf.spring4.SpringTemplateEngine">
+		<beans:property name="templateResolver" ref="templateResolver" />
+	</beans:bean>
+
+	<beans:bean class="org.thymeleaf.spring4.view.ThymeleafViewResolver"
+		p:templateEngine-ref="templateEngine" />
+
+	
+
+	<!-- Handles HTTP GET requests for /resources/** by efficiently serving 
+		up static resources in the ${webappRoot}/resources directory -->
+	<mvc:resources mapping="/resources/**" location="/resources/" />
+	<mvc:resources mapping="/webjars/**" location="classpath:/META-INF/resources/webjars/" />
+
+	<beans:bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource"
+		p:basename="messages" />
+
+	<!-- DB Properties -->
+	<beans:bean id="dbProperties"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<beans:property name="locations">
+			<beans:list>
+				<beans:value>classpath:rating-weightage-${dgEnvTarget}.properties</beans:value>
+				<beans:value>classpath:db-${dgEnvTarget}.properties</beans:value>				
+			</beans:list>
+		</beans:property>	
+		<beans:property name="ignoreResourceNotFound" value="false" />
+		<beans:property name="searchSystemEnvironment" value="true" />
+		<beans:property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
+	</beans:bean>
+
+	<!-- DB -->
+	<beans:bean id="dataSource"
+		class="org.apache.commons.dbcp.BasicDataSource">
+		<beans:property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<beans:property name="url" value="${db.url}" />
+		<beans:property name="username" value="${db.user}" />
+		<beans:property name="password" value="${db.password}" />
+    	<beans:property name="timeBetweenEvictionRunsMillis" value="300000" />
+    	<beans:property name="numTestsPerEvictionRun" value="6" />
+    	<beans:property name="minEvictableIdleTimeMillis" value="1800000" />
+    	<beans:property name="removeAbandoned" value="true"/>
+   		<beans:property name="initialSize" value="20" />
+   		<beans:property name="maxActive" value="30" />
+	</beans:bean>
+
+	<beans:bean id='jdbcTemplate' class="org.springframework.jdbc.core.JdbcTemplate">
+		<beans:property name="dataSource" ref="dataSource" />
+	</beans:bean>	
+	<beans:bean id="accreditationDAO" class="com.dg.data.dao.impl.AccreditationDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="accreditationService" class="com.dg.data.service.impl.AccreditationServiceImpl">
+		<beans:constructor-arg ref="accreditationDAO" />
+	</beans:bean>
+	<beans:bean id="aclPermissionsDAO" class="com.dg.data.dao.impl.AclPermissionsDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="aclpermissionsService" class="com.dg.data.service.impl.AclPermissionsServiceImpl">
+		<beans:constructor-arg ref="aclPermissionsDAO" />
+	</beans:bean>
+	<beans:bean id="aclResourcesDAO" class="com.dg.data.dao.impl.AclResourcesDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="aclresourcesService" class="com.dg.data.service.impl.AclResourcesServiceImpl">
+		<beans:constructor-arg ref="aclResourcesDAO" />
+	</beans:bean>
+	<beans:bean id="aclRolesDAO" class="com.dg.data.dao.impl.AclRolesDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="aclrolesService" class="com.dg.data.service.impl.AclRolesServiceImpl">
+		<beans:constructor-arg ref="aclRolesDAO" />
+	</beans:bean>
+	<beans:bean id="amenityDAO" class="com.dg.data.dao.impl.AmenityDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="amenityService" class="com.dg.data.service.impl.AmenityServiceImpl">
+		<beans:constructor-arg ref="amenityDAO" />
+	</beans:bean>
+	<beans:bean id="attestationsDAO" class="com.dg.data.dao.impl.AttestationsDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="attestationsService" class="com.dg.data.service.impl.AttestationsServiceImpl">
+		<beans:constructor-arg ref="attestationsDAO" />
+	</beans:bean>
+	<beans:bean id="attestationsPractitionerDAO"
+		class="com.dg.data.dao.impl.AttestationsPractitionerDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="attestationspractitionerService"
+		class="com.dg.data.service.impl.AttestationsPractitionerServiceImpl">
+		<beans:constructor-arg ref="attestationsPractitionerDAO" />
+	</beans:bean>
+	<beans:bean id="auditDAO" class="com.dg.data.dao.impl.AuditDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="auditService" class="com.dg.data.service.impl.AuditServiceImpl">
+		<beans:constructor-arg ref="auditDAO" />
+	</beans:bean>
+	<beans:bean id="associationDAO" class="com.dg.data.dao.impl.AssociationDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="associationService" class="com.dg.data.service.impl.AssociationServiceImpl">
+		<beans:constructor-arg ref="associationDAO" />
+	</beans:bean>
+	<beans:bean id="associateDAO" class="com.dg.data.dao.impl.AssociateDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="associateService" class="com.dg.data.service.impl.AssociateServiceImpl">
+		<beans:constructor-arg ref="associateDAO" />
+	</beans:bean>
+	<beans:bean id="chainDAO" class="com.dg.data.dao.impl.ChainDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="chainService" class="com.dg.data.service.impl.ChainServiceImpl">
+		<beans:constructor-arg ref="chainDAO" />
+	</beans:bean>
+	<beans:bean id="cityDAO" class="com.dg.data.dao.impl.CityDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />		
+	</beans:bean>
+	<beans:bean id="cityService" class="com.dg.data.service.impl.CityServiceImpl">
+		<beans:constructor-arg ref="cityDAO" />
+	</beans:bean>
+	<beans:bean id="corporateCompanyDAO"
+		class="com.dg.data.dao.impl.CorporatecompanyDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="corporatecompanyService" class="com.dg.data.service.impl.CorporatecompanyServiceImpl">
+		<beans:constructor-arg ref="corporateCompanyDAO" />
+	</beans:bean>
+	<beans:bean id="countryDAO" class="com.dg.data.dao.impl.CountryDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />		
+	</beans:bean>
+	<beans:bean id="countryService" class="com.dg.data.service.impl.CountryServiceImpl">
+		<beans:constructor-arg ref="countryDAO" />
+	</beans:bean>
+	<beans:bean id="cuisineDAO" class="com.dg.data.dao.impl.CuisineDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="cuisineService" class="com.dg.data.service.impl.CuisineServiceImpl">
+		<beans:constructor-arg ref="cuisineDAO" />
+	</beans:bean>
+	<beans:bean id="equipmentDAO" class="com.dg.data.dao.impl.EquipmentDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="equipmentService" class="com.dg.data.service.impl.EquipmentServiceImpl">
+		<beans:constructor-arg ref="equipmentDAO" />
+	</beans:bean>
+	<beans:bean id="exchangeRateDAO" class="com.dg.data.dao.impl.ExchangeRateDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="exchangerateService" class="com.dg.data.service.impl.ExchangeRateServiceImpl">
+		<beans:constructor-arg ref="exchangeRateDAO" />
+	</beans:bean>
+	<beans:bean id="healthcareprovidertypeDAO" class="com.dg.data.dao.impl.HealthcareprovidertypeDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="healthcareprovidertypeService" class="com.dg.data.service.impl.HealthcareprovidertypeServiceImpl">
+		<beans:constructor-arg ref="healthcareprovidertypeDAO" />
+	</beans:bean>
+	<beans:bean id="healthcareproviderunitDAO" class="com.dg.data.dao.impl.HealthcareproviderunitDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="healthcareproviderunitService" class="com.dg.data.service.impl.HealthcareproviderunitServiceImpl">
+		<beans:constructor-arg ref="healthcareproviderunitDAO" />
+	</beans:bean>
+	<beans:bean id="featureDAO" class="com.dg.data.dao.impl.FeatureDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="featureService" class="com.dg.data.service.impl.FeatureServiceImpl">
+		<beans:constructor-arg ref="featureDAO" />
+	</beans:bean>
+	<beans:bean id="healthcareproviderDAO"
+		class="com.dg.data.dao.impl.HealthcareproviderDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />		
+	</beans:bean>
+	<beans:bean id="healthcareproviderService"
+		class="com.dg.data.service.impl.HealthcareproviderServiceImpl">
+		<beans:constructor-arg ref="healthcareproviderDAO" />
+		<beans:property name="patientService" ref="patientService"></beans:property>
+		<beans:property name="cityService" ref="cityService"></beans:property>
+		<beans:property name="healthcareproviderRatingWeightageService" ref="healthcareproviderRatingWeightageService"></beans:property>
+		<beans:property name="practitionerService" ref="practitionerService"></beans:property>
+		<beans:property name="employeeCorporatecompanyService" ref="employeeCorporateCompanyService"></beans:property>
+		<beans:property name="distanceCalculatorService" ref="distanceCalculatorService"></beans:property>
+		<beans:property name="treatmentPriceService" ref="treatmentPriceService"></beans:property>		
+		<beans:property name="rankingCalculationService" ref="rankingCalculationService"></beans:property>
+		<beans:property name="exchangerateService" ref="exchangerateService"></beans:property>
+	</beans:bean>
+	<beans:bean id="healthcareproviderAccreditationDAO"
+		class="com.dg.data.dao.impl.HealthcareproviderAccreditationDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="healthcareprovideraccreditationService"
+		class="com.dg.data.service.impl.HealthcareproviderAccreditationServiceImpl">
+		<beans:constructor-arg ref="healthcareproviderAccreditationDAO" />
+	</beans:bean>
+	<beans:bean id="healthcareproviderAmenityDAO"
+		class="com.dg.data.dao.impl.HealthcareproviderAmenityDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="healthcareprovideramenityService"
+		class="com.dg.data.service.impl.HealthcareproviderAmenityServiceImpl">
+		<beans:constructor-arg ref="healthcareproviderAmenityDAO" />
+	</beans:bean>
+	<beans:bean id="healthcareproviderCuisineDAO"
+		class="com.dg.data.dao.impl.HealthcareproviderCuisineDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="healthcareprovidercuisineService"
+		class="com.dg.data.service.impl.HealthcareproviderCuisineServiceImpl">
+		<beans:constructor-arg ref="healthcareproviderCuisineDAO" />
+	</beans:bean>
+	<beans:bean id="healthcareproviderEquipmentDAO"
+		class="com.dg.data.dao.impl.HealthcareproviderEquipmentDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="healthcareproviderequipmentService"
+		class="com.dg.data.service.impl.HealthcareproviderEquipmentServiceImpl">
+		<beans:constructor-arg ref="healthcareproviderEquipmentDAO" />
+	</beans:bean>
+	<beans:bean id="healthcareproviderHealthcareprovidertypeDAO"
+		class="com.dg.data.dao.impl.HealthcareproviderHealthcareprovidertypeDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="healthcareproviderHealthcareprovidertypeService"
+		class="com.dg.data.service.impl.HealthcareproviderHealthcareprovidertypeServiceImpl">
+		<beans:constructor-arg ref="healthcareproviderHealthcareprovidertypeDAO" />
+	</beans:bean>
+	<beans:bean id="healthcareproviderInsuranceDAO"
+		class="com.dg.data.dao.impl.HealthcareproviderInsuranceDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="healthcareproviderinsuranceService"
+		class="com.dg.data.service.impl.HealthcareproviderInsuranceServiceImpl">
+		<beans:constructor-arg ref="healthcareproviderInsuranceDAO" />
+	</beans:bean>
+	<beans:bean id="healthcareproviderLanguageDAO"
+		class="com.dg.data.dao.impl.HealthcareproviderLanguageDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="healthcareproviderlanguageService"
+		class="com.dg.data.service.impl.HealthcareproviderLanguageServiceImpl">
+		<beans:constructor-arg ref="healthcareproviderLanguageDAO" />
+	</beans:bean>
+	<beans:bean id="healthcareproviderRatingsDAO"
+		class="com.dg.data.dao.impl.HealthcareproviderRatingsDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="healthcareproviderratingsService"
+		class="com.dg.data.service.impl.HealthcareproviderRatingsServiceImpl">
+		<beans:constructor-arg ref="healthcareproviderRatingsDAO" />
+	</beans:bean>
+	<beans:bean id="healthcareproviderSpecialtyDAO"
+		class="com.dg.data.dao.impl.HealthcareproviderSpecialtyDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="healthcareproviderSpecialtyService"
+		class="com.dg.data.service.impl.HealthcareproviderSpecialtyServiceImpl">
+		<beans:constructor-arg ref="healthcareproviderSpecialtyDAO" />
+	</beans:bean>	
+	<beans:bean id="healthcareproviderSpecialtyTreatmentMethodDAO"
+		class="com.dg.data.dao.impl.HealthcareproviderSpecialtyTreatmentMethodDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="healthcareproviderSpecialtyTreatmentMethodService"
+		class="com.dg.data.service.impl.HealthcareproviderSpecialtyTreatmentMethodServiceImpl">
+		<beans:constructor-arg ref="healthcareproviderSpecialtyTreatmentMethodDAO" />
+	</beans:bean>
+	<beans:bean
+		id="healthcareproviderSpecialtyTreatmentMethodPractitionerDAO"
+		class="com.dg.data.dao.impl.HealthcareproviderSpecialtyTreatmentMethodPractitionerDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean
+		id="healthcareproviderspecialtytreatmentmethodpractitionerService"
+		class="com.dg.data.service.impl.HealthcareproviderSpecialtyTreatmentMethodPractitionerServiceImpl">
+		<beans:constructor-arg ref="healthcareproviderSpecialtyTreatmentMethodPractitionerDAO" />
+	</beans:bean>
+	<beans:bean
+		id="healthcareproviderSpecialtyTreatmentMethodPractitionerStatDAO"
+		class="com.dg.data.dao.impl.HealthcareproviderSpecialtyTreatmentMethodPractitionerStatDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean
+		id="healthcareproviderSpecialtytreatmentMethodPractitionerStatService"
+		class="com.dg.data.service.impl.HealthcareproviderSpecialtyTreatmentMethodPractitionerStatServiceImpl">
+		<beans:constructor-arg ref="healthcareproviderSpecialtyTreatmentMethodPractitionerStatDAO" />
+	</beans:bean>
+	<beans:bean id="healthcareproviderUnitFeatureDAO"
+		class="com.dg.data.dao.impl.HealthcareproviderUnitFeatureDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="healthcareproviderunitfeatureService"
+		class="com.dg.data.service.impl.HealthcareproviderUnitFeatureServiceImpl">
+		<beans:constructor-arg ref="healthcareproviderUnitFeatureDAO" />
+	</beans:bean>
+	<beans:bean id="healthcareproviderUserDAO"
+		class="com.dg.data.dao.impl.HealthcareproviderUserDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="healthcareprovideruserService"
+		class="com.dg.data.service.impl.HealthcareproviderUserServiceImpl">
+		<beans:constructor-arg ref="healthcareproviderUserDAO" />
+	</beans:bean>
+	<beans:bean id="healthcareproviderphotoDAO"
+		class="com.dg.data.dao.impl.HealthcareproviderphotoDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="healthcareproviderphotoService"
+		class="com.dg.data.service.impl.HealthcareproviderphotoServiceImpl">
+		<beans:constructor-arg ref="healthcareproviderphotoDAO" />
+	</beans:bean>
+	<beans:bean id="insuranceDAO" class="com.dg.data.dao.impl.InsuranceDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="insuranceService" class="com.dg.data.service.impl.InsuranceServiceImpl">
+		<beans:constructor-arg ref="insuranceDAO" />
+	</beans:bean>
+	<beans:bean id="methodDAO" class="com.dg.data.dao.impl.MethodDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="methodService" class="com.dg.data.service.impl.MethodServiceImpl">
+		<beans:constructor-arg ref="methodDAO" />
+	</beans:bean>
+	<beans:bean id="patientDAO" class="com.dg.data.dao.impl.PatientDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="patientService" class="com.dg.data.service.impl.PatientServiceImpl">
+		<beans:constructor-arg ref="patientDAO" />
+		<beans:property name="cityService" ref="cityService" />
+	</beans:bean>
+	<beans:bean id="patientcaseDAO" class="com.dg.data.dao.impl.PatientcaseDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="patientcaseService" class="com.dg.data.service.impl.PatientcaseServiceImpl">
+		<beans:constructor-arg ref="patientcaseDAO" />
+	</beans:bean>
+	<beans:bean id="patientcaseauditDAO"
+		class="com.dg.data.dao.impl.PatientcaseauditDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="patientcaseauditService" class="com.dg.data.service.impl.PatientcaseauditServiceImpl">
+		<beans:constructor-arg ref="patientcaseauditDAO" />
+	</beans:bean>
+	<beans:bean id="patientcasebookingDAO"
+		class="com.dg.data.dao.impl.PatientcasebookingDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="patientcasebookingService"
+		class="com.dg.data.service.impl.PatientcasebookingServiceImpl">
+		<beans:constructor-arg ref="patientcasebookingDAO" />
+	</beans:bean>
+	<beans:bean id="patientcasefileDAO" class="com.dg.data.dao.impl.PatientcasefileDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="patientcasefileService" class="com.dg.data.service.impl.PatientcasefileServiceImpl">
+		<beans:constructor-arg ref="patientcasefileDAO" />
+	</beans:bean>
+	<beans:bean id="patientcasemessagesDAO"
+		class="com.dg.data.dao.impl.PatientcasemessagesDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="patientcasemessagesService"
+		class="com.dg.data.service.impl.PatientcasemessagesServiceImpl">
+		<beans:constructor-arg ref="patientcasemessagesDAO" />
+	</beans:bean>
+	<beans:bean id="patientconferenceDAO"
+		class="com.dg.data.dao.impl.PatientconferenceDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="patientconferenceService"
+		class="com.dg.data.service.impl.PatientconferenceServiceImpl">
+		<beans:constructor-arg ref="patientconferenceDAO" />
+	</beans:bean>
+	<beans:bean id="patientreviewDAO" class="com.dg.data.dao.impl.PatientreviewDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="patientreviewService" class="com.dg.data.service.impl.PatientreviewServiceImpl">
+		<beans:constructor-arg ref="patientreviewDAO" />
+	</beans:bean>
+	<beans:bean id="patientreviewratingsDAO"
+		class="com.dg.data.dao.impl.PatientreviewratingsDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="patientreviewratingsService"
+		class="com.dg.data.service.impl.PatientreviewratingsServiceImpl">
+		<beans:constructor-arg ref="patientreviewratingsDAO" />
+	</beans:bean>
+	<beans:bean id="practitionerDAO" class="com.dg.data.dao.impl.PractitionerDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="practitionerService" class="com.dg.data.service.impl.PractitionerServiceImpl">
+		<beans:constructor-arg ref="practitionerDAO" />
+		<beans:property name="practitionerRatingWeightageService" ref="practitionerRatingWeightageService"></beans:property>
+		<beans:property name="patientService" ref="patientService"></beans:property>
+		<beans:property name="employeeCorporatecompanyService" ref="employeeCorporateCompanyService"></beans:property>
+		<beans:property name="cityService" ref="cityService"></beans:property>
+		<beans:property name="treatmentPriceService" ref="treatmentPriceService"></beans:property>
+		<beans:property name="exchangerateService" ref="exchangerateService"></beans:property>
+		<beans:property name="rankingCalculationService" ref="rankingCalculationService"></beans:property>		
+	</beans:bean>
+	<beans:bean id="practitionerLanguageDAO"
+		class="com.dg.data.dao.impl.PractitionerLanguageDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="practitionerlanguageService"
+		class="com.dg.data.service.impl.PractitionerLanguageServiceImpl">
+		<beans:constructor-arg ref="practitionerLanguageDAO" />
+	</beans:bean>
+	<beans:bean id="practitionertypeDAO"
+		class="com.dg.data.dao.impl.PractitionertypeDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="practitionertypeService" class="com.dg.data.service.impl.PractitionertypeServiceImpl">
+		<beans:constructor-arg ref="practitionertypeDAO" />
+	</beans:bean>
+	<beans:bean id="ratingcompaniesDAO" class="com.dg.data.dao.impl.RatingcompaniesDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="ratingcompaniesService" class="com.dg.data.service.impl.RatingcompaniesServiceImpl">
+		<beans:constructor-arg ref="ratingcompaniesDAO" />
+	</beans:bean>
+	<beans:bean id="regionDAO" class="com.dg.data.dao.impl.RegionDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="regionService" class="com.dg.data.service.impl.RegionServiceImpl">
+		<beans:constructor-arg ref="regionDAO" />
+	</beans:bean>
+	<beans:bean id="specialtyDAO" class="com.dg.data.dao.impl.SpecialtyDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="specialtyService" class="com.dg.data.service.impl.SpecialtyServiceImpl">
+		<beans:constructor-arg ref="specialtyDAO" />
+	</beans:bean>
+	<beans:bean id="specialtyTreatmentDAO"
+		class="com.dg.data.dao.impl.SpecialtyTreatmentDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="specialtytreatmentService"
+		class="com.dg.data.service.impl.SpecialtyTreatmentServiceImpl">
+		<beans:constructor-arg ref="specialtyTreatmentDAO" />
+	</beans:bean>
+	<beans:bean id="stateDAO" class="com.dg.data.dao.impl.StateDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="stateService" class="com.dg.data.service.impl.StateServiceImpl">
+		<beans:constructor-arg ref="stateDAO" />
+	</beans:bean>
+	<beans:bean id="statsDAO" class="com.dg.data.dao.impl.StatsDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="statsService" class="com.dg.data.service.impl.StatsServiceImpl">
+		<beans:constructor-arg ref="statsDAO" />
+	</beans:bean>
+	<beans:bean id="translationsDAO" class="com.dg.data.dao.impl.TranslationsDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="translationsService" class="com.dg.data.service.impl.TranslationsServiceImpl">
+		<beans:constructor-arg ref="translationsDAO" />
+	</beans:bean>
+	<beans:bean id="treatmentDAO" class="com.dg.data.dao.impl.TreatmentDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="treatmentService" class="com.dg.data.service.impl.TreatmentServiceImpl">
+		<beans:constructor-arg ref="treatmentDAO" />
+	</beans:bean>
+	<beans:bean id="treatmentAliasDAO" class="com.dg.data.dao.impl.TreatmentAliasDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="treatmentaliasService" class="com.dg.data.service.impl.TreatmentAliasServiceImpl">
+		<beans:constructor-arg ref="treatmentAliasDAO" />
+	</beans:bean>
+	<beans:bean id="userDAO" class="com.dg.data.dao.impl.UserDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="userService" class="com.dg.data.service.impl.UserServiceImpl">
+		<beans:constructor-arg ref="userDAO" />
+	</beans:bean>
+	<beans:bean id="documentDAO" class="com.dg.data.dao.impl.DocumentDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="documentService" class="com.dg.data.service.impl.DocumentServiceImpl">
+		<beans:constructor-arg ref="documentDAO" />
+	</beans:bean>
+	<beans:bean id="treatmentDocumentDAO" class="com.dg.data.dao.impl.TreatmentDocumentDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="treatmentDocumentService" class="com.dg.data.service.impl.TreatmentDocumentServiceImpl">
+		<beans:constructor-arg ref="treatmentDocumentDAO" />
+	</beans:bean>
+	<beans:bean id="healthcareproviderPractitionerDAO" class="com.dg.data.dao.impl.HealthcareproviderPractitionerDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="healthcareproviderPractitionerService" class="com.dg.data.service.impl.HealthcareproviderPractitionerServiceImpl">
+		<beans:constructor-arg ref="healthcareproviderPractitionerDAO" />
+	</beans:bean>
+	<beans:bean id="treatmentPriceDAO" class="com.dg.data.dao.impl.TreatmentPriceDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="treatmentPriceService" class="com.dg.data.service.impl.TreatmentPriceServiceImpl">
+		<beans:constructor-arg ref="treatmentPriceDAO" />
+	</beans:bean>
+	<beans:bean id="corporateCompanyInsuranceDAO" class="com.dg.data.dao.impl.CorporatecompanyInsuranceDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="corporateCompanyInsuranceService" class="com.dg.data.service.impl.CorporatecompanyInsuranceServiceImpl">
+		<beans:constructor-arg ref="corporateCompanyInsuranceDAO" />
+	</beans:bean>	
+	<beans:bean id="employeeCorporateCompanyDAO" class="com.dg.data.dao.impl.EmployeeCorporatecompanyDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="employeeCorporateCompanyService" class="com.dg.data.service.impl.EmployeeCorporatecompanyServiceImpl">
+		<beans:constructor-arg ref="employeeCorporateCompanyDAO" />
+	</beans:bean>
+	<beans:bean id="treatmentdaysDAO" class="com.dg.data.dao.impl.TreatmentdaysDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="treatmentdaysService" class="com.dg.data.service.impl.TreatmentdaysServiceImpl">
+		<beans:constructor-arg ref="treatmentdaysDAO" />
+	</beans:bean>	
+	<beans:bean id="questionnaireDAO" class="com.dg.data.dao.impl.QuestionnaireDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="questionnaireService" class="com.dg.data.service.impl.QuestionnaireServiceImpl">
+		<beans:constructor-arg ref="questionnaireDAO" />
+	</beans:bean>
+	<beans:bean id="treatmentQuestionnaireDAO" class="com.dg.data.dao.impl.TreatmentQuestionnaireDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="treatmentQuestionnaireService" class="com.dg.data.service.impl.TreatmentQuestionnaireServiceImpl">
+		<beans:constructor-arg ref="treatmentQuestionnaireDAO" />
+	</beans:bean>
+	<beans:bean id="patientcaseTreatmentQuestionnaireDAO" class="com.dg.data.dao.impl.PatientcaseTreatmentQuestionnaireDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="patientcaseTreatmentQuestionnaireService" class="com.dg.data.service.impl.PatientcaseTreatmentQuestionnaireServiceImpl">
+		<beans:constructor-arg ref="patientcaseTreatmentQuestionnaireDAO" />
+	</beans:bean>
+	<beans:bean id="historyDAO" class="com.dg.data.dao.impl.HistoryDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="historyService" class="com.dg.data.service.impl.HistoryServiceImpl">
+		<beans:constructor-arg ref="historyDAO" />
+	</beans:bean>
+	<beans:bean id="patientcasePriceDAO" class="com.dg.data.dao.impl.PatientcasePriceDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="patientcasePriceService" class="com.dg.data.service.impl.PatientcasePriceServiceImpl">
+		<beans:constructor-arg ref="patientcasePriceDAO" />
+	</beans:bean>
+	<beans:bean id="dailyExpenseDAO" class="com.dg.data.dao.impl.DailyExpenseDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="dailyExpenseService" class="com.dg.data.service.impl.DailyExpenseServiceImpl">
+		<beans:constructor-arg ref="dailyExpenseDAO" />
+	</beans:bean>
+	<beans:bean id="apiUserDAO" class="com.dg.data.dao.impl.ApiUserDAOImpl">
+		<beans:property name="jdbcTemplate" ref="jdbcTemplate" />
+	</beans:bean>
+	<beans:bean id="apiUserService" class="com.dg.data.service.impl.ApiUserServiceImpl">
+		<beans:constructor-arg ref="apiUserDAO" />
+	</beans:bean>
+	<beans:bean id="practitionerRatingWeightageService" class="com.dg.data.service.PractitionerRatingWeightageService">
+		<beans:property name="price" value="${practitioner.rating.price.weightage}" />
+		<beans:property name="numberPerformedLastYear" value="${practitioner.rating.number_performed_last_year.weightage}" />
+		<beans:property name="correctionsLastYear" value="${practitioner.rating.corrections_last_year.weightage}" />
+		<beans:property name="usTrained" value="${practitioner.rating.us_trained.weightage}" />
+		<beans:property name="usCertified" value="${practitioner.rating.us_certified.weightage}" />
+		<beans:property name="englishSpeaking" value="${practitioner.rating.english_speaking.weightage}" />		
+		<beans:property name="insuranceCap" value="${practitioner.rating.insurance_cap.weightage}" />
+	</beans:bean>
+	
+	<beans:bean id="healthcareproviderRatingWeightageService" class="com.dg.data.service.HealthcareproviderRatingWeightageService">
+		<beans:property name="topPractitionerRating" value="${healthcareprovider.rating.top_practitioner_rating.weightage}" />
+		<beans:property name="location" value="${healthcareprovider.rating.location.weightage}" />
+		<beans:property name="distance" value="${healthcareprovider.rating.distance.weightage}" />
+		<beans:property name="averagePractitionerRating" value="${healthcareprovider.rating.average_practitioner_rating.weightage}" />
+		<beans:property name="amenities" value="${healthcareprovider.rating.amenities.weightage}" />
+		<beans:property name="equipment" value="${healthcareprovider.rating.equipment.weightage}" />
+		<beans:property name="mortalityRate" value="${healthcareprovider.rating.mortality_rate.weightage}" />
+		<beans:property name="usAffiliation" value="${healthcareprovider.rating.us_affiliation.weightage}" />				
+		<beans:property name="insuranceCap" value="${healthcareprovider.rating.insurance_cap.weightage}" />
+	</beans:bean>	
+	
+	<beans:bean id="distanceCalculatorService" class="com.dg.data.service.DistanceCalculatorService"></beans:bean>
+	<beans:bean id="rankingCalculationService" class="com.dg.data.service.RankingCalculationService">
+		<beans:property name="distanceWeight" value="${ranking.distanceWeight}" />
+		<beans:property name="bonusWeight" value="${ranking.bonusWeight}" />
+		<beans:property name="volumeWeight" value="${ranking.volumeWeight}" />
+	</beans:bean>
+	
+	<!-- File upload config -->
+	<beans:bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="maxUploadSize" value="500000" />
+	</beans:bean>
+	
+	<context:component-scan base-package="com.dg.data" />
+	
+</beans:beans>

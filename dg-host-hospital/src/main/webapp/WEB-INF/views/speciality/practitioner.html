@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:include="layouts/layout::page">
+<body>
+	<main id="main-content" th:fragment='content'>	
+	  <div class="wrap">
+			<aside th:replace="fragments/sidebar :: sidebar"></aside>
+			<div id="container">
+				<div class="my-block">
+				<form th:action="@{/home/speciality-treatment-method-practitioner}" th:object="${hospitalSpecialityTreatmentMethodPractitionerForm}" method="post">
+					<h3 class="hel-med fs-16 title-in">
+						<span th:text="#{page.hospital.treatment.speciality_of}">Speciality of</span>						
+						<span th:text="${specialityMap.get(hospitalSpecialityTreatmentMethodPractitionerForm.speciality)}">Aesthetics</span>
+						<span>&gt;</span>
+						<span th:text="${treatmentMap.get(hospitalSpecialityTreatmentMethodPractitionerForm.treatment)}">Aesthetics</span>
+						<span th:text="#{page.hospital.method.treatment}"></span>
+						<span>&gt;</span>
+						<span th:text="${methodMap.get(hospitalSpecialityTreatmentMethodPractitionerForm.method)}">Aesthetics</span>	                    
+					</h3>
+					<span th:if="${success != null}" th:text="#{page.hospital.success.edited}" class="fr text-danger"></span>
+					<p th:text="#{page.hospital.specialities.treatment.method_practitioner.please_select}"></p>					 
+					 		<input type="hidden" th:field="*{healthcareproviderSpeciality}"/>
+					 		<input type="hidden" th:field="*{healthcareproviderSpecialityTreatmentMethod}"/>
+					 		<input type="hidden" th:field="*{treatment}"/>
+					 		<input type="hidden" th:field="*{method}"/>
+					 		<input type="hidden" th:field="*{speciality}"/>
+                            <ul class="my-form mt-20">
+                                <li>
+                                    <ul class="row my-scroll-block">
+                                        <li class="fl w-40 pr-20">
+                                            <h3 class="hel-med fs-16" th:text="#{page.hospital.treatment.method.practitioner.suggested_doctors}">Suggested Methods:</h3>
+                                            <div class="my-scroll">
+                                                <select th:field="*{practitioner}" multiple="multiple" class="mylistbox listbox">
+											      <option th:each="practitioner : ${practitionerList}" th:value="${{practitioner.id}}" th:text="${practitioner.title +' '+practitioner.firstName +' '+practitioner.lastName}">Alderaan</option>											     
+											    </select>
+                                            </div>
+                                        </li>
+                                        <li class="tc w-20">
+                                            <div class="my-btn-block top single w-20">
+                                                <button class="btn btn-fixed btn-gray addbtn" type="button" th:text="#{page.hospital.btn_add}">Add &gt;</button>
+                                                <button class="btn btn-fixed btn-gray removebtn" type="button" th:text="#{page.hospital.btn_remove}">&lt; Remove</button>
+                                            </div>
+                                            <div class="my-btn-block bottom single w-20">
+                                                <button class="btn btn-fixed btn-gray addallbtn" type="button" th:text="#{page.hospital.btn_add_all}">Add all</button>
+                                                <button class="btn btn-fixed btn-gray removeallbtn" type="button" th:text="#{page.hospital.btn_remove_all}">Remove all</button>
+                                            </div>
+                                        </li>
+                                        <li class="fr w-40 pl-20">
+                                            <h3 class="hel-med fs-16">
+                                            	<span th:text="#{page.hospital.treatment.method.practitioner.available_doctors}">Available</span>                                            	
+                                            </h3>
+                                            <div class="my-scroll">
+                                                <select th:field="*{selectedPractitioner}" multiple="multiple" class="mylistbox1 listbox">
+                                                	<option th:each="selectedPractitioner : ${selectedPractitionerList}" th:value="${{selectedPractitioner.id}}" th:text="${selectedPractitioner.title +' '+selectedPractitioner.firstName +' '+selectedPractitioner.lastName}">Alderaan</option>                                                												      											     
+											    </select>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <div class="tc my-btn-block">
+                                <button class="btn btn-sm btn-dk-blue" type="reset" th:text="#{page.hospital.btn_cancel}">Cancel</button>
+                                <button class="btn btn-sm btn-blue btn-list-submit" type="submit" th:text="#{page.hospital.btn_save_changes}">Save Changes</button>
+                            </div>
+                        </form>
+				</div>	
+			</div>
+	</div>
+	</main>
+</body>
+</html>			

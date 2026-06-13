@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	th:include="layouts/layoutcontext::page" class='sidebar-large'>
+<body>
+<div th:fragment='content' >
+	<div class="overlay o-sm js-conference-overlay">
+        <div class="overlay-header bg">
+            <h3 th:text="#{page.schedule.heading.cancel_conference_call}">Cancel Conference Call</h3>
+            <button class="ico ico-close btn btn-blue fancyclose"></button>
+        </div>
+        <div class="overlay-content height261">
+          <h3 th:if="${message != null}" th:text="#{page.cancelschedule.success}"></h3>          
+          <form class="form-block" name="patientConferenceForm" method='post' th:object="${patientConferenceForm}" th:action="@{/home/schedule/cancel}">
+            <ul class="row single-col hide">
+              <li>              
+                <input type ="hidden" name="id" id="id" required="required" th:field="*{id}"/>
+                <input type ="hidden" name="receiver" id="receiver" required="required" th:field="*{receiver}"/>
+                <input type ="hidden" name="status" id="status" required="required" th:field="*{status}"/>
+                <input type ="hidden" name="subject" id="subject" required="required" th:field="*{subject}"/>
+                <input type ="hidden" name="healthcareproviderSpecialtyTreatmentMethodPractitioner" id="HealthcareproviderSpecialtyTreatmentMethodPractitioner" required="required" th:field="*{healthcareproviderSpecialtyTreatmentMethodPractitioner}"/>
+                <input type="hidden" name="patientcase" id="patientcase" required="required" th:field="*{patientcase}"/>
+                <input type="hidden" name="timezone" id="timezone" th:field="*{timezone}"/>
+                <input type="hidden" name="time" id="time" th:field="*{time}"/>
+                <label for="conferenceDt" th:text="#{page.doctorarea.date}"></label>
+                <input type="text" name="conferenceDt" id="conferenceDt" required="required" th:field="*{conferenceDt}" readOnly = "true"/>                
+              </li>
+              <li>
+                <label for="msg" th:text="#{page.schedule.message}">Message:</label>
+                <textarea rows="3" name="body" id="body" required="" th:field="*{body}"></textarea>
+              </li>
+            </ul>
+            <p><span th:text="#{page.schedule.cancelmessage}"></span><span th:text="${patientname}"></span></p>
+            <p>
+              <button type="submit" class="btn btn-green btn-sm" th:text="#{page.schedule.btn.ok}">Send Request</button>
+              <button type="button" class="btn btn-green btn-sm fancyclose" th:text="#{page.schedule.btn.cancel}">Send Request</button>
+            </p>
+          </form> 
+           <script type="text/javascript" th:inline='javascript'>
+		$(document).ready(function() {
+			/*[+
+			var msg = [[${message}]];			
+			+]*/			
+			if(msg == 1){
+				parent.jQuery.fancybox.close();											
+			}
+			
+		});
+   </script>		         
+        </div>        
+      </div>
+   </div>
+  </body>  
+</html>

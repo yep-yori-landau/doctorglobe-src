@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:include="layouts/layout::page">
+<body>
+	<main id="main-content" th:fragment='content'>	
+	  <div class="wrap">
+			<aside th:replace="fragments/sidebar :: sidebar"></aside>
+			<div id="container">
+				<div class="my-block">
+				<form th:object="${hospitalSpecialtyTreatmentForm}" th:action="@{/home/specialty-treatment}" method="post">
+					<h3 class="hel-med fs-16 title-in">
+						<span th:text="#{page.hospital.treatment.specialty_of}">Specialty of</span>						
+						<span th:text="${specialtyMap.get(hospitalSpecialtyTreatmentForm.hospitalSpecialtyModel.specialty)}">Aesthetics</span>	               
+					</h3>					
+                    <h3 class="hel-med fs-16" th:text="#{page.hospital.treatment.general_specialtes_info}">General Specialities Info:</h3>
+                            <input type="hidden" th:field="*{hospitalSpecialtyModel.id}" />
+                            <input type="hidden" th:field="*{hospitalSpecialtyModel.specialty}" />
+                            <input type="hidden" th:field="*{hospitalSpecialtyModel.healthcareprovider}" />
+                             <input type="hidden" th:field="*{hospitalSpecialtyModel.active}" />
+                            <ul class="my-form mt-20">                            
+                                <li>                                	
+                                    <label for="built" th:text="#{page.hospital.treatment.was_built_at}">Was built at:</label>
+                                    <input type="text" th:field="*{hospitalSpecialtyModel.built}" readonly="readonly" class="one-third datepicker datepickerbuilt"/>
+                                    <button class="ico ico-cal btn-cal" type="button" th:id="datepickerbuilt"></button>
+                                </li>
+                                <li>
+                                    <label for="renovated" th:text="#{page.hospital.treatment.renovated_at}">Renovated at:</label>
+                                    <input type="text" th:field="*{hospitalSpecialtyModel.renovated}" readonly="readonly" class="one-third datepicker datepickerrenovated"/>
+                                    <button class="ico ico-cal btn-cal" type="button" th:id="datepickerrenovated"></button>
+                                </li>                                
+                                <li>
+                                    <label for="rename" th:text="#{page.hospital.treatment.rename_specialty_optional}">Rename Specialty (optional):</label>
+                                    <input type="text" th:field="*{hospitalSpecialtyModel.name}" class="one-third" required="required"/>
+                                </li>
+                                <li>
+                                    <ul class="row my-scroll-block">
+                                        <li class="fl w-40 pr-20">
+                                            <h3 class="hel-med fs-16" th:text="#{page.hospital.treatment.suggested_treatments}">Suggested Treatments:</h3>
+                                            <div class="my-scroll">
+                                                <select th:field="*{specialtyTreatment}" multiple="multiple" class="mylistbox listbox">
+                                                 <optgroup th:label="#{specialtytreatment.common_in} +' '+ ${specialtyMap.get(hospitalSpecialtyTreatmentForm.hospitalSpecialtyModel.specialty)}">
+											      	<option th:each="specialtyTreatmentModel : ${specialtyTreatmentList}" th:value="${{specialtyTreatmentModel.id}}" th:text="${treatmentMap.get(specialtyTreatmentModel.id)}">Alderaan</option>
+											     </optgroup>		
+											     <optgroup label="Other treatments">									     
+											      <option th:each="specialtyOtherTreatmentModel : ${specialtyOtherTreatmentList}" th:value="${{specialtyOtherTreatmentModel.id}}" th:text="${treatmentMap.get(specialtyOtherTreatmentModel.id)}">Alderaan</option>
+											     </optgroup> 
+											    </select>
+                                            </div>
+                                        </li>
+                                        <li class="fl tc w-20">
+                                            <div class="my-btn-block top single w-20">
+                                                <button class="btn btn-fixed btn-gray addbtn" type="button" th:text="#{page.hospital.specialty.btn_add}">Add &gt;</button>
+                                                <button class="btn btn-fixed btn-gray removebtn" type="button" th:text="#{page.hospital.specialty.btn_remove}">&lt; Remove</button>
+                                            </div>
+                                            <div class="my-btn-block bottom single w-20">
+                                                <button class="btn btn-fixed btn-gray addallbtn" type="button" th:text="#{page.hospital.specialty.btn_add_all}">Add all</button>
+                                                <button class="btn btn-fixed btn-gray removeallbtn" type="button" th:text="#{page.hospital.specialty.btn_remove_all}">Remove all</button>
+                                            </div>
+                                        </li>
+                                        <li class="fr w-40 pl-20">
+                                            <h3 class="hel-med fs-16">
+                                            	<span th:text="#{page.hospital.treatment.available_in}">Available in </span>
+                                            	<span th:text="${specialtyMap.get(hospitalSpecialtyTreatmentForm.hospitalSpecialtyModel.specialty)}">Aesthetics</span>
+                                            	<span th:text="#{page.hospital.treatment.specialty}"> Specialty:</span>                                            
+                                            </h3>
+                                            <div class="my-scroll">
+                                                <select th:field="*{selectedTreatment}" multiple="multiple" class="mylistbox1 listbox">
+											      <option th:each="selectedTreatment : ${selectedTreatmentList}" th:value="${{selectedTreatment.id}}" th:text="${selectedTreatment.name}">Alderaan</option>											     
+											    </select>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <div class="tc my-btn-block">
+                                <button class="btn btn-sm btn-dk-blue btn-cancel" type="reset" th:text="#{page.hospital.treatment.btn_cancel}">Cancel</button>
+                                <button class="btn btn-sm btn-blue btn-list-submit" type="submit" th:text="#{page.hospital.treatment.btn_save_changes}">Save Changes</button>
+                            </div>
+                        </form>
+				</div>
+			</div>
+		</div>
+	</main>
+</body>
+</html>					

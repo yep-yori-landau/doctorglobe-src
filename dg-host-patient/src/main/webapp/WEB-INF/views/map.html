@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	th:include="layouts/layoutcontext::page" class='sidebar-large'>	
+<body>
+	<div th:fragment='content'>
+<script type="text/javascript" src="//maps.google.com/maps/api/js?sensor=true"></script>
+		<script type="text/javascript" th:src="@{/resources/scripts/gmaps.js}"></script>
+	<div th:class="my-tab-content">
+		<script type="text/javascript" th:inline='javascript' th:if="${lat != null}">
+			$(document).ready(function() {
+				/*[+
+					var mapid = "map"+[[${id}]];
+					var lat = [[${{lat}}]];
+					var lon = [[${{lon}}]];					
+					var loc = [[${{location}}]];
+				+]*/												
+				var map = new GMaps(
+						{
+							/*[+	
+							el : mapid,															
+							lat : [[${lat}]],
+							lng : [[${lon}]],
+							+]*/
+						});		
+				map.addMarker({
+			        lat: lat,
+			        lng: lon,											     
+			      });
+			});
+		</script>					
+		<script type="text/javascript" th:inline='javascript' th:if="${lat == null}">
+			$(document)
+					.ready(
+							function() {
+								/*[+
+								var mapid = "map"+[[${id}]];
+								var loc = [[${{location}}]];
+								+]*/
+								var map;
+								map = new GMaps(
+										{
+											/*[+	
+											el : mapid,
+											lat : [[${lat}]],
+											lng : [[${lon}]],
+											+]*/
+										});
+								GMaps
+										.geocode({
+											address : loc,
+											callback : function(
+													results,
+													status) {
+												if (status == 'OK') {
+													var latlng = results[0].geometry.location;
+													map
+															.setCenter(
+																	latlng
+																			.lat(),
+																	latlng
+																			.lng());
+													map
+															.addMarker({
+																lat : latlng
+																		.lat(),
+																lng : latlng
+																		.lng(),																									
+															});
+												}
+											}
+										});
+							});
+		</script>
+		<div class="map-block" th:id="map+''+${{id}}" style="height: 600px; width: 800px;"></div>
+	</div>
+	</div>
+</body>
+</html>

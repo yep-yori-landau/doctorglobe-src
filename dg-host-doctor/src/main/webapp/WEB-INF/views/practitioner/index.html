@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:include="layouts/layout::page" class='sidebar-large'>
+<body th:class="page-common">
+	<main id="main-content" th:fragment='content'>
+	 <div class="wrap">
+                <!-- topbar-->
+                <div class="my-block">
+                    <h3 class="fs-22 fl hel-med mt-25" th:text="#{page.dashboard}">Dashboard</h3>
+                    <ul class="nav-dashboard fr">
+                        <li>
+                            <a href="#lsRet">
+                                <i class="ico ico-cal"></i>
+                                <span th:text="${totalWeekCalls}"></span> <span th:text="#{page.calls_this_week}">Calls this week</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#lsRet">
+                                <i class="ico ico-users"></i>
+                                <span th:text="${patientList.size()}"></span>&nbsp;<span th:text="#{page.new_patients}">New Patients</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#lsRet">
+                                <i class="ico ico-msgs"></i>
+                                <span class="totalnewmsg" th:text="${totalNewMessages}"></span>&nbsp;<span th:text="#{page.new_messages}">New Messages</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#lsRet">
+                                <i class="ico ico-docs"></i>
+                                <span th:text="${totalDocuments}"></span> <span th:text="#{page.new_documents}">New Documents</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#lsRet">
+                                <i class="ico ico-call"></i>
+                                <span th:text="${totalScheduledCalls}"></span> <span th:text="#{page.scheduled_calls}"></span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>                
+                <section class="row results wfull">
+                <table width="100%" class="data-table" cellpadding="0" cellspacing="0" border="0">
+                       <thead>
+                           <tr>
+                               <th th:text="#{page.table.heading.name}">Name</th>
+                               <th th:text="#{page.table.heading.case}">Case</th>
+                               <th th:text="#{page.table.heading.age}">Age</th>
+                               <th th:text="#{page.table.heading.country}">Country</th>
+                               <th th:text="#{page.table.heading.scheduled_calls}">Scheduled Calls</th>
+                               <th th:text="#{page.table.heading.documents}">Documents</th>
+                               <th th:text="#{page.table.heading.messages}">Messages</th>
+                               <th th:text="#{page.table.heading.status}">Status <a href="#"><i class="ico ico-arr-d"></i></a></th>                               
+                           </tr>
+                       </thead>                     
+                       <tbody>
+                           <tr th:each="p : ${patientList}">
+                               <td th:text="${p.name}"></td>
+                               <td th:text="${p.treatmentName}"></td>
+                               <td th:text="${p.age}"></td>
+                               <td th:text="${p.country}"></td>                               
+                               <td th:if="${p.conferenceDt.toString() == '1970-01-01 00:00:00.0'}">
+                               <a th:href="@{'/home/schedule'(pc=${p.patientcaseId},p=${p.id})}" th:text="#{page.table.data.schedule}" class="various fancybox.iframe" data-fancybox-width="645" data-fancybox-height="331"></a>                               
+                               </td>                               
+                               <td th:if="${p.conferenceDt.toString() != '1970-01-01 00:00:00.0'}">
+                                  <p th:text="${#dates.format(p.conferenceDt,'yyyy-M-dd')}"></p>                               
+                               </td>                               
+                               <td><a th:href="@{'/home/view'(pc=${p.patientcaseId},msg=0)}" th:text="${p.totalFiles}"></a></td>
+                               <td><a th:href="@{'/home/view'(pc=${p.patientcaseId},msg=1)}"><span th:text="${p.totalMessages}"></span><span th:if="${p.newMessages !=null}" th:text="${'('+p.newMessages+' New)'}"></span></a></td>
+                               <td th:text="${p.status}"> <i class="ico ico-error-info fr"></i></td>                               
+                           </tr>
+                       </tbody>                      
+                   </table>        
+                </section>
+            </div>
+	</main>
+</body>
+</html>	

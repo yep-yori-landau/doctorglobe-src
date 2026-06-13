@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	th:include="layouts/layoutresult::page" class='sidebar-large'>	
+<body th:class="page-common">
+	<main id="main-content" th:fragment='content'>	
+		<div class="wrap">
+			<!-- sidebar -->
+			<aside th:replace="fragments/sidebar :: sidebar"></aside>
+			<!-- results -->
+			<section class="results" id="first-container">			
+				<span id="treatmentid" th:text="${treatment}" class="hide"></span>
+				<div th:replace="fragments/result_new :: result"></div>			
+			</section>
+		</div>		
+		<div th:replace="fragments/ajaxresults :: ajaxresults"></div>		
+	</main>
+</body>
+</html>

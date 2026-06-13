@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<body>
+	<!-- SIDEBAR-->
+	<aside id="sidebar" th:fragment="sidebar">
+		<div class="accordion my-block no-pad">
+			<section class="acc-block">
+				<h3 class="acc-title ico ico-hospital">
+					<a th:href="@{/home/index}" th:title="#{page.sidebar.hospital_details}" th:text="#{page.sidebar.hospital_details}" class="accordion-heading">
+						Hospital Details
+					</a>					
+					<i class="ico ico-arr-common"></i>					
+				</h3>
+				<div class="acc-content">
+					<ul>
+						<li><a th:href="@{/home/index}" th:title="#{page.sidebar.hospital_details.general}"
+							class="ico ico-general" th:text="#{page.sidebar.hospital_details.general}">General</a></li>							
+						<li>
+							<a th:href="@{/home/technology}" th:title="#{page.sidebar.hospital_details.technology}" class="ico ico-technology" th:text="#{page.sidebar.hospital_details.technology}">Technology</a>
+						</li>						
+						<li><a th:href="@{/home/facility}" th:title="#{page.sidebar.hospital_details.facility}" class="ico ico-facility" th:text="#{page.sidebar.hospital_details.facility}">Facility</a></li>
+						<li><a th:href="@{/home/hospitality}" th:title="#{page.sidebar.hospital_details.hospitality}"
+							class="ico ico-hospitality" th:text="#{page.sidebar.hospital_details.hospitality}">Hospitality</a></li>
+						<li><a th:href="@{/home/insurance}" th:title="#{page.sidebar.hospital_details.insurance}" class="ico ico-insurance" th:text="#{page.sidebar.hospital_details.insurance}">Insurance</a></li>
+						<li><a th:href="@{/home/rating}" th:title="#{page.sidebar.hospital_details.third_party_rating}"
+							class="ico ico-rating" th:text="#{page.sidebar.hospital_details.third_party_rating}">3rd Party Rating</a></li>
+						<li><a th:href="@{/home/photos}" th:title="#{page.sidebar.hospital_details.photos_and_videos}"
+							class="ico ico-photos" th:text="#{page.sidebar.hospital_details.photos_and_videos}">Photos and videos</a></li>
+					</ul>
+				</div>
+			</section>
+
+			<section class="acc-block">
+				<h3 class="acc-title ico ico-specialities">					
+					<a th:href="@{/home/specialty}" th:title="#{page.sidebar.specialties}" th:text="#{page.sidebar.specialties}" class="accordion-heading">
+						Specialties
+					</a>
+					<i class="ico ico-arr-common"></i>
+				</h3>	
+				<div class="acc-content" th:if="${isHospitalSpecialtyExist}">
+					<ul class="sub-accordion">
+						<li th:each="hospitalSpecialty : ${hospitalSpecialties}" th:if="${hospitalSpecialty.active}">
+						<a th:href="@{'/home/specialty-treatment'(id=${hospitalSpecialty.id},sp=${hospitalSpecialty.specialty})}" th:title="${specialtyMap.get(hospitalSpecialty.specialty)}"
+							th:text="${specialtyMap.get(hospitalSpecialty.specialty)}">Specialty</a>
+							<ul th:each="hospitalSpecialtyTreatments : ${hospitalSpecialtyTreatmentList}" th:if="${hospitalSpecialtyTreatments.key == hospitalSpecialty.id}">
+								<li th:each="hospitalSpecialtyTreatment : ${hospitalSpecialtyTreatments.value}">
+									<a th:href="@{'/home/specialty-treatment-method'(hs=${hospitalSpecialty.id},t=${hospitalSpecialtyTreatment},sp=${hospitalSpecialty.specialty})}" th:text="${treatmentMap.get(hospitalSpecialtyTreatment)}">Treatment</a>
+									 <ul th:if="${hospitalSpecialtyTreatmentMethodList != null}">
+										<li th:each="hospitalSpecialtyTreatmentMethod : ${hospitalSpecialtyTreatmentMethodList}" th:if="${hospitalSpecialtyTreatmentMethod.healthcareproviderSpecialty == hospitalSpecialty.id and hospitalSpecialtyTreatment == hospitalSpecialtyTreatmentMethod.treatment}">
+											<a th:href="@{'/home/specialty-treatment-method-practitioner'(hstm=${hospitalSpecialtyTreatmentMethod.id},hs=${hospitalSpecialty.id},t=${hospitalSpecialtyTreatmentMethod.treatment},m=${hospitalSpecialtyTreatmentMethod.method},sp=${hospitalSpecialty.specialty})}" th:text="${methodMap.get(hospitalSpecialtyTreatmentMethod.method)}">Method</a>
+											<ul th:if="${hospitalSpecialtyTreatmentMethodPractitionerList != null}">
+												<li th:each="hstmp : ${hospitalSpecialtyTreatmentMethodPractitionerList}" th:if="${hstmp.healthcareproviderSpecialtyTreatmentMethod == hospitalSpecialtyTreatmentMethod.id}">
+													<a th:href="@{'/home/specialty-treatment-method-practitioner-detail'(id=${hstmp.id},t=${hospitalSpecialtyTreatmentMethod.treatment},m=${hospitalSpecialtyTreatmentMethod.method},sp=${hospitalSpecialty.specialty})}" th:text="${practitionerMap.get(hstmp.practitioner)}">Practitioner name</a>
+													<ul></ul>													
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</li>						
+					</ul>
+				</div>			
+			</section>
+
+			<section class="acc-block">
+				<h3 class="acc-title ico ico-doctor">		
+					<a th:href="@{/home/practitioner}" th:title="#{page.sidebar.doctors}" th:text="#{page.sidebar.doctors}">Doctors</a>
+					<i class="ico ico-arr-common"></i>
+				</h3>			
+			</section>
+
+		</div>
+	</aside>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	th:include="layouts/layoutcontext::page" class='sidebar-large'>
+<body th:class="page-common">	 
+	<main id="main-content" th:fragment='content'>
+	<header id="main-header">
+            <div class="wrap">
+                <a th:href="@{/}" class="logo"><img th:src="@{/resources/images/logo.png}" height="41" width="123" alt="Doctor Globe"/></a>             
+            </div>
+    </header>
+	<div class="wrap padding-10">
+		<div class='resetbox'>
+			<div class=" my-loginbox my-block my-block-padding">	
+                <!-- topbar-->
+                <div class="my-block">
+                    <h3 class="fs-22 hel-med" th:text="#{user.active.message}">Thank You</h3>
+                    <br/>
+                    <a th:href="${url}" class="goback" th:text="#{user.active.gotohomepage}"></a>
+                </div>
+        	 </div>
+    	</div>
+    </div>	
+	</main>
+</body>
+</html>	

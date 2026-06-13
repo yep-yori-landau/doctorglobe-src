@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<body>
+	<aside class="sidebar" th:fragment="sidebar">
+
+		<!-- module: FilterBy -->
+<!-- 	<div class="module" th:if="${totalhealthcareproviders != 0}"> -->
+		<div class="module" th:if="${totalhealthcareproviders != null}">
+			<h3>
+				<span th:text="#{sidebar.fliterby}">Filter by</span> <a href="#lsRet" th:text="#{sidebar.clear}" th:class="clearfilter">Reset</a>
+			</h3>
+			<label class="fl">
+				<input th:placeholder="${placeholder}" type="text" id ="textsearch" class="textsearch" />
+			</label>
+			<a class="s-btn cursor textsearchfilter"><i class="ico ico-sm-search-bl"></i></a>
+		</div>
+		
+		<!-- module: gender -->
+		<div class="module" th:if="${genderMap}">
+			<h3 th:text="#{sidebar.gender}">Gender</h3><h3></h3>
+			<ul>
+			   <li class="hide">
+					<label th:for="genderall" class="cust-check"> 
+						<input type="checkbox" th:name="genderall" th:id="genderall" class='showall'/> 
+						<span th:class="box">
+							<b class="tick"></b></span> <span th:text="#{sidebar.all}">
+						</span>
+					</label>
+				</li>
+				<li th:each="g : ${genderMap}"><label th:for="${g.key.toLowerCase()}"
+					class="cust-check"> <input type="checkbox" th:name="${g.key.toLowerCase()}"
+						th:id="${g.key.toLowerCase()}" class='filters gender'/> <span th:class="box + ' ' + ${g.key}"><b
+							class="tick"></b></span> <span th:text="#{gender.+${g.key}}" class="fs-1"></span>
+							
+				</label>
+				<!--<span th:text="${'('+g.value+')'}" class="fs-1"></span>-->
+				</li>
+			</ul>
+		</div>
+		
+		<!-- module: time availability -->		
+		<!-- module: Estimated Cost -->
+		<div class="module" th:if="${maxtime gt 0}">
+			<h3><span th:text="#{sidebar.availabilityTime}"></span></h3>						
+			<div class="my-slider">
+                <ul class="row">
+                   <li class="lbl-first">1</li>
+                   <li class="lbl-second timemax hide" th:text="${#numbers.formatDecimal(maxtime,0,0)}"></li>                   
+                   <li class="lbl-third timemaxvalue" th:text="${#numbers.formatDecimal(maxtime,0,0)}">30</li>
+                </ul>
+                <div class="slider-time-duration"></div>                        
+            </div>           
+		</div>
+		<!-- module: gender -->
+		<!-- <div class="module" th:if="${availability}">
+			<h3 th:text="#{sidebar.availability}">Booking Availability</h3>
+			<ul>
+			    <li class="hide">
+					<label th:for="availabilityall" class="cust-check"> 
+						<input type="checkbox" th:name="availabilityall" th:id="availabilityall" class='showall' /> 
+						<span th:class="box">
+							<b class="tick"></b></span> <span th:text="#{sidebar.all}">
+						</span>
+					</label>
+				</li>
+				<li th:each="av : ${availability}"><label th:for="${av.toLowerCase().replace(' ','').replace('-','')}"
+					class="cust-check"> <input type="checkbox" th:name="${av}"
+						th:id="${av.toLowerCase().replace(' ','').replace('-','')}" class='filters availability' /> <span th:class="box + ' ' + ${av}"><b
+							class="tick"></b></span> <span th:text="${av}"></span>
+				</label></li>
+			</ul>
+		</div>-->
+
+		<!-- module: Region -->
+		<div class="module" th:if="${regionsMap}">
+			<h3 th:text="#{sidebar.region}">Region</h3>
+			<ul>
+			    <li class="hide">
+				   	<label th:for="regionall" class="cust-check"> 
+						<input type="checkbox" th:name="regionall" th:id="regionall" class='showall'/> 
+						<span th:class="box">
+							<b class="tick"></b></span> <span th:text="#{sidebar.all}">
+						</span>
+					</label>
+				</li>
+				<li th:each="r : ${regionsMap}"><label th:for="${r.key.toLowerCase().replace(' ','')}"
+					class="cust-check"> <input type="checkbox" th:name="${r.key}"
+						th:id="${r.key.toLowerCase().replace(' ','')}" class='filters region'/> <span th:class="box + ' ' + ${r.key}"><b
+							class="tick"></b></span> <span th:text="${r.key}" class="fs-1"></span>
+				</label>
+					<!--<span th:text="${'('+r.value+')'}" class="fs-1"></span>-->
+				</li>
+			</ul>
+		</div>
+ 
+		<!-- module: Flight Duration -->
+		<div class="module" th:if="${distancemax gt 0}">
+			<h3><span th:text="#{sidebar.flighthoursfrom}"></span><span th:text="' '+${filterModel.cityName}"></span><span th:if="${filterModel.stateCode != null}" th:text="', '+${filterModel.stateCode}"></span></h3>						
+			<div class="my-slider">
+                <ul class="row">
+                   <li class="lbl-first distanceminvalue" th:text="${#numbers.formatDecimal(distancemin,0,'COMMA',0,'POINT')}">0</li>
+                   <li class="lbl-second distancemax hide" th:text="${#numbers.formatDecimal(distancemax,0,'COMMA',0,'POINT')}"></li>                   
+                   <li class="lbl-third distancemaxvalue" th:text="${#numbers.formatDecimal(distancemax,0,'COMMA',0,'POINT')}">30</li>
+                </ul>
+                <div class="slider-distance-miles"></div>                        
+            </div>           
+		</div>
+		
+		<!-- module: Flight Duration -->
+		<div class="module" th:if="${flighthourmax gt 0}">
+			<h3><span th:text="#{sidebar.flighthours}"></span></h3>						
+			<div class="my-slider">
+                <ul class="row">
+                   <li class="lbl-first flighthourminvalue" th:text="${#numbers.formatDecimal(flighthourmin,0,0)+' hr'}">0</li>
+                   <li class="lbl-second flighthourmax" th:text="${#numbers.formatDecimal(flighthourmax,0,0)+' hr'}"></li>                   
+                   <li class="lbl-third flighthourmaxvalue" th:text="${#numbers.formatDecimal(flighthourmax,0,0)+' hr'}">30</li>
+                </ul>
+                <div class="slider-flight-hour"></div>                        
+            </div>           
+		</div>
+		
+		<!-- module: Bonus Cost -->
+		<div class="module" th:if="${forcorporate == true and bonusmax gt 0}">
+			<h3><span th:text="#{sidebar.bonuslevel}"></span><span th:text="' ('+${currency}+')'"></span></h3>						
+			<div class="my-bonus-slider">
+			    <span class="hide rangevalue"></span>
+                <ul class="row">
+                   <li class="lbl-first rangeminvalue" th:text="${'$'+#numbers.formatDecimal(bonusmin,0,'COMMA',0,'POINT')}">1K</li>
+                   <li class="lbl-second rangemax">&nbsp;</li>
+                   <li class="lbl-third rangemaxvalue" th:text="${'$'+#numbers.formatDecimal(bonusmax,0,'COMMA',0,'POINT')}">30</li>                                       
+                </ul>
+                <div class="slider-bonus-filter ui-bonus-filter"></div>                        
+            </div>           
+		</div>	
+		<!-- module: Estimated Cost -->
+<!-- 
+		<div class="module" th:if="${forcorporate == false and estimatedcostmax gt 0}">
+			<h3><span th:text="#{sidebar.estimatedcost}"></span><span th:text="' ('+${currency}+')'"></span></h3>						
+			<div class="my-slider">
+				<span class="hide rangevalue"></span>
+                <ul class="row">
+                   <li class="lbl-first rangeminvalue" th:text="${#numbers.formatDecimal(estimatedcostmin,0,'COMMA',0,'POINT')}">1K</li>
+                   <li class="lbl-second rangemax">&nbsp;</li>
+                   <li class="lbl-third rangemaxvalue" th:text="${#numbers.formatDecimal(estimatedcostmax,0,'COMMA',0,'POINT')}">30</li>                   
+                </ul>
+                <div class="slider-bonus-filter ui-bonus-filter"></div>                        
+            </div>           
+		</div>
+-->	
+		<!-- module: Region -->
+		<div class="module" th:if="${volumeMap}">
+			<h3 th:text="#{sidebar.volume}">Volume</h3>
+			<ul>			    
+				<li th:each="v : ${volumeMap}"><label th:for="${v.key.toLowerCase().replace(' ','')}"
+					class="cust-check"> <input type="checkbox" th:name="${v.key}"
+						th:id="${v.key.toLowerCase().replace(' ','')}" class='filters volume' th:checked="${v.value}" /> <span th:class="box + ' ' + ${v.key}"><b
+							class="tick"></b></span> <span th:text="${v.key}" class="fs-1"></span>
+				</label>
+					<span th:if="${filterModel.volumeCountMap != null}" 					
+						  th:text="${'('+filterModel.volumeCountMap.get(v.key)+')'}" th:id="${v.key.toLowerCase().replace(' ','')+'Value'}" class="fs-1">
+					</span>
+				</li>
+			</ul>
+		</div>
+
+		<!-- module: Rating -->
+		<!--  <div class="module" th:if="${rating}">
+			<h3 th:text="#{sidebar.rating}">Rating</h3>			
+			<div class="rateit" id="userrating"></div>
+		</div>-->
+
+		<!-- module: Amenities -->
+		<!--<div class="module" th:if="${amenityMap}">
+			<h3 th:text="#{sidebar.amenities}">Amenities</h3>
+			<ul>
+			    <li class="hide">
+				   	<label th:for="amenityall" class="cust-check"> 
+						<input type="checkbox" th:name="amenityall" th:id="amenityall" class='showall' /> 
+						<span th:class="box">
+							<b class="tick"></b></span> <span th:text="#{sidebar.all}">
+						</span>
+					</label>
+				</li>
+				<li th:each="a : ${amenityMap}">
+				  <label th:for="${a.key.toLowerCase().replace(' ','')}" class="cust-check"> 
+				    <input type="checkbox" th:name="${a.key.toLowerCase().replace(' ','')}" th:id="${a.key.toLowerCase().replace(' ','')}" class='filters amenity'/> 
+				      <span class="box"><b class="tick"></b></span> 
+				      <span th:text="${a.key}" class="fs-1">International Accreditation</span>			      
+				      
+				  </label>
+				  <span th:text="${'('+a.value+')'}" class="fs-1">International Accreditation</span>
+			   </li>
+			</ul>
+		</div>-->
+		<!-- module: Equipments -->
+		<!--<div class="module hide" th:if="${equipments}">
+			<h3 th:text="#{sidebar.equipments}">Equipments</h3>
+			<ul class="sidbarfont">
+			    <li class="hide">
+				   	<label th:for="equipmentall" class="cust-check"> 
+						<input type="checkbox" th:name="equipmentyall" th:id="equipmentall" class='showall' /> 
+						<span th:class="box">
+							<b class="tick"></b></span> <span th:text="#{sidebar.all}">
+						</span>
+					</label>
+				</li>
+				<li th:each="a : ${equipments}">
+				  <label th:for="${a.toLowerCase().replace(' ','')}" class="cust-check"> 
+				    <input type="checkbox" th:name="${a.toLowerCase().replace(' ','')}" th:id="${a.toLowerCase().replace(' ','')}" class='filters equipment'/> 
+				      <span class="box"><b class="tick"></b></span> 
+				      <span th:text="${a}"></span>
+				  </label>
+			    </li>
+			</ul>
+		</div>-->
+		<!-- module: us affiliation -->
+		<div class="module" th:if="${usaffiliationMap}">
+			<h3 th:text="#{sidebar.usaffiliation}">US Affiliation</h3>
+			<ul class="sidbarfont">
+				<li class="hide">
+				   	<label th:for="usaffilicationall" class="cust-check"> 
+						<input type="checkbox" th:name="usaffilicationall" th:id="usaffilicationall" class='showall'/> 
+						<span th:class="box">
+							<b class="tick"></b></span> <span th:text="#{sidebar.all}">
+						</span>
+					</label>
+				</li>
+				<li th:each="ua : ${usaffiliationMap}">
+				  <label th:for="${ua.key.toLowerCase().replace(' ','')}" class="cust-check"> 
+				    <input type="checkbox" th:name="${ua.key.toLowerCase().replace(' ','')}" th:id="${ua.key.toLowerCase().replace(' ','')}" class='filters usaffilication'/> 
+				      <span class="box"><b class="tick"></b></span> 
+				      <span th:text="${ua.key}">US Trained</span>
+				      
+				  </label>
+				  <!--<span th:text="${'('+ua.value+')'}" class="fs-1">US Trained</span>-->
+			    </li>
+			</ul>
+		</div>
+		
+		<!-- module: language -->
+		<div class="module" th:if="${languageMap}">
+			<h3 th:text="#{sidebar.language}">Language</h3>
+			<ul>
+			    <li class="hide">
+				   	<label th:for="languageall" class="cust-check"> 
+						<input type="checkbox" th:name="languageall" th:id="languageall" class='showall'/> 
+						<span th:class="box">
+							<b class="tick"></b></span> <span th:text="#{sidebar.all}">
+						</span>
+					</label>
+				</li>
+				<li th:each="l : ${languageMap}">
+				  <label th:for="${l.replace(' ','')}" class="cust-check"> 
+				    <input type="checkbox" th:name="${l.key.replace(' ','')}" th:id="${l.key.replace(' ','')}" class='filters language'/> 
+				      <span class="box"><b class="tick"></b></span> 
+				      <span th:text="#{language.+${l.key.toLowerCase()}}" class="fs-1">English</span>				      
+				  </label>
+				  <!--<span th:text="${'('+l.value+')'}" class="fs-1"></span>-->
+			    </li>
+			</ul>
+		</div>
+	</aside>
+</body>
+</html>

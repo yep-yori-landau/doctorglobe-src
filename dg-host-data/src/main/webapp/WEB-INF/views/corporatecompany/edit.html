@@ -1,0 +1,255 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" th:include="layout::page"
+	class='sidebar-large'>
+<div class="container" th:fragment="content">
+	<div class="page-title">
+		<i class="icon-custom-left"></i>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="panel panel-default">
+				<div class="panel-heading bg-red">
+					<h3 class="panel-title">
+						<strong th:text="#{page.heading.corporate-company}">Corporate-company</strong>
+					</h3>
+				</div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-md-12 col-sm-12 col-xs-12">
+							<form action="#" th:action="@{/corporatecompany/save}"
+								th:object="${corporatecompany}" method="post"
+								id="corporate-company" class="form-horizontal">
+								<div class="form-group">
+									<ul>
+										<li th:each="e : ${#fields.detailedErrors()}"
+											th:class="${e.global}? globalerr : fielderr"><span
+											class='text-danger' th:text="${e.global}?'*':${e.fieldName}">The
+												field name </span> | <span class='text-danger'
+											th:text="${e.message}">The error message</span></li>
+									</ul>
+									<div th:errors="${corporatecompany}"></div>
+								</div>
+								<input type="hidden" class="form-control" th:field="*{id}"
+									th:value="*{id}" />
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'
+										th:text="#{corporate-company.name}">Name <span
+										class='asterisk'>*</span></label>
+									<div class='col-sm-9'>
+										<input type="text" required='' class='form-control'
+											th:field="*{name}" th:value="*{name}" />
+									</div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'
+										th:text="#{corporate-company.address_1}">Address_1<span
+										class='asterisk'>*</span>
+									</label>
+									<div class='col-sm-9'>
+										<input type="text" required='' class='form-control'
+											th:field="*{address_1}" th:value="*{address_1}" />
+									</div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'
+										th:text="#{corporate-company.address_2}">Address_2<span
+										class='asterisk'>*</span>
+									</label>
+									<div class='col-sm-9'>
+										<input type="text" class='form-control'
+											th:field="*{address_2}" th:value="*{address_2}" />
+									</div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'
+										th:text="#{corporate-company.zip_code}">Zip_code<span
+										class='asterisk'>*</span>
+									</label>
+									<div class='col-sm-9'>
+										<input type="text" required='' class='form-control'
+											th:field="*{zipCode}" th:value="*{zipCode}" />
+									</div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'
+										th:text="#{corporate-company.website}">Website<span
+										class='asterisk'>*</span>
+									</label>
+									<div class='col-sm-9'>
+										<input type="text" class='form-control'
+											th:field="*{website}" th:value="*{website}" />
+									</div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'
+										th:text="#{corporate-company.phone_1}">Phone_1<span
+										class='asterisk'>*</span>
+									</label>
+									<div class='col-sm-9'>
+										<input type="text" required='' class='form-control'
+											th:field="*{phone_1}" th:value="*{phone_1}" />
+									</div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'
+										th:text="#{corporate-company.phone_2}">Phone_2<span
+										class='asterisk'>*</span>
+									</label>
+									<div class='col-sm-9'>
+										<input type="text" class='form-control'
+											th:field="*{phone_2}" th:value="*{phone_2}" />
+									</div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'
+										th:text="#{corporate-company.email}">Email<span
+										class='asterisk'>*</span>
+									</label>
+									<div class='col-sm-9'>
+										<input type="text" required='' class='form-control'
+											th:field="*{email}" th:value="*{email}" />
+									</div>
+								</div>
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'
+										th:text="#{corporate-company.description}">Description<span
+										class='asterisk'>*</span>
+									</label>
+									<div class='col-sm-9'>
+										<input type="text" required='' class='form-control'
+											th:field="*{description}" th:value="*{description}" />
+									</div>
+								</div>								
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'
+										th:text="#{corporate-company.whitelabel_url}">Whitelabel
+										Url<span class='asterisk'>*</span>
+									</label>
+									<div class='col-sm-9'>
+										<input type="text" class='form-control' required='required'
+											th:field="*{whitelabelUrl}" th:value="*{whitelabelUrl}" />
+									</div>
+								</div>
+								<div class='form-group'>
+										<label class='col-sm-3 control-label'>minimum_amount_spread<span class='asterisk'>*</span>
+										</label>
+										<div class='col-sm-9'>
+											<input type="text" required='' class='form-control'
+												th:field="*{minimumAmountSpread}" th:value="*{minimumAmountSpread}" />
+										</div>
+								</div>
+								<div class='form-group'>
+										<label class='col-sm-3 control-label'>minimum_percentage_spread<span class='asterisk'>*</span>
+										</label>
+										<div class='col-sm-9'>
+											<input type="text" required='' class='form-control'
+												th:field="*{minimumPercentageSpread}" th:value="*{minimumPercentageSpread}" />
+										</div>
+								</div>
+									    <div class='form-group'>
+											<label class='col-sm-3 control-label'>currency<span class='asterisk'>*</span>
+											</label>
+											<div class='col-sm-9'>												
+												<select th:field="*{currency}" class="form-control">
+                                                	<option th:each = "currency : ${currencyList}" th:value="${currency}" th:text="${currency}"></option>
+                                                </select>                                          
+											</div>
+									    </div>    
+									    <div class='form-group'>
+											<label class='col-sm-3 control-label'>DG Commission<span class='asterisk'>*</span>
+											</label>
+											<div class='col-sm-9'>
+												<input type="text" required='' class='form-control'
+													th:field="*{dgCommission}" th:value="*{dgCommission}" />
+											</div>
+									    </div>
+									    <div class='form-group'>
+											<label class='col-sm-3 control-label'>Worker Incentive<span class='asterisk'>*</span>
+											</label>
+											<div class='col-sm-9'>
+												<input type="text" required='' class='form-control'
+													th:field="*{workerIncentive}" th:value="*{workerIncentive}" />
+											</div>
+									    </div>		  
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'
+										th:text="#{corporate-company.city}">City<span
+										class='asterisk'>*</span>
+									</label>
+									<div class='col-sm-9'>
+										<select th:field="*{city}" class="form-control">
+											<option th:each="var : ${cityList}" th:value="${var.id}"
+												th:text="${var.name}"></option>
+										</select>
+									</div>
+								</div>
+
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'
+										th:text="#{corporate-company.association}">association<span
+										class='asterisk'>*</span>
+									</label>
+									<div class='col-sm-9'>
+										<select th:field="*{association}" class="form-control">
+											<option th:each="var : ${associationList}" th:value="${var.id}"
+												th:text="${var.name}"></option>
+										</select>
+									</div>
+								</div>
+								
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'
+										th:text="#{corporate-company.theme}">Theme									
+									</label>
+									<div class='col-sm-9'>
+										<input type="text" class='form-control' required='required'
+											th:field="*{theme}" th:value="*{theme}" />
+									</div>
+								</div>
+								
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'
+										th:text="#{corporate-company.ein}">EIN									
+									</label>
+									<div class='col-sm-9'>
+										<input type="text" class='form-control' 
+											th:field="*{ein}" th:value="*{ein}" />
+									</div>
+								</div>
+								
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'
+										th:text="#{corporate-company.first_name}">First Name									
+									</label>
+									<div class='col-sm-9'>
+										<input type="text" class='form-control' 
+											th:field="*{firstName}" th:value="*{firstName}" />
+									</div>
+								</div>
+								
+								<div class='form-group'>
+									<label class='col-sm-3 control-label'
+										th:text="#{corporate-company.last_name}">Last Name									
+									</label>
+									<div class='col-sm-9'>
+										<input type="text" class='form-control' 
+											th:field="*{lastName}" th:value="*{lastName}" />
+									</div>
+								</div>
+
+								<div class="col-sm-9 col-sm-offset-3">
+									<div class="pull-right">
+										<button class="btn btn-primary m-b-10"
+											onclick="javascript:$('#corporate-company').parsley('validate');"
+											th:text="#{page.button.submit}">Submit</button>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</html>

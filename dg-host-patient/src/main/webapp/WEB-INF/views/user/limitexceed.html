@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	th:include="layouts/layoutcontext::page" class='sidebar-large'>
+<body>
+<div th:fragment='content' >
+	<div class="loginbox o-sm js-conference-overlay">
+        <div class="overlay-header bg">            
+            <h3 th:text="#{page.conference.limitexceed.heading.text}"></h3>
+            <button class="ico ico-close btn btn-blue fancyclose"></button>
+        </div>
+        <div class="overlay-content height241">            
+            <p th:text="#{page.conference.limitexceed.message}"></p>              
+        </div>           
+      </div>
+   </div>
+  </body>  
+</html>

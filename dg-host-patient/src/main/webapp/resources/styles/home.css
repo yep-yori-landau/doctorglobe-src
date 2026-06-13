@@ -1,0 +1,36 @@
+.page-home { background: url(../images/bg-body.jpg) 50% 0 no-repeat; }
+.page-home #main-header { background-color: #fff; border: none; min-height: 58px; }
+.page-home #main-nav a { border-bottom: 1px solid transparent;
+color: #B9C4CA;
+display: inline-block;
+padding-bottom: 12px;
+text-transform: uppercase; }
+.page-home #main-nav a:hover, .page-home #main-nav a.active { color: #35414A; }
+
+.hero-banner { min-height: 536px; position: relative; }
+.hero-banner .hero-desc { padding-top: 145px; width: 55%; }
+.hero-banner .hero-img { position: absolute; right: -125px; top: 105px; }
+.hero-banner .vlg-title { font-family: "HelveticNeu Medium"; color: white; }
+.hero-banner .vlg-title sup { font-size: 0.467em; }
+.hero-banner .search-block { margin-top: 80px; width: 100%; clear: both; }
+.hero-banner .search-block:before, .hero-banner .search-block:after { clear: both; content: "\0020"; display: block; height: 0; overflow: hidden; visibility: hidden; }
+.hero-banner .search-block > input, .hero-banner .search-block > button { float: left; }
+.hero-banner .search-block > input[type=search] { background-color: white; border: 1px solid #aeb5bb; border-right: none; border-radius: 5px 0 0 5px; height: 40px; width: 73%; }
+.hero-banner .search-block > input[type=search]:hover, .hero-banner .search-block > input[type=search]:focus { border-right: 1px solid #8a9095; border-color: #8a9095; }
+.hero-banner .search-block > .btn-green { border: 1px solid #64c0c9; border-radius: 0 5px 5px 0; color: white; cursor: pointer; height: 40px; width: 26.5%; }
+
+.home-content { padding-top: 35px; }
+.home-content .lg-title { margin-bottom: 60px; }
+.home-content .work-block { padding: 0 7%; }
+.home-content .work-block .ico-sm-play { color: #3c4548; display: block; font-size: 1.538em; margin-top: 50px; }
+.home-content .work-block .ico-sm-play:before { margin-right: 10px; }
+.home-content .work-block .ico-sm-play:hover { color: #99b04a; }
+.home-content .work-block .md-title + p { font-size: 1.231em; }
+.home-content .work-block p { font-size: 1.231em; }
+.home-content .video-block { position: relative; }
+.home-content .video-block .ico { left: 185px; position: absolute; top: 95px; z-index: 999; }
+.home-content .bottom-block { margin-top: 160px; margin-bottom: 80px;}
+.home-content .bottom-block h3 { margin-top: 5px; }
+.home-content .bottom-block p { font-size: 13px; line-height: 1.3em; }
+.pad{padding-bottom:0px !important; }
+.page-home #main-header .bg-color{ background-color:#54c5d0;}

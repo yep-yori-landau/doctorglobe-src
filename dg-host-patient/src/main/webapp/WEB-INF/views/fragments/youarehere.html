@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<body>
+	<div class="my-block" th:fragment="youarehere">
+		<ul class="my-step">
+			<li class="active" th:text="#{youarehere.findfacility}">Find Facility</li>
+			<li th:class="${{practitionerClass}}" th:text="#{youarehere.selectdoctor}">Select Doctor</li>
+			<li th:text="#{youarehere.interviewdoctor}">Interview Doctor</li>
+			<li th:text="#{youarehere.reservecare}">Reserve Care</li>
+			<li th:text="#{youarehere.linktravel}">Link Travel</li>
+		</ul>
+	</div>
+</body>
+</html>

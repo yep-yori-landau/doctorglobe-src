@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:include="layouts/layout::page">
+<body>
+	<main id="main-content" th:fragment='content'>	
+	  <div class="wrap">
+			<aside th:replace="fragments/sidebar :: sidebar"></aside>
+			<div id="container">
+				  <div class="my-block">
+                        <h3 class="hel-med fs-16 title-in">
+                        	<span th:text="#{page.hospital.third_party_rating}">3rd party rating</span>                       
+                        </h3>
+                         <form th:action="@{/home/rating}" th:object="${ratingForm}" method="post" class="w-75" name="ratingform" id="ratingform">
+                            <h3 class="hel-med fs-16" th:text="#{page.hospital.third_party_rating.general_info}">General Info</h3>
+                            <ul class="my-form mt-20">                            	
+                                <li th:each="hospitalRatingsModel,rowStat : ${ratingForm.hospitalRatingsModel}">
+                                	<input type="hidden" th:field="*{hospitalRatingsModel[__${rowStat.index}__].id}"/>
+                                	<input type="hidden" th:field="*{hospitalRatingsModel[__${rowStat.index}__].ratingcompany}"/>
+                                    <input type="hidden" th:field="*{hospitalRatingsModel[__${rowStat.index}__].healthcareprovider}"/>
+                                    
+                                    <label for="score" th:text="${ratingcompaniesMap.get(hospitalRatingsModel.ratingcompany)}">hcahps score</label>
+                                    <input type="text" th:field="*{hospitalRatingsModel[__${rowStat.index}__].score}"/>
+                                    <span th:if="${#fields.hasErrors('hospitalRatingsModel[__${rowStat.index}__].score')}" th:errors="*{hospitalRatingsModel[__${rowStat.index}__].score}" class="text-danger ml-145"></span>
+                                </li>                                
+                            </ul>          
+                            <h3 class="hel-med fs-16 mt-10" th:text="#{page.hospital.third_party_rating.outcomes}">Outcomes:</h3>
+                            <ul class="my-form mt-20">
+                            	<li>
+                            		<input type="hidden" th:field="*{healthcareprovider}"/>
+                                    <label for="readmissionRate" th:text="#{page.hospital.third_party_rating.readmission_rates}">Mortality rates</label>
+                                    <input type="text" th:field="*{readmissionRate}" id="readmissionRate" name="readmissionRate"/>
+                                    <span th:if="${#fields.hasErrors('readmissionRate')}" th:errors="*{readmissionRate}" class="text-danger ml-145"></span> 
+                                </li>                            	                                
+                                <li>
+                                    <label for="mortalityRate" th:text="#{page.hospital.third_party_rating.mortality_rates}">Mortality rates</label>
+                                    <input type="text" th:field="*{mortalityRate}" id="mortalityRate" name="mortalityRate"/> 
+                                    <span th:if="${#fields.hasErrors('mortalityRate')}" th:errors="*{mortalityRate}" class="text-danger ml-145"></span>
+                                </li>
+                                <li>
+                                    <label for="infectionRate" th:text="#{page.hospital.third_party_rating.infection_rates}">Infection rates</label>
+                                    <input type="text" th:field="*{infectionRate}" id="infectionRate" name="infectionRate"/> 
+                                    <span th:if="${#fields.hasErrors('infectionRate')}" th:errors="*{infectionRate}" class="text-danger ml-145"></span>
+                                </li>
+                                <li class="hide">
+                                    <label for="medicallawsuit" th:text="#{page.hospital.third_party_rating.medical_lawsuits}">Hsopital involvement in medical lawsuits.</label>
+                                    <select th:field="*{medicalLawsuit}" class="my-select w-403" id="medicallawsuit">
+										<option th:value="1" th:text="Yes"></option>
+										<option th:value="0" th:text="No"></option>										
+									</select>                                   
+                                </li>
+                            </ul>                
+                            <div class="tr my-btn-block">
+                                <button class="btn btn-sm btn-dk-blue btn-cancel" type="button" th:text="#{page.hospital.third_party_rating.btn_cancel}">Cancel</button>
+                                <button class="btn btn-sm btn-blue" type="submit" th:text="#{page.hospital.third_party_rating.btn_save_changes}">Save Changes</button>
+                            </div>
+                        </form>
+                    </div>
+                    <script type="text/javascript" th:inline='javascript'>
+					$(document).ready(function() {
+						$("#ratingform").validate({
+							rules:{
+								readmissionRate: {
+									number : true
+								},				
+								mortalityRate: {
+									number : true
+								},				
+								infectionRate: {
+									number : true
+								},				
+							},
+							messages:{
+								readmissionRate : "Please enter a valid number",							
+								mortalityRate : "Please enter a valid number",
+								infectionRate : "Please enter a valid number",
+							},
+							
+							submitHandler: function(form){
+								form.submit();
+							}
+						});
+					});
+				</script>
+			</div>
+	  </div>
+	</main>	
+</body>
+</html>		

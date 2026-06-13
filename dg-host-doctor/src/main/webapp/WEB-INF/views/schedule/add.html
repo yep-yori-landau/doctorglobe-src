@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	th:include="layouts/layoutcontext::page" class='sidebar-large'>
+<body>
+<div th:fragment='content' >
+	<div class="overlay o-sm js-conference-overlay height550">
+        <div class="overlay-header bg">
+            <h3 th:if="${schedule == 1}" th:text="#{page.schedule.heading.schedule_conference_call}">Schedule Conference Call</h3>
+            <h3 th:if="${schedule == 0}" th:text="#{page.schedule.heading.reschedule_conference_call}">Reschedule Conference Call</h3>
+            <button class="ico ico-close btn btn-blue fancyclose"></button>
+        </div>
+        <div class="overlay-content" th:if="${!procedureFound}">
+          <h3 th:if="${message != null}" th:text="#{page.schedule.success}"></h3>
+          <h3>
+          	<span th:if="${message == null and schedule == 1}" th:text="#{page.schedule.subheading}"></span>
+          	<span th:if="${message == null and schedule == 0}" th:text="#{page.reschedule.subheading}"></span>
+          	<span th:text="${patientname}"></span>
+          </h3>
+          <form class="form-block" name="patientConferenceForm" method='post' th:object="${patientConferenceForm}" th:action="@{/home/schedule/add}">
+            <ul class="row single-col">
+              <li>              
+                <input type ="hidden" name="id" id="id" th:field="*{id}"/>
+                <input type ="hidden" name="receiver" id="receiver" th:field="*{receiver}"/>
+                <input type ="hidden" name="status" id="status" th:field="*{status}"/>
+                <input type ="hidden" name="subject" id="subject" th:field="*{subject}"/>
+                <input type ="hidden" name="healthcareproviderSpecialtyTreatmentMethodPractitioner" id="HealthcareproviderSpecialtyTreatmentMethodPractitioner" th:field="*{healthcareproviderSpecialtyTreatmentMethodPractitioner}"/>
+                <input type="hidden" name="patientcase" id="patientcase" th:field="*{patientcase}"/> 
+                <input type="hidden" name="timezone" id="timezone" th:field="*{timezone}"/>               
+                <input type="text" name="conferenceDt" id="conferenceDt" th:field="*{conferenceDt}" class="datepicker readonly"/>                                
+              </li>
+              <li>             	  
+	             <label for="timezone" th:text="#{page.schedule.time}">Time:</label>&nbsp;<span th:text="${practitionerTimeZone}">(Your time zone):</span><span>:&nbsp;</span>
+	             <input type="text" name="time" id="time" required="required" th:field="*{time}" class="timepicker readonly time-width-100"/>
+	             <div class="fr width51">
+	             	<span th:text="#{page.conference.patient_timezone}">Patient time zone:</span>&nbsp;<span th:text="${patientTimeZone}"></span>
+	             </div>	                            
+              </li>
+              <li>
+                <label for="msg" th:text="#{page.schedule.message}">Message:</label>
+                <textarea rows="3" name="body" id="body" required="required" th:field="*{body}"></textarea>
+              </li>
+            </ul>
+            <p class="tr">
+              <button type="submit" class="btn btn-green btn-sm" th:text="#{page.schedule.btn.send_request}">Send Request</button>
+            </p>
+          </form>          
+        </div>
+        <div class="overlay-content" th:if="${procedureFound}">
+        	<h3 th:text="#{page.procedurefound.message}"></h3>
+        </div>
+         <script type="text/javascript" th:inline='javascript'>
+		$(document).ready(function() {
+			/*[+
+			var msg = [[${message}]];
+			var timezone = [[${timezone}]];
+			+]*/			
+			if(msg == 1){
+				parent.jQuery.fancybox.close();											
+			}
+			if(timezone != null){
+				$('#timezone').val(timezone);
+			}
+		});
+   </script>		    
+      </div>
+   </div>
+  </body>  
+</html>

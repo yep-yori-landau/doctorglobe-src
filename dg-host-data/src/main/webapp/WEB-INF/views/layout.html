@@ -1,0 +1,62 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:fragment="page">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>DoctorGlobe</title>
+
+	<link th:href="@{/resources/assets/bootstrap/bootstrap.min.css}" rel="stylesheet" />
+    <link th:href="@{/resources/assets/css/pixel-admin.min.css}" rel="stylesheet" />
+    <link th:href="@{/resources/assets/css/rtl.min.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/resources/assets/css/themes.min.css}" rel="stylesheet" />   
+    <script th:src="@{/webjars/jquery/2.1.1/jquery.min.js}"></script>
+    <script th:src="@{/webjars/jquery-validation/1.11.1/jquery.validate.js}"></script>
+    <link th:href="@{/resources/style/custom.css}" rel="stylesheet">
+    <link th:href="@{/resources/assets/css/font-awesome.min.css}" rel="stylesheet">
+    
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+   
+</head>
+<body class="theme-default main-menu-animated">    
+    <div id="main-wrapper">     
+    	<div th:include="fragments/header :: header" id="main-navbar" class="navbar navbar-inverse" role="navigation"></div>       
+       	<div th:include="fragments/sidebar :: sidebar" id="main-menu" role="navigation"></div>
+        <div th:include="this::content" id="content-wrapper"></div>
+        <div id="main-menu-bg"></div>
+    </div>
+    <script type="text/javascript" th:src="@{/resources/assets/js/pixel-admin.min.js}"></script>
+    <script type="text/javascript" th:src="@{/resources/assets/bootstrap/bootstrap.min.js}"></script>    
+	
+    <script type="text/javascript">
+            // When the document is ready
+            $(document).ready(function () {
+                
+                $('.date-picker').datepicker({
+                    format: "yyyy/mm/dd"
+                });             
+                
+ 				$('.dob').datepicker({
+ 						format: "yyyy/mm/dd",
+ 						changeMonth: true,
+ 				        changeYear: true,
+ 				        numberOfMonths: 1,
+ 				        showButtonPanel: true,
+ 				        minDate: "-80Y",
+ 				        maxDate: "-21Y",
+ 				        yearRange: '-80:-21',
+ 				 });
+ 				
+ 				window.PixelAdmin.start();
+            });
+    </script>
+</body>
+</html>	
+	
+	

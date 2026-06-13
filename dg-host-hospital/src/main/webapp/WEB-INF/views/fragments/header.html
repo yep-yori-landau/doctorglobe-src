@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<body>
+	 <header id="main-header" th:fragment="header">
+	 		<div class="wrap">
+                <a th:href="@{/}" class="logo"><img th:src="@{/resources/images/logo.png}" height="41" width="186" th:alt="#{page.title}"/></a>                
+                <nav id="main-nav">
+                    <ul>
+                    	<li sec:authorize="hasRole('ROLE_USER')"><a th:href="@{/home/index}" th:title="#{page.header.home}" th:text="#{page.header.home}">Home</a></li>
+                    	<li sec:authorize="hasRole('ROLE_USER')"><a th:href="@{/home/profile}" th:title="#{page.header.myprofile}" th:text="#{page.header.myprofile}">My Profile</a></li>                        
+                        <li sec:authorize="hasRole('ROLE_USER')"><a th:href="@{/logout}" th:title="#{page.header.signout}" th:text="#{page.header.signout}">Sign Out</a></li>                        
+                        <li><a href="#lsRet" th:title="#{page.header.help}" th:text="#{page.header.help}">Help</a></li>
+                        <li sec:authorize="hasRole('ROLE_USER')">
+                            <div class="user-menu">
+                                <span class="user-info">
+                                <a href="#lsRet">
+                                        <img th:src="@{/resources/images/demo_user.gif}" height="24" width="24"/>
+                                        <span th:text="${hospitalName}"></span>
+                                        <i class="ico ico-arr-d"></i>                                        
+                                    </a>                                    
+                                    <ul class="user-data">
+                                        <li th:each="hospitalList : ${userHospitalList}">
+                                        	<a th:href="@{'/home/healthcareprovider'(id=${hospitalList.id})}" th:text="${hospitalList.name}">Cedar Sinai</a>
+                                        </li>                                        
+                                    </ul>                                                                                        
+                                </span>                                                                
+                            </div>
+                        </li>
+                        <li sec:authorize="hasRole('ROLE_USER')"> 
+                        	<a href="#lsRet" class="ico ico-sm-mail mails" mails="0"></a>
+                        </li>
+                    </ul>
+                </nav>                	
+            </div>
+	 </header>
+</body>
+</html>

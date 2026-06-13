@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:include="layouts/layout::page">
+<body>
+	<main id="main-content" th:fragment='content'>	
+	  <div class="wrap">
+			<aside th:replace="fragments/sidebar :: sidebar"></aside>
+			<div id="container">
+				<div class="my-block">
+					<h3 class="hel-med fs-16 title-in">
+						<span th:text="#{page.hospital.specialties}">Specialties</span>	                  
+					</h3>
+					<p th:text="#{page.hospital.specialties.please_select}"></p>
+					 <form th:action="@{/home/specialty}" th:object="${hospitalSpecialtyForm}" method="post">
+					 		<input type="hidden" th:field="*{healthcareprovider}"/>
+                            <ul class="my-form mt-20">
+                                <li>
+                                    <ul class="row my-scroll-block">
+                                        <li class="fl w-40 pr-20">
+                                            <h3 class="hel-med fs-16" th:text="#{page.hospital.specialties.suggested_specialty}">Suggested Specialty:</h3>
+                                            <div class="my-scroll">
+                                                <select th:field="*{specialtyModel}" multiple="multiple" class="mylistbox listbox">
+											      <option th:each="specialty : ${specialtyList}" th:value="${{specialty.id}}" th:text="${specialty.name}">Alderaan</option>											     
+											    </select>
+                                            </div>
+                                        </li>
+                                        <li class="fl tc w-20">
+                                            <div class="my-btn-block top single w-20">
+                                                <button class="btn btn-fixed btn-gray addbtn" type="button" th:text="#{page.hospital.specialty.btn_add}">Add &gt;</button>
+                                                <button class="btn btn-fixed btn-gray removebtn" type="button" th:text="#{page.hospital.specialty.btn_remove}">&lt; Remove</button>
+                                            </div>
+                                            <div class="my-btn-block bottom single w-20">
+                                                <button class="btn btn-fixed btn-gray addallbtn" type="button" th:text="#{page.hospital.specialty.btn_add_all}">Add all</button>
+                                                <button class="btn btn-fixed btn-gray removeallbtn" type="button" th:text="#{page.hospital.specialty.btn_remove_all}">Remove all</button>
+                                            </div>
+                                        </li>
+                                        <li class="fr w-40 pl-20">
+                                            <h3 class="hel-med fs-16" th:text="#{page.hospital.specialty.available_in_hospital}">Available in Hospital:</h3>
+                                            <div class="my-scroll">
+                                                <select th:field="*{hospitalSpecialty}" multiple="multiple" class="mylistbox1 listbox">
+                                                	<option th:each="hospitalSpecialty : ${hospitalSpecialtyList}" th:value="${{hospitalSpecialty.id}}" th:text="${hospitalSpecialty.name}">Alderaan</option>                                                												      											     
+											    </select>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <div class="tc my-btn-block">
+                                <button class="btn btn-sm btn-dk-blue btn-cancel" type="reset" th:text="#{page.hospital.specialty.btn_cancel}">Cancel</button>
+                                <button class="btn btn-sm btn-blue btn-list-submit" type="submit" th:text="#{page.hospital.specialty.btn_save_changes}">Save Changes</button>
+                            </div>
+                        </form>
+				</div>	
+			</div>
+	</div>
+	</main>
+</body>
+</html>			

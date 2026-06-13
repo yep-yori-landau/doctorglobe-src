@@ -1,0 +1,179 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" th:include="layout::page"
+	class='sidebar-large'>
+<div class="container" th:fragment="content">
+	<div class="page-title">
+		<i class="icon-custom-left"></i>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="panel panel-default">
+				<div class="panel-heading bg-red">
+					<h3 class="panel-title">
+						<strong th:text="#{page.heading.user}">User</strong>
+					</h3>
+				</div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-md-12 col-sm-12 col-xs-12">
+							<form action="#" th:action="@{/user/save}" th:object="${user}"
+								method="post" id="userform" class="form-horizontal">
+								<div class="form-group">
+									<ul>
+										<li th:each="e : ${#fields.detailedErrors()}"
+											th:class="${e.global}? globalerr : fielderr"><span
+											class='text-danger' th:text="${e.global}?'*':${e.fieldName}">The
+												field name </span> | <span class='text-danger'
+											th:text="${e.message}">The error message</span></li>
+									</ul>
+									<div th:errors="${user}"></div>
+								</div>	
+									<input type="hidden" class="form-control" th:field="*{id}" th:value="*{id}" />
+									<div class='form-group'>
+										<label class='col-sm-3 control-label' th:text="#{user.first_name}">First_name<span
+											class='asterisk'>*</span>
+										</label>
+										<div class='col-sm-9'>
+											<input type="text" class='form-control'
+												th:field="*{firstName}" th:value="*{firstName}" />
+										</div>
+									</div>
+									<div class='form-group'>
+										<label class='col-sm-3 control-label' th:text="#{user.last_name}">Last_name<span
+											class='asterisk'>*</span>
+										</label>
+										<div class='col-sm-9'>
+											<input type="text" class='form-control'
+												th:field="*{lastName}" th:value="*{lastName}" />
+										</div>
+									</div>
+									<div class='form-group'>
+										<label class='col-sm-3 control-label' th:text="#{user.mobile}">Mobile<span
+											class='asterisk'>*</span>
+										</label>
+										<div class='col-sm-9'>
+											<input type="text" class='form-control'
+												th:field="*{mobile}" th:value="*{mobile}" />
+										</div>
+									</div>
+									<div class='form-group'>
+										<label class='col-sm-3 control-label' th:text="#{user.email}">Email<span
+											class='asterisk'>*</span>
+										</label>
+										<div class='col-sm-9'>
+											<input type="text" class='form-control' th:field="*{email}" th:value="*{email}" parsley-type="email" />
+										</div>
+									</div>
+									<div class='form-group'>
+										<label class='col-sm-3 control-label' th:text="#{user.password}">Password<span
+											class='asterisk'>*</span>
+										</label>
+										<div class='col-sm-9'>
+											<input type="password" class='form-control' th:field="*{password}" th:value="*{password}"/>
+										</div>
+									</div>
+									<div class='form-group'>
+										<label class='col-sm-3 control-label' th:text="#{user.active}">Active<span
+											class='asterisk'>*</span>
+										</label>
+										<div class='col-sm-9'>                                              
+                                              <select th:field="*{active}" class="form-control">
+                                              	<option th:value="1" th:text="Yes"></option>
+                                              	<option th:value="0" th:text="No"></option>                                            
+                                              </select>                                                                                           
+                                            </div>
+									</div>
+									<div class='form-group'>
+										<label class='col-sm-3 control-label' th:text="#{user.role}">Role<span
+											class='asterisk'>*</span>
+										</label>
+										<div class='col-sm-9'>                                              
+                                              <select th:field="*{role}" class="form-control">
+                                                <option th:each = "var : ${aclRolesList}" th:value="${var.id}" th:text="${var.role}"></option>
+                                              </select>                                                                                       
+                                        </div>
+									</div>
+
+
+									<div class="col-sm-9 col-sm-offset-3">
+										<div class="pull-right">
+											<button class="btn btn-primary m-b-10"
+												onclick="javascript:$('#user').parsley('validate');"
+												th:text="#{page.button.submit}">Submit</button>
+										</div>
+									</div>
+							</form>
+							<script type="text/javascript" th:inline='javascript'>
+			 $(document).ready(function() {
+				 $.validator.addMethod("passwordChecker",function(value){
+					 var re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])\w{6,}$/;
+					 return re.test(value);  
+				 });
+				 $( "#userform" ).validate({
+					 	rules: {
+					 		firstName:{
+					 			required: true,
+					 		},
+					 		lastName:{
+					 			required: true,
+					 		},
+					 		mobile:{
+					 			required: true,
+					 		},					 		
+					 		email:{
+					 			required: true,
+					 			email: true,
+					 		},
+					 		password: {
+					 			required: true,
+					 			minlength: 6,
+					 			passwordChecker : true
+					 		},		
+					 		active:{
+					 			required: true,				 			
+					 		},
+					 		role:{
+					 			required: true,					 			
+					 		},
+					 		
+					 	},
+					 	messages: {
+					 		firstName: {
+					 			required: "Please enter first name"
+					 		},
+					 		lastName: {
+					 			required: "Please enter last name"
+					 		},
+					 		email: {
+					 			required: "Please enter email address",
+					 			email: "Please enter valid email address"
+					 		},
+					 		mobile: {
+					 			required: "Please enter mobile number",					 			
+					 		},
+					 		password: {
+					            required: "Please provide a password",
+					            minlength: "Your password must be at least 6 characters long",
+					            passwordChecker: "Your password must contain atleast one number, one lowercase and one uppercase letter or the underscore"
+					        },		
+					        active: {
+					 			required: "Please select value",					 			
+					 		},
+					 		role: {
+					 			required: "Please select role",					 			
+					 		},
+					    },
+					    submitHandler: function(form){
+							form.submit();
+						}
+				});							
+			 });
+		 </script>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</html>

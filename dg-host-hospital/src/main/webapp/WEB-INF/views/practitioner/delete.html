@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	th:include="layouts/layoutcontext::page">
+<body>
+	<div th:fragment='content'>
+	<div class="overlay o-sm js-upload-overlay">
+        <div class="overlay-header">            
+            <h3 th:text="#{page.hospital.practitioner.remove_practitioner}">Remove Doctor</h3>
+            <button class="ico ico-close btn fancyclose"></button>
+        </div>
+        <div class="overlay-content upload-content">
+	        <form class="form-block" th:action="@{/home/practitioner/delete}" th:object="${removePractitionerForm}" method="post">
+	           <input type="hidden" th:field="*{id}" th:value="*{id}" />
+	           <input type="hidden" th:field="*{healthcareprovider}" th:value="*{healthcareprovider}" />
+	       	   <p th:utext="#{page.hospital.practitioner.remove_practitioner_text}"></p>
+	       	   <p>
+              <button type="submit" class="btn btn-green btn-sm" th:text="#{page.practitioner.remove.btn.ok}">OK</button>
+              <button type="button" class="btn btn-green btn-sm fancyclose" th:text="#{page.practitioner.remove.btn.cancel}">Cancel</button>
+            </p>
+	       	</form>	 
+        </div>
+               <script type="text/javascript" th:inline='javascript'>
+		$(document).ready(function() {
+			/*[+
+			var msg = [[${message}]];			
+			+]*/			
+			if(msg == 1){
+				parent.jQuery.fancybox.close();											
+			}
+			
+		});
+   </script>        
+    </div>
+   </div>
+</body>
+</html>      

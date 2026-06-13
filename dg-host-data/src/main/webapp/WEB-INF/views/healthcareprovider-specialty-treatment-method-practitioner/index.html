@@ -1,0 +1,80 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:include="layout::page" class='sidebar-large'>
+<div class="container" th:fragment="content">					
+			<div class="row">
+				<div class="col-md-12">
+					<div class="panel panel-default">
+                                        <div class="panel-heading" th:if="${message} != null">
+						<h3 class ="panel-title"><strong th:text="${message}"></strong></h3>
+					</div>
+					<div class="panel-heading bg-red">
+						<h3 class ="panel-title"><strong th:text="#{page.heading.healthcareprovider-specialty-treatment-method-practitioner}">healthcareproviderSpecialtyTreatmentMethodPractitioner</strong></h3>
+					</div>
+					<div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12 m-b-20">
+                                    <div class="btn-group">
+                                       <a id="table-edit_new" class="btn btn-danger" th:href="@{'/healthcareprovider-specialty-treatment-method-practitioner/edit'}">
+                                            Add New <i class="fa fa-plus"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                      <div class="col-md-12 col-sm-12 col-xs-12 table-responsive table-red">
+                            <table class="table table-striped table-hover dataTable" id="table-editable">          
+								<thead>
+									<tr>
+										<th th:text="#{healthcareprovider-specialty-treatment-method-practitioner.id}">id</th>
+							<th th:text="#{healthcareprovider-specialty-treatment-method-practitioner.years_practiced}">years_practiced</th>
+							<th th:text="#{healthcareprovider-specialty-treatment-method-practitioner.number_performed_overall}">number_performed_overall</th>
+							<th th:text="#{healthcareprovider-specialty-treatment-method-practitioner.number_performed_last_year}">number_performed_last_year</th>
+							<th th:text="#{healthcareprovider-specialty-treatment-method-practitioner.corrections_last_year}">corrections_last_year</th>
+							<th th:text="#{healthcareprovider-specialty-treatment-method-practitioner.availability_days}">availability_days</th>
+							<th th:text="#{healthcareprovider-specialty-treatment-method-practitioner.currency}">currency</th>
+							<th th:text="#{healthcareprovider-specialty-treatment-method-practitioner.healthcareprovider_price}">healthcareprovider_price</th>
+							<th th:text="#{healthcareprovider-specialty-treatment-method-practitioner.practitioner_price}">practitioner_price</th>
+							<th th:text="#{healthcareprovider-specialty-treatment-method-practitioner.method_price}">anesthesia_price</th>
+							<th th:text="#{healthcareprovider-specialty-treatment-method-practitioner.active}">active</th>
+							<th th:text="#{healthcareprovider-specialty-treatment-method-practitioner.practitioner}">practitioner</th>
+							<th th:text="#{healthcareprovider-specialty-treatment-method-practitioner.healthcareprovider_specialty_treatment_method}">healthcareprovider_specialty_treatment_method</th>
+							<th th:text="#{healthcareprovider-specialty-treatment-method-practitioner.Corporatecompany_insurance}">CorporateCompany Insurance</th>
+							<th th:text="#{healthcareprovider-specialty-treatment-method-practitioner.verified}">verified</th>
+							
+										<th class="text-center sorting" th:text="#{page.text.options}">Options</th>
+									</tr>
+								</thead>
+						<tbody>							
+								<tr th:each="model :${models}">
+								<td th:text="${model.id}"></td>
+								<td th:text="${model.yearsPracticed}"></td>
+								<td th:text="${model.numberPerformedOverall}"></td>
+								<td th:text="${model.numberPerformedLastYear}"></td>
+								<td th:text="${model.correctionsLastYear}"></td>
+								<td th:text="${model.availabilityDays}"></td>
+								<td th:text="${model.currency}"></td>
+								<td th:text="${model.healthcareproviderPrice}"></td>
+								<td th:text="${model.practitionerPrice}"></td>
+								<td th:text="${model.anesthesiaPrice}"></td>
+								<td th:text="${model.active}"></td>
+								<td th:text="${model.practitioner}"></td>
+								<td th:text="${model.healthcareproviderSpecialtyTreatmentMethod}"></td>
+								<td th:text="${model.corporatecompanyInsurance}"></td>
+								<td th:text="${model.verified}"></td>
+								<td class="text-center">
+								<a class="edit btn btn-dark" th:href="@{'/healthcareprovider-specialty-treatment-method-practitioner/edit'(id=${model.id})}"><i class="fa fa-pencil-square-o"></i>
+								Edit
+								</a>								
+								<a class="delete btn btn-danger" th:href="@{'/healthcareprovider-specialty-treatment-method-practitioner/delete'(id=${model.id})}">
+								<i class="fa fa-times-circle"></i>
+								Remove								
+								</a>
+								</td>
+								</tr>							
+						</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+		</div>
+</div>
+</html>

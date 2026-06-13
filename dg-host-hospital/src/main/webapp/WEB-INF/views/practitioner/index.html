@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:include="layouts/layout::page">
+<body>
+	<main id="main-content" th:fragment='content'>	
+	  <div class="wrap">
+			<aside th:replace="fragments/sidebar :: sidebar"></aside>
+			<div id="container">
+				<div class="my-block">
+					<h3 class="hel-med fs-16 title-in">
+						<span th:text="#{page.hospital.practitioner.doctors}">Doctor</span>	                    
+	                    <span th:if="${inactive != null}" th:text="#{page.hospital.practitioner.inactive}" class="fr text-danger"></span>
+					</h3>
+					<div class="row mb-20">
+                            <div class="fl ">
+                                <label for="speciality" class="hel-med fs-16 mr-20" th:text="#{page.hospital.practitioner.search_specialty}">Specialty:</label>
+                                <select name="speciality" id="speciality" class="my-select practitionerspecialty mw-240">
+                                	<option value="all">All</option>
+                                    <option th:each="specialty : ${specialtyList}" th:value="${specialty.id}" th:text="${specialty.name}">Aesthetics</option>                                    
+                                </select>                                
+                            </div>                           
+                            <div class="fr">
+                                <label for="speciality" class="hel-med fs-16 mr-20 mt-5 fl" th:text="#{page.hospital.practitioner.search_doctors}">Search Doctors:</label>
+                                <div class="search-block fl">                                
+                                    <input type="text" class="fl w-75" id="textsearch"/>
+                                    <button class="btn btn-gray fl ico ico-search"></button>
+                                </div>
+                            </div>                             
+                    </div>	 
+                    <div class="row mb-20">
+	                    <div class="fl">
+	                            <label for="treatment" class="hel-med fs-16 mr-14" th:text="#{page.hospital.practitioner.search_treatment}">Treatment:</label>
+	                            <select name="treatment" id="treatment" class="my-select practitionertreatment  mw-240">
+	                               <option value="all">All</option>
+	                               <option th:each="treatment : ${treatmentList}" th:value="${treatment.id}" th:text="${treatment.name}">Aesthetics</option>                                    
+	                            </select>                                
+	                     </div>
+                     </div>       
+					<table class="my-table" border="0" cellspacing="0" cellpadding="0">
+                       <thead>
+                           <tr>
+                               <th th:text="#{page.hospital.practitioner.table.heading.name}">Name</th>
+                               <!--<th th:text="#{page.hospital.practitioner.table.heading.department}">Department</th>
+                               <th th:text="#{page.hospital.practitioner.table.heading.treatments}">Treatments</th>-->
+                               <th th:text="#{page.hospital.practitioner.table.heading.emails}">Emails</th>
+                               <!--<th th:text="#{page.hospital.practitioner.table.heading.status}">Status</th>-->
+                               <th th:text="#{page.hospital.practitioner.table.heading.edit}">Edit</th>
+                               <th th:text="#{page.hospital.practitioner.table.heading.delete}">Delete</th>                                                              
+                           </tr>
+                       </thead>                     
+                       <tbody>
+                          		<tr th:each="hospitalPractitioner : ${hospitalPractitionerList}" th:class="result +' '+${hospitalPractitioner.specialtyClass}+' '+${hospitalPractitioner.treatmentClass}">
+                          			<td th:text="${hospitalPractitioner.name}"></td>
+                          			<!--<td th:text="${hospitalPractitioner.specialtyName}">Test</td>
+                          			<td th:text="${hospitalPractitioner.treatmentName}">Test</td>-->
+                          			<td th:text="${hospitalPractitioner.email}">Test</td>
+                          			<!--<td th:if="${hospitalPractitioner.active}">Active</td>
+                          			<td th:if="${!hospitalPractitioner.active}">InActive</td>-->
+                          			<td th:if="${hospitalPractitioner.active}"><a th:href="@{'/home/practitioner/edit'(id=${hospitalPractitioner.id})}" th:title="#{page.hospital.practitioner.table.heading.edit}" th:text="#{page.hospital.practitioner.table.heading.edit}">Edit</a></td>                          			
+                          			<td th:if="${hospitalPractitioner.active}"><a class="various fancybox.iframe" data-fancybox-width="645" data-fancybox-height="474" th:href="@{'/home/practitioner/delete'(id=${hospitalPractitioner.id})}" th:title="#{page.hospital.practitioner.table.heading.delete}" th:text="#{page.hospital.practitioner.table.heading.delete}">Delete</a></td>                          			
+                          		</tr>
+                       </tbody>                      
+                   </table>    
+                   <div class="row my-btn-block">
+                            <div class="tl fl">
+                            	<a th:href="@{'/home/practitioner/add'}">
+                                	<button class="btn btn-sm btn-gray" type="button" th:text="#{page.hospital.btn_add_new_doctor}">+ Add new Doctor</button>
+                                </a>
+                            </div>                          
+                    </div>
+				</div>
+			</div>
+		</div>
+	</main>
+</body>
+</html>	
+					

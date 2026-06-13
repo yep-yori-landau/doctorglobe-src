@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	th:include="layouts/layoutcontext::page" class='sidebar-large'>
+<body>
+<div th:fragment='content' >
+	<div class="loginbox o-sm js-conference-overlay">
+        <div class="overlay-header bg">            
+            <h3 th:text="#{page.associate_company_users}"></h3>           
+        </div>
+        <div class="overlay-content" th:if="${patientList != null}" style="min-height:530px;">     
+	       <ul th:each="model : ${patientList}">
+	          <strong th:text="${model.key}"></strong>
+	          <li th:each="ccModel : ${model.value}">	
+	          	<a th:href="@{'/associate'(id=${ccModel.patientId})}" th:text="${ccModel.patientName}" target="_parent"></a>
+	          </li>        		
+	       </ul>	 	                  	                 
+        </div>   
+        <div class="overlay-content" th:if="${patientList == null}" style="min-height:530px;">     
+	       	 <strong>No Result Found</strong>	                  	                 
+        </div>       
+      </div>
+   </div>
+  </body>  
+</html>

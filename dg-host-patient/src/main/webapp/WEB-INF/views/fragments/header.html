@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<body>
+	 <header id="main-header" th:fragment="header">
+            <div class="wrap">
+                <a href="#lsRet" class="logo"></a>               
+                <nav id="main-nav">
+                    <ul id="js-o-nav">
+                        <li><a href="#lsRet" th:title="#{header.search}" class="active" th:text="#{header.search}" th:href="@{/search}">Search</a></li>
+                        <!--<li sec:authorize="hasRole('ROLE_USER')"><a th:href="@{/user/discussion}" th:text="#{header.userarea}" th:class="${isAllCaseDataSubmit}?null:warning">My Area</a></li>-->
+                        <li sec:authorize="hasRole('ROLE_USER')"><a th:href="@{/logout}" th:title="#{header.signout}" th:text="#{header.signout}">Sign Out</a></li>                        
+                        <li sec:authorize="!isAuthenticated()"><a th:href="@{/login}" th:title="#{header.signin}" th:text="#{header.userarea}" id="js-signin" class="various fancybox.iframe" data-fancybox-width="645" data-fancybox-height="385" data-value="0"></a></li>
+                        <li sec:authorize="!isAuthenticated()"><a th:href="@{/login}" th:title="#{header.signin}" th:text="#{header.signin}" id="js-signin" class="various fancybox.iframe" data-fancybox-width="645" data-fancybox-height="385" data-value="0"></a></li>
+                        <li sec:authorize="!isAuthenticated()" style="display:none"><a th:href="@{/signup}" id="js-signup" class="various1 fancybox.iframe" data-fancybox-width="645" data-fancybox-height="510"></a></li>
+                        <li sec:authorize="!isAuthenticated()" style="display:none"><a th:href="@{/forgot}" id="js-forgot" class="various1 fancybox.iframe" data-fancybox-width="645" data-fancybox-height="385"></a></li>
+                        <li sec:authorize="hasRole('ROLE_USER')" th:if="${isProfileShow}"><a th:href="@{/user/profile}" th:title="#{header.userprofile}" th:text="#{header.userprofile}">My Profile</a></li>                                                      
+                        <li sec:authorize="hasRole('ROLE_USER')">
+                            <div class="user-menu global">
+                                <span class="user-info">
+                                    <a href="#lsRet" class="pad">
+                                        <img th:if="${userImage != null}" th:src="@{${userImage}}" height="24" width="24"/>                                        
+                                        <span th:text="${userName}" class="pr-4"></span>
+                                    </a>
+                                    <a href="#lsRet" class="user-ico ico-sm-mail mails" th:title="${totalNewMessage}"></a>
+                                </span>                               
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+            <script th:inline="javascript" sec:authorize="!isAuthenticated()">
+				/*<![CDATA[*/
+					$(document).ready(function() {
+						$('#js-signin').trigger("click");	
+					});
+				/*]]>*/
+			</script>	
+            </div>
+        </header>
+</body>
+</html>

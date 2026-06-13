@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="ajaxcountry">
+	<script type="text/javascript" th:inline='javascript'>	
+		$(document).ready(function() {
+			
+			$('.date-picker').datepicker({
+				dateFormat : 'yy-mm-dd',
+				changeMonth : true,
+				changeYear : true,
+				numberOfMonths : 1,
+				showButtonPanel : true,
+				maxDate : "0",
+				minDate : "-100Y",				
+				yearRange : '0:-0',
+			});
+		
+			$("select.country").change(function(){
+				var val = $(this).val();
+				$('#ajaxcity').html('');		
+				var hosturl = /*[[${application.hostbaseurl} ]]*/; 
+				$.ajax({
+					url: hosturl+'/state/country/'+val,
+					success : function(data){						    
+						    if(data.length > 0){
+						    	var options = '<option value="">All States</option>';
+						    	$(data).each(function(index){
+						    		options += '<option value="' + data[index].id + '">' + data[index].name + '</option>';						    		
+						    	});						    							    	
+					            $('#state').html(options);						
+						    }else{						    	
+						    	var options = '<option value="">No States</option>';
+					        	$('#state').html(options);
+					        	$.ajax({
+					    			url: hosturl+'/city/country/'+val,
+					    			success : function(data){
+					    					if(data.length > 0){
+					    						var options = '<option value="">All Cities</option>';
+					    						$(data).each(function(index){
+					    			                options += '<option value="' + data[index].id + '">' + data[index].name + '</option>';
+					    			            });
+					    			            $('#ajaxcity').html(options); 
+					    					}else {  
+					    			        	var options = '<option value="">No City</option>';
+					    			        	$('#ajaxcity').html(options); 
+					    			        	
+					    					}
+					    				}
+					        	});
+							}						    
+					},
+				});
+			});
+			
+			$("select.state").change(function(){
+				var val = $(this).val();		
+				var hosturl = /*[[${application.hostbaseurl} ]]*/;
+				$.ajax({
+					url: hosturl+'/city/state/'+val,				
+					success : function(data){
+						console.log(data);
+							if(data.length > 0){
+								var options = '<option value="">All Cities</option>';
+								$(data).each(function(index){
+	    			                options += '<option value="' + data[index].id + '">' + data[index].name + '</option>';
+	    			            });
+					            $('#ajaxcity').html(options); 
+							}else{
+								var options = '<option value="">None</option>';
+								$('#ajaxcity').html(options);								
+							}
+					}
+				});
+			});
+			
+			$("select#ajaxcity").change(function(){
+				$('#city').val($(this).val());
+			});
+			
+			var city = $("#city").val();
+				if(city.length > 0){		
+					var val = $("#city").val();
+					var hosturl = /*[[${application.hostbaseurl} ]]*/;
+						$.ajax({
+							url: hosturl+'/city/id/'+val,
+							success : function(data){			
+								$('select.country').val(data.country);					
+								var country = data.country;
+								var state = data.state;
+								var hosturl = /*[[${application.hostbaseurl} ]]*/;
+								if(state !=null){
+									$.ajax({
+										url: hosturl+'/state/country/'+country,
+										success : function(data){			
+											if(data.length > 0){
+												var options = '<option value="">All State</option>';
+												$(data).each(function(index){
+					    			                options += '<option value="' + data[index].id + '">' + data[index].name + '</option>';
+					    			            });
+									            $('#state').html(options);					            
+									            $('select.state').val(state);
+									            $.ajax({
+													url: hosturl+'/city/state/'+state,
+													success : function(data){			
+														if(data.length > 0){
+															var options = '<option value="">All City</option>';
+															$(data).each(function(index){
+								    			                options += '<option value="' + data[index].id + '">' + data[index].name + '</option>';
+								    			            });
+												            $('#ajaxcity').html(options);					            
+												            $('select#ajaxcity').val(val);						            				            
+														}					
+													}
+												});	
+											}					
+										}
+									});	
+								}else{
+									var options = '<option value="">No States</option>';
+									var hosturl = /*[[${application.hostbaseurl} ]]*/;
+						        	$('#state').html(options);
+						        	$.ajax({
+						    			url: hosturl+'/city/country/'+country,
+						    			success : function(data){
+						    					if(data.length > 0){
+						    						var options = '';
+						    						$(data).each(function(index){
+						    			                options += '<option value="' + data[index].id + '">' + data[index].name + '</option>';
+						    			            });
+						    			            $('#ajaxcity').html(options); 
+						    			            $('select#ajaxcity').val(val);
+						    					}else {  
+						    			        	var options = '<option value="">No City</option>';
+						    			        	$('#ajaxcity').html(options);   			        	
+						    					}
+						    				}
+						        	});
+								}
+							}
+						});			
+				}
+		});
+   </script>
+</div>
+</body>
+</html>
