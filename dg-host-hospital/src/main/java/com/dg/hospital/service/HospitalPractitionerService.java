@@ -424,27 +424,31 @@ public class HospitalPractitionerService extends RestService{
 		BigInteger treatmentId = this.getTreatmentGeneralId();
 		BigInteger methodId = this.getMethodGeneralId();
 		List<HospitalSpecialtyTreatmentMethodModel> hospitalSpecialtyTreatmentMethodModelList = super.getHospitalSpecialtyTreatmentMethodByHealthcareproviderSpecialty(healthcareproviderSpecialty);
-		for(HospitalSpecialtyTreatmentMethodModel model: hospitalSpecialtyTreatmentMethodModelList){
-			if(model.getTreatment().equals(treatmentId) && model.getMethod().equals(methodId)){
-				found = true;
-				model.setActive(true);				
+		if(treatmentId != null && methodId != null){
+			for(HospitalSpecialtyTreatmentMethodModel model: hospitalSpecialtyTreatmentMethodModelList){
+				if(model.getTreatment().equals(treatmentId) && model.getMethod().equals(methodId)){
+					found = true;
+					model.setActive(true);
+					edited = super.setHospitalSpecialtyTreatmentMethod(model);
+					if(edited != null && edited > 0){
+						result = true;
+					}
+				}
+			}
+			if(!found){
+				HospitalSpecialtyTreatmentMethodModel model = new HospitalSpecialtyTreatmentMethodModel();
+				model.setActive(true);
+				model.setHealthcareproviderSpecialty(healthcareproviderSpecialty);
+				model.setTreatment(treatmentId);
+				model.setMethod(methodId);
+				model.setHealthcareproviderPrice(0.0);
 				edited = super.setHospitalSpecialtyTreatmentMethod(model);
-				if(edited > 0){
+				if(edited != null && edited > 0){
 					result = true;
 				}
 			}
-		}
-		if(!found){
-			   HospitalSpecialtyTreatmentMethodModel model = new HospitalSpecialtyTreatmentMethodModel();
-			   model.setActive(true);
-			   model.setHealthcareproviderSpecialty(healthcareproviderSpecialty);
-			   model.setTreatment(treatmentId);
-			   model.setMethod(methodId);
-			   model.setHealthcareproviderPrice(0.0);
-			   edited = super.setHospitalSpecialtyTreatmentMethod(model);
-			   if(edited > 0){
-					result = true;
-			   }
+		} else {
+			result = !hospitalSpecialtyTreatmentMethodModelList.isEmpty();
 		}
 		return result;
 	}
@@ -460,14 +464,21 @@ public class HospitalPractitionerService extends RestService{
 		return hstmId;
 	}	
 	
-	public HospitalSpecialtyTreatmentMethodModel getHospitalSpecialtyTreatmentMethodByHospitalSpecialtyId(BigInteger id){		
+	public HospitalSpecialtyTreatmentMethodModel getHospitalSpecialtyTreatmentMethodByHospitalSpecialtyId(BigInteger id){
 		HospitalSpecialtyTreatmentMethodModel hstmModel = new HospitalSpecialtyTreatmentMethodModel();
+		BigInteger treatmentId = this.getTreatmentGeneralId();
+		BigInteger methodId = this.getMethodGeneralId();
 		List<HospitalSpecialtyTreatmentMethodModel> hospitalSpecialtyTreatmentMethodModelList = super.getHospitalSpecialtyTreatmentMethodByHealthcareproviderSpecialty(id);
-		for(HospitalSpecialtyTreatmentMethodModel model: hospitalSpecialtyTreatmentMethodModelList){
-			if(model.getTreatment().equals(this.getTreatmentGeneralId()) && model.getMethod().equals(this.getMethodGeneralId())){				
-				hstmModel = model;
-				break;
+		if(treatmentId != null && methodId != null){
+			for(HospitalSpecialtyTreatmentMethodModel model: hospitalSpecialtyTreatmentMethodModelList){
+				if(model.getTreatment().equals(treatmentId) && model.getMethod().equals(methodId)){
+					hstmModel = model;
+					break;
+				}
 			}
+		}
+		if(hstmModel.getId() == null && !hospitalSpecialtyTreatmentMethodModelList.isEmpty()){
+			hstmModel = hospitalSpecialtyTreatmentMethodModelList.get(0);
 		}
 		return hstmModel;
 	}	
@@ -1134,8 +1145,9 @@ public class HospitalPractitionerService extends RestService{
 	
 	public Boolean isPractitionerAvailable(String email,BigInteger healthcareprovider){
 		Boolean result = true;
-		for(HospitalPractitionerDetailModel model: super.getAllHospitalPractitioner()){
-			if(model.getEmail().equalsIgnoreCase(email) && model.getHealthcareprovider().equals(healthcareprovider)){
+		List<HospitalPractitionerModel> activeList = super.getHospitalPractitioner(healthcareprovider);
+		for(HospitalPractitionerModel model: activeList){
+			if(model.getEmail() != null && model.getEmail().equalsIgnoreCase(email)){
 				result = false;
 			}
 		}

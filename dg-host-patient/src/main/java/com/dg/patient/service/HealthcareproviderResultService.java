@@ -376,18 +376,18 @@ public class HealthcareproviderResultService {
 				}
 				if (estimatedCostMap.containsKey(fm.getId())) {
 					Set set = new HashSet(estimatedCostMap.get(fm.getId()));
-					double mincost = Collections.min(set);
-					double maxcost = Collections.max(set);
+					double mincost = (Double) Collections.min(set);
+					double maxcost = (Double) Collections.max(set);
 					fm.setEstimatedCost(mincost);
 				}
 				if (youGetUpToMap.containsKey(fm.getId())) {
 					Set set = new HashSet(youGetUpToMap.get(fm.getId()));
-					double minYouGetUpTo = Collections.min(set);
+					double minYouGetUpTo = (Double) Collections.min(set);
 					fm.setYouGetUpTo(minYouGetUpTo);
 				}
 				if (youPayUpToMap.containsKey(fm.getId())) {
 					Set set = new HashSet(youPayUpToMap.get(fm.getId()));
-					double maxYouPayUpTo = Collections.max(set);
+					double maxYouPayUpTo = (Double) Collections.max(set);
 					fm.setYouPayUpTo(maxYouPayUpTo);
 				}
 
@@ -654,18 +654,18 @@ public class HealthcareproviderResultService {
 				}
 				if (estimatedCostMap.containsKey(fm.getId())) {
 					Set set = new HashSet(estimatedCostMap.get(fm.getId()));
-					double mincost = Collections.min(set);
-					double maxcost = Collections.max(set);
+					double mincost = (Double) Collections.min(set);
+					double maxcost = (Double) Collections.max(set);
 					fm.setEstimatedCost(mincost);
 				}
 				if (youGetUpToMap.containsKey(fm.getId())) {
 					Set set = new HashSet(youGetUpToMap.get(fm.getId()));
-					double minYouGetUpTo = Collections.min(set);
+					double minYouGetUpTo = (Double) Collections.min(set);
 					fm.setYouGetUpTo(minYouGetUpTo);
 				}
 				if (youPayUpToMap.containsKey(fm.getId())) {
 					Set set = new HashSet(youPayUpToMap.get(fm.getId()));
-					double maxYouPayUpTo = Collections.max(set);
+					double maxYouPayUpTo = (Double) Collections.max(set);
 					fm.setYouPayUpTo(maxYouPayUpTo);
 				}
 
@@ -1013,18 +1013,18 @@ public class HealthcareproviderResultService {
 				}
 				if (estimatedCostMap.containsKey(fm.getId())) {
 					Set set = new HashSet(estimatedCostMap.get(fm.getId()));
-					double mincost = Collections.min(set);
-					double maxcost = Collections.max(set);
+					double mincost = (Double) Collections.min(set);
+					double maxcost = (Double) Collections.max(set);
 					fm.setEstimatedCost(mincost);
 				}
 				if (youGetUpToMap.containsKey(fm.getId())) {
 					Set set = new HashSet(youGetUpToMap.get(fm.getId()));
-					double minYouGetUpTo = Collections.min(set);
+					double minYouGetUpTo = (Double) Collections.min(set);
 					fm.setYouGetUpTo(minYouGetUpTo);
 				}
 				if (youPayUpToMap.containsKey(fm.getId())) {
 					Set set = new HashSet(youPayUpToMap.get(fm.getId()));
-					double maxYouPayUpTo = Collections.max(set);
+					double maxYouPayUpTo = (Double) Collections.max(set);
 					fm.setYouPayUpTo(maxYouPayUpTo);
 				}
 

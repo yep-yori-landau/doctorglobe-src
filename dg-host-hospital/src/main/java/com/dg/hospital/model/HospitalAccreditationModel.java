@@ -1,10 +1,12 @@
 package com.dg.hospital.model;
 import java.math.BigInteger;
 import javax.validation.constraints.NotNull;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 /**
  * @author kkowlgi
  * 
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class HospitalAccreditationModel {
           
 	private BigInteger id;

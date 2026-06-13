@@ -3,9 +3,11 @@ package com.dg.hospital.model;
 import java.math.BigInteger;
 
 import javax.validation.constraints.NotNull;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.validation.constraints.Size;
 
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class EquipmentModel {
 	
 	private BigInteger id;

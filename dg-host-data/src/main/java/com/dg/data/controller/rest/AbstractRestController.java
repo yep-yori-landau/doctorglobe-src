@@ -42,6 +42,11 @@ public abstract class AbstractRestController<T> {
 		return this.getGenericService().get(id);
 	}
 
+	@RequestMapping(value = "/get/id/{id}", method = RequestMethod.GET)
+	public @ResponseBody T getById(@PathVariable("id") int id) {
+		return this.getGenericService().get(id);
+	}
+
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
 	public @ResponseBody Integer delete(@PathVariable("id") int id) {
 		return this.getGenericService().delete(id);

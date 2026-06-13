@@ -3,6 +3,8 @@ package com.dg.hospital.model;
 import java.math.BigInteger;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class InsuranceModel{
 	
 	private BigInteger id;

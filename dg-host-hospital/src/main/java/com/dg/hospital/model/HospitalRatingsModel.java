@@ -3,7 +3,9 @@ package com.dg.hospital.model;
 import java.math.BigInteger;
 
 import javax.validation.constraints.NotNull;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class HospitalRatingsModel{
 	
 	private BigInteger id;

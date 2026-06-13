@@ -5,10 +5,10 @@
 	<!-- SIDEBAR-->
 	<aside id="sidebar" th:fragment="sidebar">
 		<div class="row my-block">
-                        <figure th:if="${practitionerDetail.photo == 'demo_user.gif'}" class="tc">                            
+                        <figure th:if="${practitionerDetail == null or practitionerDetail.photo == null or practitionerDetail.photo == 'demo_user.gif'}" class="tc">
                             <img th:src="@{/resources/images/demo_user.gif}" height="170" width="174"/>
                         </figure>
-                        <figure th:if="${practitionerDetail.photo != 'demo_user.gif'}" class="tc">                            
+                        <figure th:if="${practitionerDetail != null and practitionerDetail.photo != null and practitionerDetail.photo != 'demo_user.gif'}" class="tc">
                             <img th:src="@{/doctorglobe-doctor/practitioner/}+${practitionerDetail.id}+'/photo/'+${practitionerDetail.photo}" height="170" width="174"/>
                         </figure>
                         <h3 class="hel-med fs-16" th:text="${practitionerDetail.title}+' '+${practitionerDetail.firstName}+' '+${practitionerDetail.lastName}">Doctor Lisa Mcbee</h3>

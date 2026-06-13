@@ -241,6 +241,13 @@
 		</dependency>
 		
 
+		<!-- JAXB — removed from JRE in Java 11, required by hibernate-validator 4.x -->
+		<dependency>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
+			<version>2.3.1</version>
+		</dependency>
+
 		<!-- Test -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -270,9 +277,9 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>${org.apache.maven.plugins-version}</version>
 				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
-					<compilerArgument>-Xlint:all</compilerArgument>
+					<source>1.7</source>
+					<target>1.7</target>
+					<compilerArgument>-Xlint:none</compilerArgument>
 					<showWarnings>true</showWarnings>
 					<showDeprecation>true</showDeprecation>
 				</configuration>

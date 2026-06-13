@@ -4,10 +4,12 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import javax.validation.constraints.NotNull;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class HospitalPractitionerDetailModel{
 	
 	private BigInteger id;

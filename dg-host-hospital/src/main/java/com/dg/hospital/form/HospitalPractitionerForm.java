@@ -568,20 +568,20 @@ public class HospitalPractitionerForm{
 			this.setDescription(hpModel.getDescription());
 		}		
 		if(practitionerModel.getId() != null){
-			if(this.getTitle().length() == 0){
+			if(this.getTitle() == null || this.getTitle().length() == 0){
 				this.setTitle(practitionerModel.getTitle());
 			}
-			if(this.getFirstName().length() == 0){
+			if(this.getFirstName() == null || this.getFirstName().length() == 0){
 				this.setFirstName(practitionerModel.getFirstName());
 			}
-			if(this.getLastName().length() == 0){
+			if(this.getLastName() == null || this.getLastName().length() == 0){
 				this.setLastName(practitionerModel.getLastName());
-			}			
+			}
 			logger.info("mobile {}",this.getMobile());
-			if(this.getMobile() == null || this.getMobile() == ""){
+			if(this.getMobile() == null || this.getMobile().equals("")){
 				this.setMobile(practitionerModel.getMobile());
 			}
-			if(this.getEmail().length() == 0){
+			if(this.getEmail() == null || this.getEmail().length() == 0){
 				this.setEmail(practitionerModel.getEmail());
 			}
 			logger.info("description {}",this.getDescription());
